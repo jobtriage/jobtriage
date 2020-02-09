@@ -1,0 +1,15 @@
+.signupPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.signupForm {
+  display: grid;
+}
+
+.loginInput {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
