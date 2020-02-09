@@ -23,10 +23,11 @@ class AuthController < ApplicationController
   end
 
   def test
-    render json: { message: 'Logged in successfully' }, status: :ok
+    render json: { message: { user_id: current_user.id.to_s, email: current_user.email } }, status: :ok
   end
 
   private
+
   def user_params
     params.permit(:email, :name)
   end

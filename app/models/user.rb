@@ -8,6 +8,8 @@ class User
   field :name, type: String
   field :password_hash, type: String
 
+  has_many :applications
+
   validates :email, uniqueness: { message: 'Email already registered' }
   validates :name, presence: true
 

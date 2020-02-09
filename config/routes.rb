@@ -3,4 +3,6 @@ Rails.application.routes.draw do
   post 'auth/register', to: 'auth#register'
   post 'auth/login', to: 'auth#login'
   get 'auth/test', to: 'auth#test'
+
+  resources :applications
 end
