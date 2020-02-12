@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { addUser } from '../../actions';
 import APIService from '../../service/APIService';
 import { Button } from '../../components/index';
 import './LandingPage.css';
 
-export default function LandingPage() {
+const LandingPage = ({ dispatch }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    APIService.isLoggedIn()
-      .then(() => setIsAuthenticated(true))
-      .catch(e => console.log(e.response.status));
+    APIService.isLoggedIn().then(resp => {
+      const { user_id: userId, email } = resp.data.message;
+      dispatch(addUser(userId, email));
+      setIsAuthenticated(true);
+    }).catch(console.log);
   }, []);
 
   return (
@@ -19,14 +23,13 @@ export default function LandingPage() {
       <Body isAuthenticated={isAuthenticated} />
     </div>
   );
-}
+};
 
 const Header = (props) => {
   const history = useHistory();
   const { isAuthenticated } = props;
 
   const HeaderButtons = () => {
-    console.log(isAuthenticated);
     if (isAuthenticated) {
       return (
         <div>
@@ -60,3 +63,5 @@ const Body = () => {
     </div>
   );
 };
+
+export default connect()(LandingPage);

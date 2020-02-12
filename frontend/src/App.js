@@ -1,19 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
 } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from './theme';
+import APIService from './service/APIService';
+import { addUser } from './actions';
 import LandingPage from './screens/landingpage/LandingPage';
 import Login from './screens/auth/LoginPage';
 import Signup from './screens/auth/SignupPage';
 import Dashboard from './screens/dashboard/Dashboard';
+import Account from './screens/account/Account';
 import './App.css';
 
 
-export default function App() {
+function App({ dispatch }) {
+  useEffect(() => {
+    APIService.isLoggedIn().then(resp => {
+      const { user_id: userId, email } = resp.data.message;
+      dispatch(addUser(userId, email));
+    }).catch(console.log);
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <Routes />
@@ -35,6 +46,9 @@ const Routes = () => {
           <Route path="/dashboard">
             <Dashboard />
           </Route>
+          <Route path="/account">
+            <Account />
+          </Route>
           <Route path="/">
             <LandingPage />
           </Route>
@@ -43,3 +57,5 @@ const Routes = () => {
     </Router>
   );
 };
+
+export default connect()(App);
