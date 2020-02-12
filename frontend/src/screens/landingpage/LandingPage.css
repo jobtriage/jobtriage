@@ -1,7 +1,3 @@
-h1 {
-  color: var(--primary-color);
-}
-
 .header {
   height: 10vh;
   display: flex;

@@ -1,0 +1,42 @@
+.navBar {
+  height: 100vh;
+  background-color: #f1f1f1;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 15vh;
+  background-color: #f1f1f1;
+}
+
+li a {
+  display: block;
+  color: rgb(127, 127, 127);
+  ;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+/* Change the link color on hover */
+li a:hover {
+  background-color: #555;
+  color: white;
+}
+
+li .active {
+  background-color: #555;
+  color: white;
+}
+
+.logoDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+.logoDiv img{
+  width: 40px;
+}

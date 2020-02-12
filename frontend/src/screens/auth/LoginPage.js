@@ -24,7 +24,7 @@ export default function Login() {
         <Input type="password" label="password" onChange={e => setPassword(e.target.value)} value={password} />
         <Button name="Login" type="submit" style={{ marginTop: '5px', marginBottom: '5px' }} />
         <p>
-          Don't have an account?
+          Don&apos;t have an account?
           <span onClick={() => history.push('/signup')} className="anchor">
             {' '}
             Sign up here
