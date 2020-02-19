@@ -1,24 +1,26 @@
-# README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Job Triage 
+### Interactive way to manage your Job application
+Made with Rails, React, Mongo DB and :purple_heart:
 
-Things you may want to cover:
+## :rocket: Development
 
-* Ruby version
+### server
 
-* System dependencies
+ - Install the gems using `bundle install`
+ - Change DB details of mongo in `config/mongoid.yml`
+ - Start server using `rails s`
 
-* Configuration
+### client
 
-* Database creation
+ - `cd frontend`
+ - `yarn install`
+ - `yarn start`
 
-* Database initialization
+## :pray: Special Thanks
 
-* How to run the test suite
+ - [React Trello](https://github.com/rcdexta/react-trello) - kanban board
+ - [Material UI](https://github.com/mui-org/material-ui) - Material UI
+ 
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+> Written with [StackEdit](https://stackedit.io/).
