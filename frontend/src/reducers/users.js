@@ -4,6 +4,7 @@ const users = (state = {}, action) => {
       ...state,
       userId: action.userId,
       email: action.email,
+      name: action.name,
     };
   }
 

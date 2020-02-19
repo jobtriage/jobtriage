@@ -20,7 +20,7 @@ export default function Login() {
   return (
     <div className="loginPage">
       <form className="loginForm" onSubmit={handleSubmit}>
-        <Input type="text" label="email" onChange={e => setEmail(e.target.value)} value={email} />
+        <Input type="text" label="email" onChange={e => setEmail(e.target.value)} value={email} required />
         <Input type="password" label="password" onChange={e => setPassword(e.target.value)} value={password} />
         <Button name="Login" type="submit" style={{ marginTop: '5px', marginBottom: '5px' }} />
         <p>

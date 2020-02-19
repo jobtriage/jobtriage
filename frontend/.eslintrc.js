@@ -23,5 +23,6 @@ module.exports = {
     'arrow-parens': 0,
     'arrow-body-style': 0,
     'react/jsx-props-no-spreading': 0,
+    'no-restricted-syntax': 0,
   },
 };

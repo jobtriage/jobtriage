@@ -20,8 +20,8 @@ import './App.css';
 function App({ dispatch }) {
   useEffect(() => {
     APIService.isLoggedIn().then(resp => {
-      const { user_id: userId, email } = resp.data.message;
-      dispatch(addUser(userId, email));
+      const { user_id: userId, email, name } = resp.data.message;
+      dispatch(addUser(userId, email, name));
     }).catch(console.log);
   }, []);
 

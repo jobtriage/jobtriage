@@ -15,7 +15,9 @@ class ApplicationsController < ApplicationController
   # Update job application
   def update
     application = current_user.applications.find(params[:id])
-    application.set_company params[:company_name], params[:company_url]
+    if params[:company_name]
+      application.set_company params[:company_name], params[:company_url]
+    end
 
     render json: { message: application }, status: :ok if application.update_attributes!(application_params)
   end

@@ -4,7 +4,7 @@ import { NavBar } from '../../container';
 import './Account.css';
 
 function Account(props) {
-  const { email } = props;
+  const { email, name } = props;
   return (
     <div className="account">
       <NavBar />
@@ -13,6 +13,10 @@ function Account(props) {
         <h3>
           Email :
           {email}
+        </h3>
+        <h3>
+          Name :
+          {name}
         </h3>
       </div>
     </div>

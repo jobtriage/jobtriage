@@ -21,4 +21,11 @@ class User
     @password = Password.create(new_password)
     self.password_hash = @password
   end
+
+  def as_json(*args)
+    res = super
+    res['_id'] = self.id.to_s
+    res['password_hash'] = '****'
+    res
+  end
 end
