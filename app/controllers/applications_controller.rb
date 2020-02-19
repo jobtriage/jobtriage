@@ -4,6 +4,12 @@ class ApplicationsController < ApplicationController
     render json: { message: current_user.applications }, status: :ok
   end
 
+  # Get job details
+  def show
+    application = current_user.applications.find(params[:id])
+    render json: { message: application }, status: :ok
+  end
+  
   # Create job application
   def create
     application = current_user.applications.new(application_params)
