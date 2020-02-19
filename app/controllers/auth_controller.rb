@@ -23,7 +23,7 @@ class AuthController < ApplicationController
   end
 
   def test
-    render json: { message: { user_id: current_user.id.to_s, email: current_user.email } }, status: :ok
+    render json: { message: current_user }, status: :ok
   end
 
   private

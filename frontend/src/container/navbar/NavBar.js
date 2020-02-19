@@ -14,7 +14,7 @@ const NavBar = (props) => {
       </div>
       <ul>
         <li><NavLink to="/dashboard">Application</NavLink></li>
-        <li><NavLink to="/self">Self Analysis</NavLink></li>
+        {/* <li><NavLink to="/self">Self Analysis</NavLink></li> */}
         <li><NavLink to="/account">Account</NavLink></li>
       </ul>
     </div>

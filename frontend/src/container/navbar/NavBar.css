@@ -3,7 +3,7 @@
   background-color: #f1f1f1;
 }
 
-ul {
+.navBar ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -11,23 +11,22 @@ ul {
   background-color: #f1f1f1;
 }
 
-li a {
+.navBar li a {
   display: block;
-  color: rgb(127, 127, 127);
-  ;
+  color: rgb(127, 127, 127);;
   padding: 8px 16px;
   text-decoration: none;
+  font-weight: 500;
+
 }
 
 /* Change the link color on hover */
-li a:hover {
-  background-color: #555;
-  color: white;
+.navBar li a:hover {
+  background-color: #d8d8d8;
 }
 
-li .active {
-  background-color: #555;
-  color: white;
+.navBar li .active {
+  background-color: #d8d8d8;
 }
 
 .logoDiv {

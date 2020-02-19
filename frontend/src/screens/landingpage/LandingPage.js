@@ -1,22 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import React from 'react';
+import { useHistory, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { addUser } from '../../actions';
-import APIService from '../../service/APIService';
 import { Button } from '../../components/index';
 import './LandingPage.css';
+import Logo from '../../assets/logo.png';
 
-const LandingPage = ({ dispatch }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    APIService.isLoggedIn().then(resp => {
-      const { user_id: userId, email } = resp.data.message;
-      dispatch(addUser(userId, email));
-      setIsAuthenticated(true);
-    }).catch(console.log);
-  }, []);
-
+const LandingPage = (props) => {
+  const { email } = props;
+  const isAuthenticated = email !== undefined;
   return (
     <div>
       <Header isAuthenticated={isAuthenticated} />
@@ -47,7 +38,13 @@ const Header = (props) => {
 
   return (
     <div className="header">
-      <span className="headerTitle">Job Triage</span>
+      <span className="headerTitle">
+        <div className="logoDiv">
+          <NavLink to="/">
+            <img src={Logo} alt="Job Triage" />
+          </NavLink>
+        </div>
+      </span>
       <HeaderButtons />
     </div>
   );
@@ -64,4 +61,9 @@ const Body = () => {
   );
 };
 
-export default connect()(LandingPage);
+const mapStateToProps = (state) => {
+  const { users } = state;
+  return users;
+};
+
+export default connect(mapStateToProps)(LandingPage);

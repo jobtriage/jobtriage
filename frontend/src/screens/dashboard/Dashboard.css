@@ -5,3 +5,13 @@
 .container {
   padding: 10px;
 }
+
+.react-trello-board {
+  background-color: #fff;;
+}
+
+.fab {
+  position: absolute;
+  bottom: 2%;
+  right: 2%;
+}
