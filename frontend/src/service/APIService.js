@@ -79,6 +79,7 @@ const deleteApplication = id => axiosInstance.delete(`${apiUrl}/applications/${i
 
 /**
  * Add new Job application
+ *
  * @param {String} title
  * @param {String} status
  * @param {Number} priority
@@ -94,6 +95,33 @@ const addJobApplication = (title, status, priority, companyName) => {
 };
 
 
+/**
+ * Add new Job application
+ *
+ * @param {String} title
+ * @param {String} status
+ * @param {Number} priority
+ * @param {String} companyName
+ */
+const updateJobApplication = (jobId, title, status, priority, companyName) => {
+  return axiosInstance.put(`${apiUrl}/applications/${jobId}`, {
+    title,
+    status,
+    priority,
+    company_name: companyName,
+  });
+};
+
+/**
+ * Get Job Application detail
+ *
+ * @param {String} jobId
+ *
+ * @returns {Promise}
+ */
+const getApplicationDetails = (jobId) => axiosInstance.get(`${apiUrl}/applications/${jobId}`);
+
+
 export default {
   isLoggedIn,
   login,
@@ -103,4 +131,6 @@ export default {
   updateApplicationStatus,
   deleteApplication,
   addJobApplication,
+  updateJobApplication,
+  getApplicationDetails,
 };

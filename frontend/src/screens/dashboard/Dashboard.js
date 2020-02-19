@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import cloneDeep from 'lodash/cloneDeep';
 import { NavBar } from '../../container';
 import { Button, Input, Select } from '../../components';
+import ViewJob from './viewjob/ViewJob';
 import APIService from '../../service/APIService';
 import './Dashboard.css';
 
@@ -64,7 +65,9 @@ const parseApplicationData = appData => {
     const { status, _id: id, title } = application;
     const { company } = application;
     const priority = getPriority(application.priority);
-    getLane(status).push({ id, title, description: company.name, label: priority });
+    getLane(status).push({
+      id, title, description: company.name, label: priority,
+    });
   }
 
   return { lanes };
@@ -124,14 +127,26 @@ const AddJobDialog = props => {
 const Dashboard = () => {
   const classes = useStyles();
   const [boardData, setBoardData] = useState(data);
-  const [openDialog, setOpenDialog] = React.useState(false);
+  const [openJobAdd, setOpenJobAdd] = React.useState(false);
+  const [openJobView, setOpenJobView] = React.useState(false);
+  const [selectedJob, setSelectedJob] = React.useState('');
 
-  const handleClickOpen = () => {
-    setOpenDialog(true);
+  const handleJobAddOpen = () => {
+    setOpenJobAdd(true);
   };
 
-  const handleClose = () => {
-    setOpenDialog(false);
+  const handleJobAddClose = () => {
+    setOpenJobAdd(false);
+  };
+
+  const handleJobViewOpen = (cardId) => {
+    setOpenJobView(true);
+    setSelectedJob(cardId);
+  };
+
+  const handleJobViewClose = () => {
+    setOpenJobView(false);
+    setSelectedJob('');
   };
 
   const getJobApplications = () => {
@@ -166,12 +181,23 @@ const Dashboard = () => {
           style={{ backgroundColor: '#fff', height: '95vh' }}
           handleDragEnd={handleDrag}
           onCardDelete={cardDelete}
+          onCardClick={(cardId) => handleJobViewOpen(cardId)}
         />
       </div>
-      <Fab color="primary" aria-label="Add job" className={classes.fab} onClick={handleClickOpen}>
+      <Fab color="primary" aria-label="Add job" className={classes.fab} onClick={handleJobAddOpen}>
         <Add />
       </Fab>
-      <AddJobDialog open={openDialog} onClose={handleClose} onChange={getJobApplications} />
+      <AddJobDialog
+        open={openJobAdd}
+        onClose={handleJobAddClose}
+        onChange={getJobApplications}
+      />
+      <ViewJob
+        open={openJobView}
+        onClose={handleJobViewClose}
+        onChange={getJobApplications}
+        jobId={selectedJob}
+      />
     </div>
   );
 };
