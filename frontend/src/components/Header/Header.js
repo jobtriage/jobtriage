@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '../../Components/index';
+import { Button } from '../index';
 import { useHistory, NavLink } from 'react-router-dom';
 import { Logo } from '../../assets/icons';
 

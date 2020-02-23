@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '../../Components/index';
+import { Button } from '../index';
 import { Calendar, Free, Priority } from '../../assets/icons';
 
 import './LandingBody.css';

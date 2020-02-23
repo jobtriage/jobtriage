@@ -3,9 +3,8 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import rootReducer from './store/reducers';
-import { App } from './Containers'
+import App from './Containers/App/App';
 import { ThemeProvider, theme } from './Material-UI/import';
-
 
 import './index.css';
 
