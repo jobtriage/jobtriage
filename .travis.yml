@@ -3,3 +3,6 @@ rvm:
   - 2.5.5
 script:
   - bundle exec rails test
+services:
+  - mongodb
+  
