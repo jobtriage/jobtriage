@@ -1,5 +1,6 @@
+[![Build Status](https://travis-ci.org/jobtriage/jobtriage.svg?branch=master)](https://travis-ci.org/jobtriage/jobtriage)
 
-# Job Triage 
+# Job Triage  
 ### Interactive way to manage your Job application
 Made with Rails, React, Mongo DB and :purple_heart:
 
