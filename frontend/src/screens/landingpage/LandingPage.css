@@ -15,11 +15,11 @@
 }
 
 .bodyHeader {
-  height: 25vh;
   background-color: #956eb7;
   color: white;
   text-align: center;
   padding-top: 2%;
+  padding-bottom: 2%;
 }
 
 .bodyContent {

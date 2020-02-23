@@ -10,7 +10,7 @@ class User
 
   has_many :applications
 
-  validates :email, uniqueness: { message: 'Email already registered' }
+  validates :email, uniqueness: { message: 'Email already registered' }, presence: true
   validates :name, presence: true
 
   def password
