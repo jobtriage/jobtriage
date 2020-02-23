@@ -1,5 +1,6 @@
 :root {
-  --primary-color: #8727db;
+  --primary-color: #956eb7;
+  --primary-dark: #8727db;
 }
 
 .app {
@@ -9,10 +10,23 @@
 }
 
 .anchor {
-  color: var(--primary-color);
+  color: var(--primary-dark);
   cursor: pointer;
+}
+
+a {
+  color: var(--primary-dark);
+  cursor: pointer;
+  text-decoration: none;
 }
 
 .error {
   color: rgb(201, 58, 58);
+}
+
+.h1 {
+  color: var(--primary-color);
+  font-size: 1.6em;
+  line-height: 2em;
+  font-weight: 500;
 }
