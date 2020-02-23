@@ -10,6 +10,7 @@ Made with Rails, React, Mongo DB and :purple_heart:
  - Install the gems using `bundle install`
  - Change DB details of mongo in `config/mongoid.yml`
  - Start server using `rails s`
+ - Test server using `rails test`
 
 ### client
 
