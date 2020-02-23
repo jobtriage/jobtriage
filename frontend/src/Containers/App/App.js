@@ -4,7 +4,6 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
-import { connect } from 'react-redux';
 import APIService from '../../service/APIService';
 import { addUser } from '../../store/actions';
 import LandingPage from '../LandingPage/LandingPage';
@@ -13,9 +12,7 @@ import Signup from '../Onboarding/Signup/SignupPage';
 import Dashboard from '../Dashboard/Dashboard';
 import { AccountDetails } from '../../Components';
 
-
 import './App.css';
-
 
 const App = ({ dispatch }) => {
 
@@ -55,4 +52,4 @@ const Routes = () => {
   );
 };
 
-export default connect()(App);
+export default App;

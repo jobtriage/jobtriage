@@ -6,7 +6,6 @@ import {
 import { Add } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import cloneDeep from 'lodash/cloneDeep';
-import { } from '..';
 import { Button, Input, Select, NavBar } from '../../Components';
 import ViewJob from './viewjob/ViewJob';
 import APIService from '../../service/APIService';
