@@ -14,6 +14,51 @@
   float: left;
 }
 
-@media (min-width: 635px) {
+.bodyHeader {
+  height: 25vh;
+  background-color: #956eb7;
+  color: white;
+  text-align: center;
+  padding-top: 2%;
+}
 
+.bodyContent {
+  text-align: center;
+  padding-top: 2%;
+  width: 60%;
+  line-height: 1.5;
+  margin: auto;
+}
+
+.bodyTitle {
+  font-size: 2em;
+  line-height: 3em;
+  font-weight: 600;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5%;
+}
+
+.rowIcons {
+  height: 100px;
+}
+
+@media screen and (max-width: 600px) {
+  .bodyContent {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px;
+  }
+
+  .row {
+    margin-top: 5%;
+    display: block;
+  }
+
+  .col{
+    margin: 7%;
+  }
 }

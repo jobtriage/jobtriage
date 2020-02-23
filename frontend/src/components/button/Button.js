@@ -5,7 +5,7 @@ import './Button.css';
 
 export default function PrimaryButton(props) {
   const {
-    name, style, onClick, type,
+    name, style, onClick, type, color,
   } = props;
 
   return (
@@ -13,7 +13,7 @@ export default function PrimaryButton(props) {
       style={style}
       onClick={onClick}
       className="button"
-      color="primary"
+      color={color || 'primary'}
       variant="contained"
       type={type}
     >
