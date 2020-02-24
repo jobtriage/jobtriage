@@ -1,0 +1,27 @@
+.app {
+  font-size: 16px;
+  color: rgb(127, 127, 127);
+  height: 100vh;
+}
+
+.anchor {
+  color: var(--primary-dark);
+  cursor: pointer;
+}
+
+a {
+  color: var(--primary-dark);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.error {
+  color: rgb(201, 58, 58);
+}
+
+.h1 {
+  color: var(--primary-color);
+  font-size: 1.6em;
+  line-height: 2em;
+  font-weight: 500;
+}
