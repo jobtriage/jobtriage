@@ -10,7 +10,7 @@ import LandingPage from '../LandingPage/LandingPage';
 import Login from '../Onboarding/Login/LoginPage';
 import Signup from '../Onboarding/Signup/SignupPage';
 import Dashboard from '../Dashboard/Dashboard';
-import { AccountDetails } from '../../Components/index';
+import { AccountDetails } from '../../Components';
 
 import './App.css';
 

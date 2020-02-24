@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Input, Button } from '../../../Components';
 import APIService from '../../../service/APIService';
+
 import './SignupPage.css';
 
 const SignUp = () => {
