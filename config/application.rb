@@ -27,7 +27,8 @@ module Jobtriage
     config.autoload_paths << Rails.root.join('lib')
 
     ENV['CLIENT_HOST'] ||= 'http://localhost:3001'
-    puts ENV['CLIENT_HOST']
+    Rails.application.secrets.secret_key_base ||= ENV['SECRET_KEY_BASE']
+    
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins ENV['CLIENT_HOST']
