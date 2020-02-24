@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/jobtriage/jobtriage.svg?branch=master)](https://travis-ci.org/jobtriage/jobtriage)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/1b54333d-e878-46c0-9c18-3786a58b71f2/deploy-status)](https://app.netlify.com/sites/jobtriage/deploys)
 
 # Job Triage  
 ### Interactive way to manage your Job application
