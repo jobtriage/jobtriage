@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/jobtriage/jobtriage.svg?branch=master)](https://travis-ci.org/jobtriage/jobtriage)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 [![Netlify Status](https://api.netlify.com/api/v1/badges/1b54333d-e878-46c0-9c18-3786a58b71f2/deploy-status)](https://app.netlify.com/sites/jobtriage/deploys)
 
@@ -41,6 +41,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="https://hiteshchauhan.netlify.com/"><img src="https://avatars2.githubusercontent.com/u/51196367?v=4" width="100px;" alt=""/><br /><sub><b>Hitesh Chauhan</b></sub></a><br /><a href="#maintenance-hiteshkundal" title="Maintenance">🚧</a> <a href="https://github.com/jobtriage/jobtriage/commits?author=hiteshkundal" title="Code">💻</a></td>
+    <td align="center"><a href="http://yashpandit.netlify.com"><img src="https://avatars0.githubusercontent.com/u/26370910?v=4" width="100px;" alt=""/><br /><sub><b>Yash Pandit</b></sub></a><br /><a href="https://github.com/jobtriage/jobtriage/issues?q=author%3Ayashpandit" title="Bug reports">🐛</a> <a href="https://github.com/jobtriage/jobtriage/commits?author=yashpandit" title="Documentation">📖</a></td>
   </tr>
 </table>
 
