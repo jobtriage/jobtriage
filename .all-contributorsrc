@@ -24,6 +24,17 @@
         "bug",
         "doc"
       ]
+    },
+    {
+      "login": "koushikmohan1996",
+      "name": "Koushik Mohan",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/24666922?v=4",
+      "profile": "https://koushikmohan.com/",
+      "contributions": [
+        "bug",
+        "code",
+        "maintenance"
+      ]
     }
   ],
   "contributorsPerLine": 7,
