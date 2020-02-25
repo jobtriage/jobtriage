@@ -1,4 +1,7 @@
 [![Build Status](https://travis-ci.org/jobtriage/jobtriage.svg?branch=master)](https://travis-ci.org/jobtriage/jobtriage)
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 [![Netlify Status](https://api.netlify.com/api/v1/badges/1b54333d-e878-46c0-9c18-3786a58b71f2/deploy-status)](https://app.netlify.com/sites/jobtriage/deploys)
 
 # Job Triage  
@@ -27,3 +30,22 @@ Made with Rails, React, Mongo DB and :purple_heart:
  
 
 > Written with [StackEdit](https://stackedit.io/).
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://hiteshchauhan.netlify.com/"><img src="https://avatars2.githubusercontent.com/u/51196367?v=4" width="100px;" alt=""/><br /><sub><b>Hitesh Chauhan</b></sub></a><br /><a href="#maintenance-hiteshkundal" title="Maintenance">🚧</a> <a href="https://github.com/jobtriage/jobtriage/commits?author=hiteshkundal" title="Code">💻</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!

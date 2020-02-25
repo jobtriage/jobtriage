@@ -1,0 +1,25 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "hiteshkundal",
+      "name": "Hitesh Chauhan",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/51196367?v=4",
+      "profile": "https://hiteshchauhan.netlify.com/",
+      "contributions": [
+        "maintenance",
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "jobtriage",
+  "projectOwner": "jobtriage",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
