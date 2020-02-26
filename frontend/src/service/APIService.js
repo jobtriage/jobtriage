@@ -34,6 +34,13 @@ const isLoggedIn = () => axios.get(`${apiUrl}/auth/test`);
  */
 const login = (email, password) => axios.post(`${apiUrl}/auth/login/`, { email, password });
 
+/**
+ * Logout from job triage
+ *
+ * @returns {Promise}
+ */
+const logout = () => axios.post(`${apiUrl}/auth/logout/`);
+
 
 /**
  *
@@ -133,4 +140,5 @@ export default {
   addJobApplication,
   updateJobApplication,
   getApplicationDetails,
+  logout,
 };

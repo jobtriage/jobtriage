@@ -22,6 +22,11 @@ class AuthController < ApplicationController
     end
   end
 
+  def logout
+    cookies.delete :token
+    render json: { message: 'Logged out'}, status: :ok
+  end
+
   def test
     render json: { message: current_user }, status: :ok
   end
@@ -35,8 +40,8 @@ class AuthController < ApplicationController
   def authenticate_user
     user = User.find_by(email: params[:email])
     if user.password == params[:password]
-      token = JsonWebToken.encode(user_id: user.id.to_s)
-      cookies[:token] = { value: token, expires: 20.days.from_now, httponly: true }
+      token = JsonWebToken.encode(user_id: user.id.to_s, exp: 100.days.from_now)
+      cookies[:token] = { value: token, expires: 100.days.from_now, httponly: true }
       return token
     end
 
