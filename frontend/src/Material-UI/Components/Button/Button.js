@@ -20,6 +20,6 @@ const PrimaryButton = (props) => {
       {name}
     </Button>
   );
-}
+};
 
-export default PrimaryButton
+export default PrimaryButton;
