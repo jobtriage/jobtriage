@@ -16,6 +16,7 @@ Made with Rails, React, Mongo DB and :purple_heart:
  - Change DB details of mongo in `config/mongoid.yml`
  - Start server using `rails s`
  - Test server using `rails test`
+ - Check the [API doc here](https://documenter.getpostman.com/view/3705194/SzKWuxaB?version=latest)
 
 ### client
 
