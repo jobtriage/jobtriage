@@ -4,14 +4,14 @@ require 'test_helper'
 
 class ApplicationTest < ActiveSupport::TestCase
   test 'Application should not be saved without title' do
-    user = get_user('test@test.com')
+    user = get_user
     application = user.applications.new
 
     assert_not application.save, 'Application saved without title'
   end
 
   test 'Application should not be saved without status' do
-    user = get_user('test@test.com')
+    user = get_user
     application = user.applications.new
     application.title = 'Software develper'
 
@@ -19,7 +19,7 @@ class ApplicationTest < ActiveSupport::TestCase
   end
 
   test 'Application should not be saved without priority' do
-    user = get_user('test@test.com')
+    user = get_user
     application = user.applications.new
     application.title = 'Software develper'
     application.status = 'applied'
@@ -28,7 +28,7 @@ class ApplicationTest < ActiveSupport::TestCase
   end
 
   test 'Application should not be saved without company' do
-    user = get_user('test@test.com')
+    user = get_user
     application = user.applications.new
     application.title = 'Software develper'
     application.status = 'applied'
@@ -38,7 +38,7 @@ class ApplicationTest < ActiveSupport::TestCase
   end
 
   test 'Application should be saved with proper data' do
-    user = get_user('test@test.com')
+    user = get_user
     application = user.applications.new
     application.title = 'Software develper'
     application.status = 'applied'
