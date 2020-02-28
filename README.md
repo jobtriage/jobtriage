@@ -1,3 +1,4 @@
+
 [![Build Status](https://travis-ci.org/jobtriage/jobtriage.svg?branch=master)](https://travis-ci.org/jobtriage/jobtriage)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
@@ -8,7 +9,7 @@
 ### Interactive way to manage your Job application
 Made with Rails, React, Mongo DB and :purple_heart:
 
-## :rocket: Development
+## Development :rocket:
 
 ### server
 
@@ -24,13 +25,18 @@ Made with Rails, React, Mongo DB and :purple_heart:
  - `yarn install`
  - `yarn start`
 
-## :pray: Special Thanks
+##  Special Thanks :pray:
 
  - [React Trello](https://github.com/rcdexta/react-trello) - kanban board
  - [Material UI](https://github.com/mui-org/material-ui) - Material UI
  
 
-> Written with [StackEdit](https://stackedit.io/).
+## How to contribute 🤝
+Contributions are always welcome. Try out **Job Triage** and create issues that you think to be addressed. You can also go through our issues and start working on any of the issue. 
+
+To get started on working on an issue, just comment that you will be working on it. If you have any doubts, just ask in the commnt section. we are always happy to help :)
+
+To make this easier, some of the issues are marked as [good first issue](https://github.com/jobtriage/jobtriage/issues?q=is:open%20is:issue%20label:%22Good%20First%20Issue%22) that contain bugs which have a relatively limited scop and will help you get your feet wet and get you familiar with our contribution process. 
 
 ## Contributors ✨
 
@@ -52,3 +58,6 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+
+> Written with [StackEdit](https://stackedit.io/).
+
