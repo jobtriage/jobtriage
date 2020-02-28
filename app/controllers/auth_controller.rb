@@ -40,7 +40,7 @@ class AuthController < ApplicationController
   def authenticate_user
     user = User.find_by(email: params[:email])
     if user.password == params[:password]
-      token = JsonWebToken.encode(user_id: user.id.to_s, exp: 100.days.from_now)
+      token = JsonWebToken.encode(user_id: user.id.to_s)
       cookies[:token] = { value: token, expires: 100.days.from_now, httponly: true }
       return token
     end
