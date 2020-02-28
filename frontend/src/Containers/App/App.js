@@ -20,12 +20,12 @@ const App = ({ addUserInitially }) => {
   useEffect(() => {
     APIService.isLoggedIn().then(resp => {
       const { user_id: userId, email, name } = resp.data.message;
-      addUserInitially({ userId, email, name })
+      addUserInitially({ userId, email, name });
     }).catch(console.log);
   }, [addUserInitially]);
 
-  return <Routes />
-}
+  return <Routes />;
+};
 
 const Routes = () => {
   return (
@@ -55,8 +55,8 @@ const Routes = () => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addUserInitially: (userDetails) => dispatch(addUser(userDetails))
-  }
-}
+    addUserInitially: (userDetails) => dispatch(addUser(userDetails)),
+  };
+};
 
 export default connect(null, mapDispatchToProps)(App);

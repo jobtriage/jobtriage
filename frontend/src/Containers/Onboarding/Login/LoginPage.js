@@ -14,7 +14,7 @@ const Login = () => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     APIService.login(email, password)
-      .then(() => history.push('/dashboard'))
+      .then(() => (window.location = '/dashboard'))
       .catch(() => setError('Authentication failed check input'));
   };
 
@@ -37,6 +37,6 @@ const Login = () => {
       </form>
     </div>
   );
-}
+};
 
 export default Login;
