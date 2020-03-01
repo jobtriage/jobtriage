@@ -26,11 +26,19 @@ class ActiveSupport::TestCase
   end
 
   def get_jwt_token(user_id)
-    token = JsonWebToken.encode(user_id: user_id.to_s)
+    JsonWebToken.encode(user_id: user_id.to_s)
   end
 
   def add_application
     get_user.applications.create(title: 'Dev', status: 'applied', priority: 3, company: { name: 'Job triage' })
+  end
+
+  def delete_application(id)
+    get_user.applications.find(id).delete
+  end
+
+  def add_notes(application, content)
+    application.notes.create(content: content)
   end
 
   def get_request(url)

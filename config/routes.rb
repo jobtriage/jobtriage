@@ -7,5 +7,7 @@ Rails.application.routes.draw do
 
   get 'auth/test', to: 'auth#test'
 
-  resources :applications
+  resources :applications do
+    resources :notes
+  end
 end
