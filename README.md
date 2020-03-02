@@ -38,6 +38,8 @@ To get started on working on an issue, just comment that you will be working on 
 
 To make this easier, some of the issues are marked as [good first issue](https://github.com/jobtriage/jobtriage/issues?q=is:open%20is:issue%20label:%22Good%20First%20Issue%22) that contain bugs which have a relatively limited scop and will help you get your feet wet and get you familiar with our contribution process. 
 
+We request you all to follow the design guidelines given [here](/DESIGN_GUIDELINES.md).
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
