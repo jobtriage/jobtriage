@@ -6,10 +6,13 @@ import {
 import { Add } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import cloneDeep from 'lodash/cloneDeep';
-import { Button, Input, Select, NavBar } from '../../Components';
+import {
+  Button, Input, Select, NavBar,
+} from '../../Components';
 import ViewJob from './viewjob/ViewJob';
 import APIService from '../../service/APIService';
 import './Dashboard.css';
+
 
 const data = {
   lanes: [
@@ -39,32 +42,34 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const getPriority = priority => {
+  let status = 'High';
+  if (priority === 1) {
+    status = 'Low';
+  } if (priority === 2) {
+    status = 'Medium';
+  }
+  return status;
+};
+
+const getLane = (lanes, status) => {
+  let { cards } = lanes[0];
+  if (status === 'applied') cards = lanes[1].cards;
+  if (status === 'inprogress') cards = lanes[2].cards;
+  if (status === 'accepted') cards = lanes[3].cards;
+  if (status === 'rejected') cards = lanes[4].cards;
+
+  return cards;
+};
+
 const parseApplicationData = appData => {
   const { lanes } = cloneDeep(data);
-
-  const getLane = status => {
-    if (status === 'applied') return lanes[1].cards;
-    if (status === 'inprogress') return lanes[2].cards;
-    if (status === 'accepted') return lanes[3].cards;
-    if (status === 'rejected') return lanes[4].cards;
-
-    return lanes[0].cards;
-  };
-
-  const getPriority = priority => {
-    if (priority === 1) {
-      return 'Low';
-    } if (priority === 2) {
-      return 'Medium';
-    }
-    return 'High';
-  };
 
   for (const application of appData) {
     const { status, _id: id, title } = application;
     const { company } = application;
     const priority = getPriority(application.priority);
-    getLane(status).push({
+    getLane(lanes, status).push({
       id, title, description: company.name, label: priority,
     });
   }
@@ -105,7 +110,6 @@ const AddJobDialog = props => {
             <MenuItem value="inprogress">In Progress</MenuItem>
             <MenuItem value="accepted">Accepted</MenuItem>
             <MenuItem value="rejected">Rejected</MenuItem>
-
           </Select>
 
           <Select label="priority" required onChange={e => setPriority(e.target.value)}>
