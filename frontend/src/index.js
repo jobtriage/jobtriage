@@ -6,7 +6,7 @@ import rootReducer from './store/reducers';
 import { ThemeProvider, theme } from './Material-UI/import';
 import App from './Containers/App/App';
 
-import './index.css';
+import './global-styles/index.css';
 
 const store = createStore(rootReducer);
 
