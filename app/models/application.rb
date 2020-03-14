@@ -8,7 +8,7 @@ class Application
   field :status, type: String
   field :priority, type: Integer
   field :company, type: Hash
-  embeds_many :notes
+  has_many :notes
 
   belongs_to :user
 
@@ -23,9 +23,10 @@ class Application
 
   def as_json(*args)
     res = super
-    res['_id'] = self.id.to_s
-    res['user_id'] = self.user_id.to_s
-    res['notes'] = self.notes.as_json
+    res['_id'] = id.to_s
+    res['id'] = id.to_s
+    res['user_id'] = user_id.to_s
+    res['notes'] = notes.as_json
     res
   end
 end
