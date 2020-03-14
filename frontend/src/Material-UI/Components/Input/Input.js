@@ -2,7 +2,6 @@ import React from 'react';
 import { TextField } from '../../import';
 
 const Input = (props) => {
-
   return (
     <TextField
       {...props}
@@ -11,6 +10,6 @@ const Input = (props) => {
       style={{ marginTop: '5px', marginBottom: '5px' }}
     />
   );
-}
+};
 
 export default Input;

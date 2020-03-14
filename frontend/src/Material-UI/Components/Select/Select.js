@@ -22,6 +22,6 @@ const SelectComponent = (props) => {
       </Select>
     </FormControl>
   );
-}
+};
 
 export default SelectComponent;

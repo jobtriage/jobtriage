@@ -1,5 +1,5 @@
 :root {
-  --primary-color: #956eb7;
+  --primary-color: #794BC4;
   --primary-dark: #8727db;
 }
 
@@ -11,7 +11,7 @@
 
 body {
  font-family: 'Montserrat',sans-serif;
-  -webkit-font-smoothing: antialiased;
+  -webkit-font-smoothing: subpixel-antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 

@@ -1,5 +1,5 @@
 .bodyHeader {
-    background-color: #956eb7;
+    background-color:var(--primary-color);
     color: white;
     text-align: center;
     padding-top: 2%;
