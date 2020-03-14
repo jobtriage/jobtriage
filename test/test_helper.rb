@@ -37,8 +37,8 @@ class ActiveSupport::TestCase
     get_user.applications.find(id).delete
   end
 
-  def add_notes(application, content)
-    application.notes.create(content: content)
+  def add_notes(application, title, content)
+    application.notes.create(title: title, content: content)
   end
 
   def get_request(url)

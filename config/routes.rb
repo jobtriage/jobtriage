@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   post 'auth/login', to: 'auth#login'
   post 'auth/logout', to: 'auth#logout'
   get 'auth/logout', to: 'auth#logout'
-
   get 'auth/test', to: 'auth#test'
 
   resources :applications do
