@@ -11,12 +11,11 @@ import LandingPage from '../LandingPage/LandingPage';
 import Login from '../Onboarding/Login/LoginPage';
 import Signup from '../Onboarding/Signup/SignupPage';
 import Dashboard from '../Dashboard/Dashboard';
-import { AccountDetails } from '../../Components';
+import AccountDetails from '../AccountDetails/AccountDetails';
 
 import './App.css';
 
 const App = ({ addUserInitially }) => {
-
   useEffect(() => {
     APIService.isLoggedIn().then(resp => {
       const { user_id: userId, email, name } = resp.data.message;

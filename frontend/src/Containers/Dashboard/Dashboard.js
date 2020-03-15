@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+// eslint-disable-next-line import/no-unresolved
 import Board from 'react-trello';
 import {
   Fab, Dialog, DialogContent, DialogTitle, MenuItem,

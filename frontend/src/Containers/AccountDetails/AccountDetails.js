@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { NavBar } from '..';
+import { NavBar } from '../../Components';
 import APIService from '../../service/APIService';
 import Button from '../../Material-UI/Components/Button/Button';
 

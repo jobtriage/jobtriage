@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Header, LandingBody } from '../../Components';
+import Header from './Header/Header';
+import LandingBody from './LandingBody/LandingBody';
 
 import './LandingPage.css';
 

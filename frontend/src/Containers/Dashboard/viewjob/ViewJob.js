@@ -22,12 +22,14 @@ const ViewJob = props => {
     if (title === '') {
       APIService.getApplicationDetails(jobId)
         .then(resp => {
-          const { title, status, priority, company } = resp.data.message;
+          const {
+            title: respTitle, status: respStatus, priority: respPriority, company: respCompany,
+          } = resp.data.message;
           if (title) {
-            setTitle(title);
-            setStatus(status);
-            setCompany(company.name);
-            setPriority(priority);
+            setTitle(respTitle);
+            setStatus(respStatus);
+            setCompany(respCompany.name);
+            setPriority(respPriority);
           }
         })
         .catch(console.log);

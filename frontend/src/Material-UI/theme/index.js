@@ -1,19 +1,20 @@
-import { createMuiTheme } from '../import';
+import { createMuiTheme } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
-    typography: {
-        fontFamily: ['Montserrat', 'sans-serif'].join(','),
+  typography: {
+    fontFamily: ['Montserrat', 'sans-serif'].join(','),
+  },
+  palette: {
+    primary: {
+      main: '#794BC4',
     },
-    palette: {
-        primary: {
-            main: '#956eb7',
-        },
-        secondary: {
-            main: '#03DAC6',
-        },
-        error: {
-            main: '#B00020',
-        },
+    secondary: {
+      main: '#03DAC6',
     },
+    error: {
+      main: '#B00020',
+    },
+  },
 });
+// eslint-disable-next-line import/prefer-default-export
 export { theme };
