@@ -14,16 +14,19 @@ Made with Rails, React, Mongo DB and :purple_heart:
 ### server
 
  - Install the gems using `bundle install`
- - Change DB details of mongo in `config/mongoid.yml`
+ - Start mongodb server in local as you prefered
  - Start server using `rails s`
  - Test server using `rails test`
  - Check the [API doc here](https://documenter.getpostman.com/view/3705194/SzKWuxaB?version=latest)
+
+Note: You can find mongodb server details in `/config/mongoid.yml`. You don't have to change anything in that file.
 
 ### client
 
  - `cd frontend`
  - `yarn install`
  - `yarn start`
+ -  Open http://localhost:3001 or any port at which React starts 
 
 ##  Special Thanks :pray:
 
