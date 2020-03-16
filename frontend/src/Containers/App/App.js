@@ -7,13 +7,13 @@ import {
 import { connect } from 'react-redux';
 import APIService from '../../service/APIService';
 import { addUser } from '../../store/actions';
-import LandingPage from '../LandingPage/LandingPage';
+import { LandingPage } from '../../Components';
 import Login from '../Onboarding/Login/LoginPage';
 import Signup from '../Onboarding/Signup/SignupPage';
 import Dashboard from '../Dashboard/Dashboard';
-import AccountDetails from '../AccountDetails/AccountDetails';
+import { AccountDetails } from '../../Components';
 
-import './App.css';
+import styles from './App.module.scss';
 
 const App = ({ addUserInitially }) => {
   useEffect(() => {
@@ -29,7 +29,7 @@ const App = ({ addUserInitially }) => {
 const Routes = () => {
   return (
     <Router>
-      <div className="app">
+      <div className={styles.App}>
         <Switch>
           <Route path="/login">
             <Login />

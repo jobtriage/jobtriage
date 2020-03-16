@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
 // eslint-disable-next-line import/no-unresolved
-import Board from 'react-trello';
 import {
-  Fab, Dialog, DialogContent, DialogTitle, MenuItem,
+  Fab
 } from '@material-ui/core';
+import Board from 'react-trello';
 import { Add } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import cloneDeep from 'lodash/cloneDeep';
 import {
-  Button, Input, Select, NavBar,
+  NavBar,
 } from '../../Components';
+import AddJob from './AddJob/AddJob';
 import ViewJob from './viewjob/ViewJob';
 import APIService from '../../service/APIService';
-import './Dashboard.css';
+
+import styles from './Dashboard.module.scss';
 
 
 const data = {
@@ -37,7 +39,7 @@ const data = {
 
 const useStyles = makeStyles(theme => ({
   fab: {
-    position: 'absolute',
+    position: 'fixed',
     bottom: theme.spacing(2),
     right: theme.spacing(2),
   },
@@ -78,55 +80,7 @@ const parseApplicationData = appData => {
   return { lanes };
 };
 
-const AddJobDialog = props => {
-  const { open, onClose, onChange } = props;
-  const [title, setTitle] = useState('');
-  const [company, setCompany] = useState('');
-  const [status, setStatus] = useState('');
-  const [priority, setPriority] = useState('');
-  const [error, setError] = useState('');
 
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-    APIService.addJobApplication(title, status, priority, company)
-      .then(() => {
-        onChange();
-        onClose();
-        setTitle('');
-        setCompany('');
-      })
-      .catch(() => { setError('Error in adding Job application'); });
-  };
-
-  return (
-    <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title" style={{ marginBottom: '10px' }}>
-      <DialogTitle id="form-dialog-title">Add new job</DialogTitle>
-      <DialogContent>
-        <form className="loginForm" onSubmit={handleSubmit}>
-          <Input type="text" label="title" required onChange={e => setTitle(e.target.value)} value={title} />
-          <Input type="text" label="company" required onChange={e => setCompany(e.target.value)} value={company} />
-          <Select label="status" required onChange={e => setStatus(e.target.value)}>
-            <MenuItem value="yettoapply">Yet to apply</MenuItem>
-            <MenuItem value="applied">Applied</MenuItem>
-            <MenuItem value="inprogress">In Progress</MenuItem>
-            <MenuItem value="accepted">Accepted</MenuItem>
-            <MenuItem value="rejected">Rejected</MenuItem>
-          </Select>
-
-          <Select label="priority" required onChange={e => setPriority(e.target.value)}>
-            <MenuItem value={1}>Low</MenuItem>
-            <MenuItem value={2}>Medium</MenuItem>
-            <MenuItem value={3}>High</MenuItem>
-          </Select>
-          <Button name="Add" type="submit" style={{ marginTop: '5px', marginBottom: '5px' }} />
-          <p className="error">
-            {error}
-          </p>
-        </form>
-      </DialogContent>
-    </Dialog>
-  );
-};
 
 const Dashboard = () => {
   const classes = useStyles();
@@ -177,9 +131,9 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="dashboard">
+    <div className={styles.Dashboard}>
       <NavBar />
-      <div className="container">
+      <div className={styles.Container}>
         <Board
           data={boardData}
           style={{ backgroundColor: '#fff', height: '95vh' }}
@@ -188,10 +142,13 @@ const Dashboard = () => {
           onCardClick={(cardId) => handleJobViewOpen(cardId)}
         />
       </div>
-      <Fab color="primary" aria-label="Add job" className={classes.fab} onClick={handleJobAddOpen}>
+      <Fab color="primary"
+        aria-label="Add job"
+        className={classes.fab}
+        onClick={handleJobAddOpen}>
         <Add />
       </Fab>
-      <AddJobDialog
+      <AddJob
         open={openJobAdd}
         onClose={handleJobAddClose}
         onChange={getJobApplications}

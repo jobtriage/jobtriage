@@ -1,0 +1,35 @@
+.NavBar {
+  height: 100vh;
+  background-color: #f1f1f1;
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 15vh;
+    background-color: #f1f1f1;
+    li a {
+      display: block;
+      color: rgb(127, 127, 127);;
+      padding: 8px 16px;
+      text-decoration: none;
+      font-weight: 500;
+
+      &:hover, &:active {
+        background-color: #d8d8d8;
+      }
+    
+    }
+  }
+}
+
+.LogoDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  
+  img{
+    width: 40px;
+  }
+}
+

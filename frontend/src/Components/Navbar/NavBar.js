@@ -2,12 +2,12 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Logo } from '../../assets/icons';
 
-import './NavBar.css';
+import styles from './NavBar.module.scss';
 
 const NavBar = (props) => {
   return (
-    <div className="navBar" {...props}>
-      <div className="logoDiv">
+    <div className={styles.NavBar} {...props}>
+      <div className={styles.LogoDiv}>
         <NavLink to="/">
           <img src={Logo} alt="Job Triage" />
         </NavLink>

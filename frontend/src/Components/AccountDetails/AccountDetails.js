@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { NavBar } from '../../Components';
+import { NavBar } from '..';
 import APIService from '../../service/APIService';
-import Button from '../../Material-UI/Components/Button/Button';
+import { Button } from '../';
 
-import './AccountDetails.css';
+import styles from './AccountDetails.module.scss';
 
 const AccountDetails = (props) => {
   const { email, name } = props;
@@ -17,19 +17,19 @@ const AccountDetails = (props) => {
   };
 
   return (
-    <div className="account">
+    <div className={styles.Account}>
       <NavBar />
-      <div className="container">
+      <div className={styles.InnerContainer}>
         <h2>Account</h2>
         <h3>
-          Email :
+          Email:{' '}
           {email}
         </h3>
         <h3>
-          Name :
+          Name:{' '}
           {name}
         </h3>
-        <Button name="Logout" onClick={logout} style={{ marginTop: '20px' }} />
+        <Button onClick={logout}>LogOut</Button>
       </div>
     </div>
   );

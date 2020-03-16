@@ -1,13 +1,22 @@
 import React from 'react';
-import { Select, InputLabel, FormControl } from '../../import';
+import { Select, InputLabel, FormControl, makeStyles } from '../../import';
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    margin: theme.spacing(1),
+  },
+}));
 
 const SelectComponent = (props) => {
+
+  const classes = useStyles();
+
   const {
     label, onChange, children, required,
   } = props;
 
   return (
-    <FormControl variant="outlined" required={required} style={{ marginTop: '5px', marginBottom: '5px' }}>
+    <FormControl variant="outlined" required={required} className={classes.root}>
       <InputLabel id={label}>
         {label}
       </InputLabel>

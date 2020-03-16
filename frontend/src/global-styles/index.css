@@ -15,4 +15,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+a {
+  color: var(--primary-color);
+  cursor: pointer;
+  text-decoration: none;
+}
+
 
