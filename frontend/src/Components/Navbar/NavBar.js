@@ -13,9 +13,9 @@ const NavBar = (props) => {
         </NavLink>
       </div>
       <ul>
-        <li><NavLink to="/dashboard">Application</NavLink></li>
+        <li><NavLink activeClassName={styles.ActiveClass} to="/dashboard">Application</NavLink></li>
         {/* <li><NavLink to="/self">Self Analysis</NavLink></li> */}
-        <li><NavLink to="/account">Account</NavLink></li>
+        <li><NavLink activeClassName={styles.ActiveClass} to="/account">Account</NavLink></li>
       </ul>
     </div>
   );

@@ -7,21 +7,22 @@
     padding: 0;
     width: 15vh;
     background-color: #f1f1f1;
-    li a {
+    li a{
       display: block;
       color: rgb(127, 127, 127);;
       padding: 8px 16px;
       text-decoration: none;
       font-weight: 500;
-
-      &:hover, &:active {
-        background-color: #d8d8d8;
+      &:hover{
+        background-color: rgba($color: #d8d8d8, $alpha: 0.4);
       }
-    
     }
   }
 }
 
+.ActiveClass {
+  background-color: #d8d8d8;
+}
 .LogoDiv {
   display: flex;
   justify-content: center;
