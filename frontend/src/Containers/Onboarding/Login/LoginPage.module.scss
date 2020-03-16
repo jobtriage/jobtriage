@@ -1,0 +1,27 @@
+.LoginPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.LoginForm {
+  display: flex;
+  flex-direction: column;    
+}
+
+.Anchor {
+  margin: 8px;
+  span{
+    color: var(--primary-color);
+    cursor: pointer;
+  }
+  
+}
+.Error {
+  color: rgb(201, 58, 58);
+  margin: 8px;
+  align-self: center;
+}
+
+

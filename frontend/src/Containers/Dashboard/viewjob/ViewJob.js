@@ -4,8 +4,8 @@ import {
 } from '@material-ui/core';
 import { Button, Input, Select } from '../../../Components';
 import APIService from '../../../service/APIService';
-import './ViewJob.css';
 
+import styles from './ViewJob.module.scss';
 
 const ViewJob = props => {
   const {
@@ -57,9 +57,9 @@ const ViewJob = props => {
 
   return (
     <Dialog open={open} onClose={reset} aria-labelledby="form-dialog-title" style={{ marginBottom: '10px' }}>
-      <DialogTitle id="form-dialog-title">View Job Details</DialogTitle>
+      <DialogTitle style={{ marginLeft: '8px' }} id="form-dialog-title">View Job Details</DialogTitle>
       <DialogContent>
-        <form className="loginForm" onSubmit={handleSubmit}>
+        <form className={styles.MainCard} onSubmit={handleSubmit}>
           <Input type="text" label="title" required onChange={e => setTitle(e.target.value)} value={title} />
           <Input type="text" label="company" required onChange={e => setCompany(e.target.value)} value={company} />
           <Select label="status" value={status} required onChange={e => setStatus(e.target.value)}>
@@ -68,7 +68,6 @@ const ViewJob = props => {
             <MenuItem value="inprogress">In Progress</MenuItem>
             <MenuItem value="accepted">Accepted</MenuItem>
             <MenuItem value="rejected">Rejected</MenuItem>
-
           </Select>
 
           <Select label="priority" value={priority} required onChange={e => setPriority(e.target.value)}>
@@ -76,8 +75,8 @@ const ViewJob = props => {
             <MenuItem value={2}>Medium</MenuItem>
             <MenuItem value={3}>High</MenuItem>
           </Select>
-          <Button name="Update" type="submit" style={{ marginTop: '5px', marginBottom: '5px' }} />
-          <p className="error">
+          <Button name="Update" type="submit">Update</Button>
+          <p className={styles.Error}>
             {error}
           </p>
         </form>
