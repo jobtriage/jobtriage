@@ -1,21 +1,31 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button } from '../../../Components';
+import { Button, AppBar } from '../../../Components';
+import { makeStyles } from '../../../Material-UI/import';
 import { Logo } from '../../../assets/icons';
 
-import styles from './Header.module.scss';
+const useStyles = makeStyles(() => ({
+    root: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        padding: '1vh 4vw',
+        backgroundColor: 'white'
+    },
+    logo: {
+        width: '50px'
+    }
+}))
 
 const Header = (props) => {
+    const classes = useStyles();
     const history = useHistory();
     const { isAuthenticated } = props;
 
     const HeaderButtons = () => {
         if (isAuthenticated) {
-            return (
-                <div>
-                    <Button onClick={() => history.push('/dashboard')}>Access App</Button>
-                </div>
-            );
+            return <Button onClick={() => history.push('/dashboard')}>Access App</Button>
         }
         return (
             <div>
@@ -26,10 +36,10 @@ const Header = (props) => {
     };
 
     return (
-        <div className={styles.Header}>
-            <img src={Logo} alt="Job Triage" />
+        <AppBar position='sticky' className={classes.root}>
+            <img src={Logo} alt="Job Triage" className={classes.logo} />
             <HeaderButtons />
-        </div>
+        </AppBar>
     );
 };
 
