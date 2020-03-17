@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { NavBar } from '..';
+import { NavBar, Button } from '..';
 import APIService from '../../service/APIService';
-import { Button } from '../';
+
 
 import styles from './AccountDetails.module.scss';
 
@@ -22,11 +22,13 @@ const AccountDetails = (props) => {
       <div className={styles.InnerContainer}>
         <h2>Account</h2>
         <h3>
-          Email:{' '}
+          Email:
+          {' '}
           {email}
         </h3>
         <h3>
-          Name:{' '}
+          Name:
+          {' '}
           {name}
         </h3>
         <Button onClick={logout}>LogOut</Button>
