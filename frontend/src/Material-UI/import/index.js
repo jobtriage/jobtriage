@@ -1,6 +1,5 @@
 export { ThemeProvider } from '@material-ui/styles';
 export { makeStyles, withStyles } from '@material-ui/core/styles';
-export { theme } from '../theme';
 export {
   Button,
   Container,
@@ -17,5 +16,5 @@ export {
   Menu,
   ListItemIcon,
   ListItemText,
-  Box
+  Box,
 } from '@material-ui/core';

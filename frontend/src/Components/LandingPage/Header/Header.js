@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button, AppBar } from '../..';
+import { AppBar, Button } from '../../../Material-UI/Components';
 import { makeStyles } from '../../../Material-UI/import';
 import { Logo } from '../../../assets/icons';
 

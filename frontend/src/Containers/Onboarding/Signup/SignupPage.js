@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Input, Button } from '../../../Components';
+import { Input, Button } from '../../../Material-UI/Components';
 import APIService from '../../../service/APIService';
 
 import styles from './SignupPage.module.scss';
@@ -30,7 +30,7 @@ const SignUp = () => {
         <Button name="Sign up" type="submit">Sign Up</Button>
         <p className={styles.Anchor}>
           Already have an account?
-          <span onClick={() => history.push('/login')} >
+          <span onClick={() => history.push('/login')}>
             {' '}
             Login here
           </span>
@@ -38,8 +38,8 @@ const SignUp = () => {
         <p className={styles.Error}>
           {error}
         </p>
-      </form >
-    </div >
+      </form>
+    </div>
   );
 };
 

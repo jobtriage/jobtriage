@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   Dialog, DialogContent, DialogTitle, MenuItem,
 } from '@material-ui/core';
-import { Button, Input, Select } from '../../../Components';
+import { Button, Input, Select } from '../../../Material-UI/Components';
 import APIService from '../../../service/APIService';
 
 import styles from './ViewJob.module.scss';
@@ -32,7 +32,10 @@ const ViewJob = props => {
             setPriority(respPriority);
           }
         })
-        .catch(console.log);
+        .catch((err) => {
+          // eslint-disable-next-line no-console
+          console.log(err);
+        });
     }
   });
 
@@ -49,7 +52,6 @@ const ViewJob = props => {
   };
 
   const reset = () => {
-    console.log('close');
     setTitle('');
     setCompany('');
     onClose();

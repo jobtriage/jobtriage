@@ -16,5 +16,5 @@ const theme = createMuiTheme({
     },
   },
 });
-// eslint-disable-next-line import/prefer-default-export
-export { theme };
+
+export default theme;

@@ -7,7 +7,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 const Input = (props) => {
-  const classes = useStyles()
+  const classes = useStyles();
 
   return (
     <TextField

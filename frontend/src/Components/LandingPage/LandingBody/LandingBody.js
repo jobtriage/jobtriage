@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Typography } from '../..';
+import { Button, Typography } from '../../../Material-UI/Components';
 import { makeStyles } from '../../../Material-UI/import';
 import { Calendar, Free, Priority } from '../../../assets/icons';
 
@@ -73,10 +73,20 @@ const LandingBody = () => {
     <>
       <BodyTitle className={classes.bodyTitle} />
       <BodySectionWrapper className={classes.commonSectionStyle}>
-        <Typography variant="h5" color="primary" className={classes.underLine}>What is triage?</Typography>
+        <Typography
+          variant="h5"
+          color="primary"
+          className={classes.underLine}
+        >
+          What is triage?
+        </Typography>
         <Typography>
-          Triage is the process of determining the priority of patient&apos;s treatments based on the severity of their condition.
-          This rations patient treatment efficiently when resources are insufficient for all to be treated immediately, influencing the order and priority of emergency treatment, emergency transport, or transport destination for the patient.
+          Triage is the process of determining the priority of patient&apos;s
+          treatments based on the severity of their condition.
+          This rations patient treatment efficiently when resources
+          are insufficient for all to be treated immediately, influencing
+          the order and priority of emergency treatment, emergency transport, or
+          transport destination for the patient.
         </Typography>
       </BodySectionWrapper>
       <BodySectionWrapper className={classes.commonSectionStyle}>
