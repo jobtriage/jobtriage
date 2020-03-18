@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { NavBar, Button } from '..';
+import NavBar from '../Navbar/NavBar';
 import APIService from '../../service/APIService';
-
+import { Button } from '../../Material-UI/Components';
 
 import styles from './AccountDetails.module.scss';
 
@@ -13,6 +13,7 @@ const AccountDetails = (props) => {
       .then(() => {
         document.location = '/';
       })
+      // eslint-disable-next-line no-console
       .catch(console.log);
   };
 

@@ -1,5 +1,7 @@
 import React from 'react';
-import { Select, InputLabel, FormControl, makeStyles } from '../../import';
+import {
+  Select, InputLabel, FormControl, makeStyles,
+} from '../../import';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -8,7 +10,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SelectComponent = (props) => {
-
   const classes = useStyles();
 
   const {

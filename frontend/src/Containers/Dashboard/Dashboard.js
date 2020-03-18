@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
+
+import { Fab } from '@material-ui/core';
 // eslint-disable-next-line import/no-unresolved
-import {
-  Fab
-} from '@material-ui/core';
 import Board from 'react-trello';
 import { Add } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import cloneDeep from 'lodash/cloneDeep';
-import {
-  NavBar,
-} from '../../Components';
+import NavBar from '../../Components/Navbar/NavBar';
 import AddJob from './AddJob/AddJob';
 import ViewJob from './viewjob/ViewJob';
 import APIService from '../../service/APIService';
@@ -81,7 +78,6 @@ const parseApplicationData = appData => {
 };
 
 
-
 const Dashboard = () => {
   const classes = useStyles();
   const [boardData, setBoardData] = useState(data);
@@ -122,12 +118,14 @@ const Dashboard = () => {
 
   const handleDrag = (id, source, target) => {
     if (source !== target) {
-      APIService.updateApplicationStatus(id, target).then(console.log);
+      // eslint-disable-next-line no-console
+      APIService.updateApplicationStatus(id, target).then((res) => console.log(res));
     }
   };
 
   const cardDelete = id => {
-    APIService.deleteApplication(id).then(console.log);
+    // eslint-disable-next-line no-console
+    APIService.deleteApplication(id).then((res) => console.log(res));
   };
 
   return (
@@ -142,10 +140,12 @@ const Dashboard = () => {
           onCardClick={(cardId) => handleJobViewOpen(cardId)}
         />
       </div>
-      <Fab color="primary"
+      <Fab
+        color="primary"
         aria-label="Add job"
         className={classes.fab}
-        onClick={handleJobAddOpen}>
+        onClick={handleJobAddOpen}
+      >
         <Add />
       </Fab>
       <AddJob

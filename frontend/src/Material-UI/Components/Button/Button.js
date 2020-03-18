@@ -9,10 +9,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const PrimaryButton = (props) => {
-  const classes = useStyles()
+  const classes = useStyles();
 
   const {
-    children, style, onClick, type, color, fullWidth, size
+    children, style, onClick, type, color, fullWidth, size,
   } = props;
 
   return (

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Input, Button } from '../../../Components';
+import { Input, Button } from '../../../Material-UI/Components';
 import APIService from '../../../service/APIService';
 
 import styles from './LoginPage.module.scss';
@@ -26,7 +26,7 @@ const Login = () => {
         <Button name="Login" type="submit">Login</Button>
         <p className={styles.Anchor}>
           Don&apos;t have an account?
-          <span onClick={() => history.push('/signup')} >
+          <span onClick={() => history.push('/signup')}>
             {' '}
             Sign up here
           </span>
