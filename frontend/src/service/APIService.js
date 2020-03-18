@@ -91,6 +91,8 @@ const deleteApplication = id => axiosInstance.delete(`${apiUrl}/applications/${i
  * @param {String} status
  * @param {Number} priority
  * @param {String} companyName
+ *
+ * @returns {Promise}
  */
 const addJobApplication = (title, status, priority, companyName) => {
   return axiosInstance.post(`${apiUrl}/applications`, {
@@ -106,28 +108,57 @@ const addJobApplication = (title, status, priority, companyName) => {
  * Add new Job application
  *
  * @param {String} title
- * @param {String} status
- * @param {Number} priority
- * @param {String} companyName
+ * @param {object} jobDetail
+ *
+ * @returns {Promise}
  */
-const updateJobApplication = (jobId, title, status, priority, companyName) => {
-  return axiosInstance.put(`${apiUrl}/applications/${jobId}`, {
-    title,
-    status,
-    priority,
-    company_name: companyName,
-  });
+const updateJobApplication = (applicationId, jobDetail) => {
+  return axiosInstance.put(`${apiUrl}/applications/${applicationId}`, jobDetail);
 };
 
 /**
  * Get Job Application detail
  *
- * @param {String} jobId
+ * @param {String} applicationId
  *
  * @returns {Promise}
  */
-const getApplicationDetails = (jobId) => axiosInstance.get(`${apiUrl}/applications/${jobId}`);
+const getApplicationDetails = (applicationId) => axiosInstance.get(`${apiUrl}/applications/${applicationId}`);
 
+
+/**
+ * @param {String} applicationId
+ * @param {String} title
+ * @param {String} content
+ *
+ * @returns {Promise}
+ */
+const addNotes = (applicationId, title, content) => {
+  return axiosInstance.post(`${apiUrl}/applications/${applicationId}/notes`, { title, content });
+};
+
+
+/**
+ * @param {String} applicationId
+ * @param {String} title
+ * @param {String} content
+ *
+ * @returns {Promise}
+ */
+const updateNote = (applicationId, noteId, title, content) => {
+  return axiosInstance.put(`${apiUrl}/applications/${applicationId}/notes/${noteId}`, { title, content });
+};
+
+
+/**
+ * @param {String} applicationId
+ * @param {String} noteId
+ *
+ * @returns {Promise}
+ */
+const deleteNote = (applicationId, noteId) => {
+  return axiosInstance.delete(`${apiUrl}/applications/${applicationId}/notes/${noteId}`);
+};
 
 export default {
   isLoggedIn,
@@ -141,4 +172,7 @@ export default {
   updateJobApplication,
   getApplicationDetails,
   logout,
+  addNotes,
+  deleteNote,
+  updateNote,
 };

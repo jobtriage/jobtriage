@@ -18,6 +18,7 @@ class Application
   validates :company, presence: true
 
   def set_company(name, url)
+    url = url == nil ? company[:url] : url
     self.company = { name: name, url: url }
   end
 
