@@ -14,7 +14,10 @@ export {
   InputLabel,
   MenuItem,
   Menu,
+  List,
+  ListItem,
   ListItemIcon,
   ListItemText,
   Box,
+  Divider,
 } from '@material-ui/core';

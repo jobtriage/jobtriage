@@ -6,7 +6,7 @@ import Board from 'react-trello';
 import { Add } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import cloneDeep from 'lodash/cloneDeep';
-import NavBar from '../../Components/Navbar/NavBar';
+import NavBar from '../../Components/NavBar/NavBar';
 import AddJob from './AddJob/AddJob';
 import ViewJob from './viewjob/ViewJob';
 import APIService from '../../service/APIService';
