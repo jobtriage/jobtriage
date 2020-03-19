@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
-import {
-  Dialog, DialogContent, DialogTitle, MenuItem,
-} from '@material-ui/core';
-import {
-  Button, Select, Input,
-} from '../../../Material-UI/Components';
+import { Dialog, DialogContent, DialogTitle } from '@material-ui/core';
+import { Button, Input } from '../../../Material-UI/Components';
+import { StatusMenu, PriorityMenu } from '../../../Components';
 import APIService from '../../../service/APIService';
 
 import styles from './AddJob.module.scss';
@@ -36,19 +33,8 @@ const AddJobDialog = props => {
         <form className={styles.MainCard} onSubmit={handleSubmit}>
           <Input type="text" label="title" required onChange={e => setTitle(e.target.value)} value={title} />
           <Input type="text" label="company" required onChange={e => setCompany(e.target.value)} value={company} />
-          <Select label="status" required onChange={e => setStatus(e.target.value)}>
-            <MenuItem value="yettoapply">Yet to apply</MenuItem>
-            <MenuItem value="applied">Applied</MenuItem>
-            <MenuItem value="inprogress">In Progress</MenuItem>
-            <MenuItem value="accepted">Accepted</MenuItem>
-            <MenuItem value="rejected">Rejected</MenuItem>
-          </Select>
-
-          <Select label="priority" required onChange={e => setPriority(e.target.value)}>
-            <MenuItem value={1}>Low</MenuItem>
-            <MenuItem value={2}>Medium</MenuItem>
-            <MenuItem value={3}>High</MenuItem>
-          </Select>
+          <PriorityMenu onChange={e => setPriority(e.target.value)} />
+          <StatusMenu onChange={e => setStatus(e.target.value)} />
           <Button type="submit">Add</Button>
           <p className={styles.Error}>
             {error}

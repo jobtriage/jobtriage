@@ -12,6 +12,7 @@ import AccountDetails from '../../Components/AccountDetails/AccountDetails';
 import Login from '../Onboarding/Login/LoginPage';
 import Signup from '../Onboarding/Signup/SignupPage';
 import Dashboard from '../Dashboard/Dashboard';
+import ViewJob from '../ViewJob/ViewJob';
 
 
 import styles from './App.module.scss';
@@ -35,21 +36,12 @@ const Routes = () => {
     <Router>
       <div className={styles.App}>
         <Switch>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/signup">
-            <Signup />
-          </Route>
-          <Route path="/dashboard">
-            <Dashboard />
-          </Route>
-          <Route path="/account">
-            <AccountDetails />
-          </Route>
-          <Route path="/">
-            <LandingPage />
-          </Route>
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/account" component={AccountDetails} />
+          <Route path="/application/:applicationId" component={ViewJob} />
+          <Route path="/" component={LandingPage} />
         </Switch>
       </div>
     </Router>

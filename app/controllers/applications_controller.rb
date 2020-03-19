@@ -9,7 +9,7 @@ class ApplicationsController < ApplicationController
     application = current_user.applications.find(params[:id])
     render json: { message: application }, status: :ok
   end
-  
+
   # Create job application
   def create
     application = current_user.applications.new(application_params)

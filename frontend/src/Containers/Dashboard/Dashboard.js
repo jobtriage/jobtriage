@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import { useHistory } from 'react-router-dom';
 import { Fab } from '@material-ui/core';
 // eslint-disable-next-line import/no-unresolved
 import Board from 'react-trello';
@@ -8,7 +8,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import cloneDeep from 'lodash/cloneDeep';
 import NavBar from '../../Components/NavBar/NavBar';
 import AddJob from './AddJob/AddJob';
-import ViewJob from './viewjob/ViewJob';
 import APIService from '../../service/APIService';
 
 const data = {
@@ -77,10 +76,9 @@ const parseApplicationData = appData => {
 
 const Dashboard = () => {
   const classes = useStyles();
+  const history = useHistory();
   const [boardData, setBoardData] = useState(data);
   const [openJobAdd, setOpenJobAdd] = React.useState(false);
-  const [openJobView, setOpenJobView] = React.useState(false);
-  const [selectedJob, setSelectedJob] = React.useState('');
 
   const handleJobAddOpen = () => {
     setOpenJobAdd(true);
@@ -88,16 +86,6 @@ const Dashboard = () => {
 
   const handleJobAddClose = () => {
     setOpenJobAdd(false);
-  };
-
-  const handleJobViewOpen = (cardId) => {
-    setOpenJobView(true);
-    setSelectedJob(cardId);
-  };
-
-  const handleJobViewClose = () => {
-    setOpenJobView(false);
-    setSelectedJob('');
   };
 
   const getJobApplications = () => {
@@ -133,7 +121,7 @@ const Dashboard = () => {
           style={{ backgroundColor: '#fff', height: '95vh' }}
           handleDragEnd={handleDrag}
           onCardDelete={cardDelete}
-          onCardClick={(cardId) => handleJobViewOpen(cardId)}
+          onCardClick={cardId => history.push(`/application/${cardId}`)}
         />
       </NavBar>
       <Fab
@@ -148,12 +136,6 @@ const Dashboard = () => {
         open={openJobAdd}
         onClose={handleJobAddClose}
         onChange={getJobApplications}
-      />
-      <ViewJob
-        open={openJobView}
-        onClose={handleJobViewClose}
-        onChange={getJobApplications}
-        jobId={selectedJob}
       />
     </div>
   );
