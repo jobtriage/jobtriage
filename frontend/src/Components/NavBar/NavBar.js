@@ -1,5 +1,5 @@
 import React from 'react';
-import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
+import { NavLink } from 'react-router-dom';
 import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import { Logo } from '../../assets/icons';
@@ -25,36 +25,47 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.textPrimary.main,
     fontWeight: '500',
   },
+  logoDiv: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  container: {
+    marginLeft: '200px',
+  },
 }));
 
-const NavBar = () => {
+const NavBar = props => {
   const classes = useStyles();
+  const { children } = props;
   return (
-    <nav className={classes.root}>
-      <img src={Logo} alt="logo" className={classes.logo} />
-      <Divider />
-      <List component="ul">
-        <ListItemWithLink
-          primary="Home"
-          to="/"
-          exact
-          textOverrideClass={{ primary: classes.textStyle }}
-          icon={<HomeOutlinedIcon />}
-        />
-        <ListItemWithLink
-          primary="Dashboard"
-          to="/dashboard"
-          textOverrideClass={{ primary: classes.textStyle }}
-          icon={<DashboardOutlinedIcon />}
-        />
-        <ListItemWithLink
-          primary="Account"
-          to="/account"
-          textOverrideClass={{ primary: classes.textStyle }}
-          icon={<SettingsOutlinedIcon />}
-        />
-      </List>
-    </nav>
+    <div>
+      <nav className={classes.root}>
+        <div className={classes.logoDiv}>
+          <NavLink to="/">
+            <img src={Logo} alt="logo" className={classes.logo} />
+          </NavLink>
+        </div>
+        <Divider />
+        <List component="ul">
+          <ListItemWithLink
+            primary="Dashboard"
+            to="/dashboard"
+            textOverrideClass={{ primary: classes.textStyle }}
+            icon={<DashboardOutlinedIcon />}
+          />
+          <ListItemWithLink
+            primary="Account"
+            to="/account"
+            textOverrideClass={{ primary: classes.textStyle }}
+            icon={<SettingsOutlinedIcon />}
+          />
+        </List>
+      </nav>
+      <div className={classes.container}>
+        {children}
+      </div>
+    </div>
+
   );
 };
 
