@@ -19,21 +19,22 @@ const AccountDetails = (props) => {
 
   return (
     <div className={styles.Account}>
-      <NavBar />
-      <div className={styles.InnerContainer}>
-        <h2>Account</h2>
-        <h3>
-          Email:
-          {' '}
-          {email}
-        </h3>
-        <h3>
-          Name:
-          {' '}
-          {name}
-        </h3>
-        <Button onClick={logout}>LogOut</Button>
-      </div>
+      <NavBar>
+        <div className={styles.InnerContainer}>
+          <h2>Account</h2>
+          <h3>
+            Email:
+            {' '}
+            {email}
+          </h3>
+          <h3>
+            Name:
+            {' '}
+            {name}
+          </h3>
+          <Button onClick={logout}>LogOut</Button>
+        </div>
+      </NavBar>
     </div>
   );
 };

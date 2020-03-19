@@ -11,9 +11,6 @@ import AddJob from './AddJob/AddJob';
 import ViewJob from './viewjob/ViewJob';
 import APIService from '../../service/APIService';
 
-import styles from './Dashboard.module.scss';
-
-
 const data = {
   lanes: [
     {
@@ -129,9 +126,8 @@ const Dashboard = () => {
   };
 
   return (
-    <div className={styles.Dashboard}>
-      <NavBar />
-      <div className={styles.Container}>
+    <div>
+      <NavBar>
         <Board
           data={boardData}
           style={{ backgroundColor: '#fff', height: '95vh' }}
@@ -139,7 +135,7 @@ const Dashboard = () => {
           onCardDelete={cardDelete}
           onCardClick={(cardId) => handleJobViewOpen(cardId)}
         />
-      </div>
+      </NavBar>
       <Fab
         color="primary"
         aria-label="Add job"
