@@ -23,6 +23,9 @@ const theme = createMuiTheme({
     error: {
       main: '#b00020',
     },
+    border: {
+      main: '#0000001a',
+    },
   },
 });
 

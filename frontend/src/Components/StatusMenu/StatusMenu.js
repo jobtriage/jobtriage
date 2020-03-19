@@ -2,7 +2,7 @@ import React from 'react';
 import { MenuItem } from '../../Material-UI/import';
 import { Select } from '../../Material-UI/Components';
 
-export default function StatusMenu(props) {
+const StatusMenu = props => {
   return (
     <Select label="status" {...props}>
       <MenuItem value="yettoapply">Yet to apply</MenuItem>
@@ -12,4 +12,6 @@ export default function StatusMenu(props) {
       <MenuItem value="rejected">Rejected</MenuItem>
     </Select>
   );
-}
+};
+
+export default StatusMenu;

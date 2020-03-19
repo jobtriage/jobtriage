@@ -5,7 +5,7 @@ import { Typography } from '../../../Material-UI/Components';
 import APIService from '../../../service/APIService';
 import NoteForm from './AddNote';
 
-const useStyles = makeStyles(({
+const useStyles = makeStyles(theme => ({
   root: {
     marginLeft: 30,
   },
@@ -17,7 +17,7 @@ const useStyles = makeStyles(({
     width: 250,
     height: 250,
     margin: 5,
-    border: '1px solid #0000001a',
+    border: `1px solid ${theme.palette.border.main}`,
     borderRadius: '4px',
 
   },
@@ -30,7 +30,7 @@ const useStyles = makeStyles(({
     height: 250,
     margin: 5,
     cursor: 'pointer',
-    border: '1px solid #0000001a',
+    border: `1px solid ${theme.palette.border.main}`,
     borderRadius: '4px',
   },
   cardAction: {

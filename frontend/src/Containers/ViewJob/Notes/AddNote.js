@@ -4,9 +4,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Button, Input } from '../../../Material-UI/Components';
 import APIService from '../../../service/APIService';
 
-const useStyles = makeStyles(({
+const useStyles = makeStyles(theme => ({
   error: {
-    color: 'rgb(201, 58, 58)',
+    color: theme.palette.error.main,
   },
   form: {
     minWidth: '400px',

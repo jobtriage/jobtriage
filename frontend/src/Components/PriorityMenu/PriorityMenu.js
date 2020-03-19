@@ -2,7 +2,7 @@ import React from 'react';
 import { MenuItem } from '../../Material-UI/import';
 import { Select } from '../../Material-UI/Components';
 
-export default function priorityMenu(props) {
+const PriorityMenu = props => {
   const { value, onChange } = props;
   return (
     <Select label="priority" value={value} required onChange={onChange}>
@@ -11,4 +11,6 @@ export default function priorityMenu(props) {
       <MenuItem value={3}>High</MenuItem>
     </Select>
   );
-}
+};
+
+export default PriorityMenu;
