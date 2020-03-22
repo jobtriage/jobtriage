@@ -5,27 +5,28 @@ import CloseIcon from '@material-ui/icons/Close';
 import { Error, InfoOutlined, Done } from '@material-ui/icons';
 import theme from '../../theme';
 
+
+const StatusIcon = ({ type }) => {
+  const getIcon = () => {
+    if (type === 'success') {
+      return <Done fontSize="small" style={{ color: theme.palette.success.main }} />;
+    } if (type === 'error') {
+      return <Error fontSize="small" style={{ color: theme.palette.error.main }} />;
+    }
+    return <InfoOutlined fontSize="small" style={{ color: theme.palette.info.main }} />;
+  };
+
+  return (
+    <IconButton size="small">
+      {getIcon()}
+    </IconButton>
+  );
+};
+
 const Toast = props => {
   const {
     show, duration, onClose, message, type,
   } = props;
-
-  const StatusIcon = () => {
-    const getIcon = () => {
-      if (type === 'success') {
-        return <Done fontSize="small" style={{ color: theme.palette.success.main }} />;
-      } if (type === 'error') {
-        return <Error fontSize="small" style={{ color: theme.palette.error.main }} />;
-      }
-      return <InfoOutlined fontSize="small" style={{ color: theme.palette.info.main }} />;
-    };
-
-    return (
-      <IconButton size="small" aria-label="close" color="inherit" onClick={onClose}>
-        {getIcon()}
-      </IconButton>
-    );
-  };
 
   return (
     <Snackbar
@@ -34,7 +35,7 @@ const Toast = props => {
       onClose={onClose}
       message={(
         <div>
-          <StatusIcon />
+          <StatusIcon type={type} />
           {' '}
           {message}
         </div>
