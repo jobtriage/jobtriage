@@ -3,16 +3,17 @@ import { Dialog, DialogContent, DialogTitle } from '@material-ui/core';
 import { Button, Input } from '../../../Material-UI/Components';
 import { StatusMenu, PriorityMenu } from '../../../Components';
 import APIService from '../../../service/APIService';
+import { useToast, ToastConstants } from '../../../store/context';
 
 import styles from './AddJob.module.scss';
 
 const AddJobDialog = props => {
+  const showToast = useToast();
   const { open, onClose, onChange } = props;
   const [title, setTitle] = useState('');
   const [company, setCompany] = useState('');
   const [status, setStatus] = useState('');
   const [priority, setPriority] = useState('');
-  const [error, setError] = useState('');
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -22,8 +23,9 @@ const AddJobDialog = props => {
         onClose();
         setTitle('');
         setCompany('');
+        showToast('Job application added successfully', ToastConstants.SUCCESS);
       })
-      .catch(() => { setError('Error in adding Job application'); });
+      .catch(() => { showToast('Error in adding Job application', ToastConstants.ERROR); });
   };
 
   return (
@@ -36,9 +38,6 @@ const AddJobDialog = props => {
           <PriorityMenu onChange={e => setPriority(e.target.value)} />
           <StatusMenu onChange={e => setStatus(e.target.value)} />
           <Button type="submit">Add</Button>
-          <p className={styles.Error}>
-            {error}
-          </p>
         </form>
       </DialogContent>
     </Dialog>

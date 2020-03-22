@@ -4,6 +4,7 @@ import APIService from '../../service/APIService';
 import {
   Typography, Input, Button, StatusMenu, PriorityMenu,
 } from '../../Components';
+import { useToast, ToastConstants } from '../../store/context';
 
 const useStyles = makeStyles(({
   form: {
@@ -17,8 +18,9 @@ const useStyles = makeStyles(({
 }));
 
 const BasicDetails = props => {
+  const showToast = useToast();
   const classes = useStyles();
-  const { basicDetail } = props;
+  const { basicDetail, reload } = props;
   const [title, setTitle] = useState(basicDetail.title);
   const [companyName, setCompanyName] = useState(basicDetail.company.name);
   const [companyUrl, setCompanyUrl] = useState(basicDetail.company.url || '');
@@ -28,7 +30,6 @@ const BasicDetails = props => {
   const [url, setUrl] = useState(basicDetail.url || '');
 
   const handleSubmit = event => {
-    console.log(basicDetail);
     event.preventDefault();
     const jobDetail = {
       title,
@@ -40,7 +41,11 @@ const BasicDetails = props => {
       url,
     };
     APIService.updateJobApplication(basicDetail.applicationId, jobDetail)
-      .then(() => console.log('Success')).catch(() => console.log('Failure'));
+      .then(() => {
+        showToast('Update success', ToastConstants.SUCCESS);
+        reload();
+      })
+      .catch(() => showToast('Update failed', ToastConstants.ERROR));
   };
 
   return (
