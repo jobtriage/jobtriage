@@ -48,7 +48,7 @@ const ViewJob = props => {
 
   const Body = () => (
     <div className={classes.root}>
-      <BasicDetails basicDetail={basicDetail} />
+      <BasicDetails basicDetail={basicDetail} reload={loadData} />
       <Notes notes={basicDetail.notes} applicationId={applicationId} reload={loadData} />
     </div>
   );

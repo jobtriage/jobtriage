@@ -13,8 +13,8 @@ import Login from '../Onboarding/Login/LoginPage';
 import Signup from '../Onboarding/Signup/SignupPage';
 import Dashboard from '../Dashboard/Dashboard';
 import ViewJob from '../ViewJob/ViewJob';
-
-
+import { Toast } from '../../Material-UI/Components';
+import { useAppContext } from '../../store/context';
 import styles from './App.module.scss';
 
 const App = ({ addUserInitially }) => {
@@ -28,7 +28,18 @@ const App = ({ addUserInitially }) => {
     });
   }, [addUserInitially]);
 
-  return <Routes />;
+  const { state, closeToast } = useAppContext();
+  return (
+    <div>
+      <Routes />
+      <Toast
+        show={state.toast.show}
+        message={state.toast.message}
+        type={state.toast.type}
+        onClose={() => closeToast()}
+      />
+    </div>
+  );
 };
 
 const Routes = () => {

@@ -9,6 +9,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import NavBar from '../../Components/NavBar/NavBar';
 import AddJob from './AddJob/AddJob';
 import APIService from '../../service/APIService';
+import { useToast, ToastConstants } from '../../store/context';
 
 const data = {
   lanes: [
@@ -75,6 +76,7 @@ const parseApplicationData = appData => {
 
 
 const Dashboard = () => {
+  const showToast = useToast();
   const classes = useStyles();
   const history = useHistory();
   const [boardData, setBoardData] = useState(data);
@@ -103,14 +105,13 @@ const Dashboard = () => {
 
   const handleDrag = (id, source, target) => {
     if (source !== target) {
-      // eslint-disable-next-line no-console
-      APIService.updateApplicationStatus(id, target).then((res) => console.log(res));
+      APIService.updateApplicationStatus(id, target)
+        .catch(() => showToast('Error while deleting updating Job application', ToastConstants.ERROR));
     }
   };
 
   const cardDelete = id => {
-    // eslint-disable-next-line no-console
-    APIService.deleteApplication(id).then((res) => console.log(res));
+    APIService.deleteApplication(id).catch(() => showToast('Error while deleting Job application', ToastConstants.ERROR));
   };
 
   return (

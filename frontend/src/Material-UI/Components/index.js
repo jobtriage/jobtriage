@@ -8,3 +8,4 @@ export { default as ListItem } from './List/ListItem/ListItem';
 export { default as ListItemText } from './List/ListItem/ListItemText/ListItemText';
 export { default as ListItemIcon } from './List/ListItem/ListItemIcon/ListItemIcon';
 export { default as Divider } from './Divider/Divider';
+export { default as Toast } from './Toast/Toast';
