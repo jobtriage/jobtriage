@@ -34,12 +34,12 @@ Note: You can find mongodb server details in `/config/mongoid.yml`. You don't ha
  - [Material UI](https://github.com/mui-org/material-ui) - Material UI
  
 
-## How to contribute 🤝
+## Contribute 🤝
 Contributions are always welcome. Try out **Job Triage** and create issues that you think to be addressed. You can also go through our issues and start working on any of the issue. 
 
 To get started on working on an issue, just comment that you will be working on it. If you have any doubts, just ask in the commnt section. we are always happy to help :)
 
-To make this easier, some of the issues are marked as [good first issue](https://github.com/jobtriage/jobtriage/issues?q=is:open%20is:issue%20label:%22Good%20First%20Issue%22) that contain bugs which have a relatively limited scop and will help you get your feet wet and get you familiar with our contribution process. 
+To make this easier, some of the issues are marked as [good first issue](https://github.com/jobtriage/jobtriage/issues?q=is:open%20is:issue%20label:%22Good%20First%20Issue%22) that contain bugs which have a relatively limited scope and will help you get your feet wet and get you familiar with our contribution process. 
 
 We request you all to follow the design guidelines given [here](/DESIGN_GUIDELINES.md).
 
