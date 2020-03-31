@@ -9,6 +9,8 @@
 ### Interactive way to manage your Job application
 Made with Rails, React, Mongo DB and :purple_heart:
 
+**Note** : This is still in beta version and there may be some issues. Please raise them as github issues.
+
 ## Development :rocket:
 
 ### server
