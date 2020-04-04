@@ -7,6 +7,7 @@ class AuthController < ApplicationController
     @user.password = params[:password]
     if @user.save
       response = { message: 'User created successfully' }
+      authenticate_user
       render json: response, status: :ok
     else
       render json: { message: @user.errors }, status: :bad_request
