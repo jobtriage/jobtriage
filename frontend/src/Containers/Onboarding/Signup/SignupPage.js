@@ -16,7 +16,7 @@ const SignUp = () => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     APIService.signUp(name, email, password)
-      .then(() => history.push('/dashboard'))
+      .then(() => { window.location = '/dashboard'; })
       .catch(() => setError('Error occurred check inputs'));
   };
 
