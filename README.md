@@ -11,25 +11,6 @@ Made with Rails, React, Mongo DB and :purple_heart:
 
 **Note** : This is still in beta version and there may be some issues. Please raise them as github issues.
 
-## Development :rocket:
-
-### server
-
- - Install the gems using `bundle install`
- - Start mongodb server in local as you prefered
- - Start server using `rails s`
- - Test server using `rails test`
- - Check the [API doc here](https://documenter.getpostman.com/view/3705194/SzKWuxaB?version=latest)
-
-Note: You can find mongodb server details in `/config/mongoid.yml`. You don't have to change anything in that file.
-
-### client
-
- - `cd frontend`
- - `yarn install`
- - `yarn start`
- -  Open http://localhost:3001 or any port at which React starts 
-
 ##  Special Thanks :pray:
 
  - [React Trello](https://github.com/rcdexta/react-trello) - kanban board
@@ -44,6 +25,8 @@ To get started on working on an issue, just comment that you will be working on 
 To make this easier, some of the issues are marked as [good first issue](https://github.com/jobtriage/jobtriage/issues?q=is:open%20is:issue%20label:%22Good%20First%20Issue%22) that contain bugs which have a relatively limited scope and will help you get your feet wet and get you familiar with our contribution process. 
 
 We request you all to follow the design guidelines given [here](/DESIGN_GUIDELINES.md).
+
+Checkout our [Contributing guidelines](/CONTRIBUTING.md)
 
 ## Contributors ✨
 
