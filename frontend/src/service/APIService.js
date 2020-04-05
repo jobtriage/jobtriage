@@ -160,6 +160,11 @@ const deleteNote = (applicationId, noteId) => {
   return axiosInstance.delete(`${apiUrl}/applications/${applicationId}/notes/${noteId}`);
 };
 
+/**
+ * @returns {Promise}
+ */
+const resendVerificationMail = () => axiosInstance.get(`${apiUrl}/auth/resend`);
+
 export default {
   isLoggedIn,
   login,
@@ -175,4 +180,5 @@ export default {
   addNotes,
   deleteNote,
   updateNote,
+  resendVerificationMail,
 };

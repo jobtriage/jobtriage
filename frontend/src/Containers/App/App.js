@@ -11,6 +11,7 @@ import LandingPage from '../../Components/LandingPage/LandingPage';
 import AccountDetails from '../../Components/AccountDetails/AccountDetails';
 import Login from '../Onboarding/Login/LoginPage';
 import Signup from '../Onboarding/Signup/SignupPage';
+import VerifiedRoute from '../Onboarding/VerifiedRoute/VerifiedRoute';
 import Dashboard from '../Dashboard/Dashboard';
 import ViewJob from '../ViewJob/ViewJob';
 import { Toast } from '../../Material-UI/Components';
@@ -20,8 +21,12 @@ import styles from './App.module.scss';
 const App = ({ addUserInitially }) => {
   useEffect(() => {
     APIService.isLoggedIn().then(resp => {
-      const { user_id: userId, email, name } = resp.data.message;
-      addUserInitially({ userId, email, name });
+      const {
+        user_id: userId, email, name, email_confirmed: confirmed,
+      } = resp.data.message;
+      addUserInitially({
+        userId, email, name, confirmed,
+      });
     }).catch((error) => {
       // eslint-disable-next-line no-console
       console.log(error);
@@ -42,6 +47,18 @@ const App = ({ addUserInitially }) => {
   );
 };
 
+const VerifiedDashboard = () => (
+  <VerifiedRoute>
+    <Dashboard />
+  </VerifiedRoute>
+);
+
+const VerifiedAccountDetails = () => (
+  <VerifiedRoute>
+    <AccountDetails />
+  </VerifiedRoute>
+);
+
 const Routes = () => {
   return (
     <Router>
@@ -49,8 +66,8 @@ const Routes = () => {
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/account" component={AccountDetails} />
+          <Route path="/dashboard" component={VerifiedDashboard} />
+          <Route path="/account" component={VerifiedAccountDetails} />
           <Route path="/application/:applicationId" component={ViewJob} />
           <Route path="/" component={LandingPage} />
         </Switch>
