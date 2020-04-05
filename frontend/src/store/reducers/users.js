@@ -5,6 +5,7 @@ const users = (state = {}, action) => {
       userId: action.userId,
       email: action.email,
       name: action.name,
+      confirmed: action.confirmed,
     };
   }
 

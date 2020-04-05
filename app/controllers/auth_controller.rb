@@ -1,13 +1,14 @@
 class AuthController < ApplicationController
-  skip_before_action :authenticate_request, only: %i[login register]
+  skip_before_action :authenticate_request, only: %i[login register verify_email]
 
   # POST /register
   def register
     @user = User.create(user_params)
     @user.password = params[:password]
     if @user.save
-      response = { message: 'User created successfully' }
       authenticate_user
+      UserMailer.with(user: @user).welcome_email.deliver_now
+      response = { message: 'User created successfully' }
       render json: response, status: :ok
     else
       render json: { message: @user.errors }, status: :bad_request
@@ -30,6 +31,26 @@ class AuthController < ApplicationController
 
   def test
     render json: { message: current_user }, status: :ok
+  end
+
+  def verify_email
+    user = User.find_by confirm_token: params[:token]
+    if user
+      user.update_attributes(email_confirmed: true)
+    end
+
+    redirect_to ENV['CLIENT_HOST']
+  end
+
+  def resend_email
+    puts current_user
+    if !current_user.confirm_token
+      current_user.generate_confirm_token
+      current_user.update
+    end
+
+    UserMailer.with(user: current_user).welcome_email.deliver_now
+    render json: { message: 'Mail sent' }, status: :ok
   end
 
   private
