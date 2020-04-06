@@ -11,6 +11,7 @@ class User
   field :password_hash, type: String
   field :email_confirmed, type: Boolean, default: false
   field :confirm_token, type: String
+  field :reset_token, type: String
 
   has_many :applications
 
@@ -39,5 +40,9 @@ class User
     if self.confirm_token.blank?
       self.confirm_token = SecureRandom.urlsafe_base64.to_s
     end
+  end
+
+  def generate_reset_token
+    self.reset_token = SecureRandom.hex(4)
   end
 end

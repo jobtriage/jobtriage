@@ -1,5 +1,5 @@
 class AuthController < ApplicationController
-  skip_before_action :authenticate_request, only: %i[login register verify_email]
+  skip_before_action :authenticate_request, only: %i[login register verify_email generate_otp verify_otp] 
 
   # POST /register
   def register
@@ -35,22 +35,61 @@ class AuthController < ApplicationController
 
   def verify_email
     user = User.find_by confirm_token: params[:token]
-    if user
-      user.update_attributes(email_confirmed: true)
-    end
+    user&.update_attributes(email_confirmed: true)
 
     redirect_to ENV['CLIENT_HOST']
   end
 
   def resend_email
-    puts current_user
-    if !current_user.confirm_token
+    unless current_user.confirm_token
       current_user.generate_confirm_token
       current_user.update
     end
-
     UserMailer.with(user: current_user).welcome_email.deliver_now
     render json: { message: 'Mail sent' }, status: :ok
+  end
+
+  def change_password
+    if current_user.password == params[:current_password]
+      current_user.password = params[:password]
+      if current_user.update
+        render json: { message: 'Password upated' }, status: :ok
+      end
+    else
+      render json: { message: 'Password mismatch' }, status: :bad_request
+    end
+  end
+
+  def generate_otp
+    user = User.find_by(email: params[:email])
+    if user
+      user.generate_reset_token
+      user.update
+      UserMailer.with(user: user).forgot_password_email.deliver_now
+
+      render json: { message: 'OTP sent check mail' }, status: :ok
+    else
+      render json: { message: 'Email not registered' }, status: :bad_request
+    end
+  end
+
+  def verify_otp
+    begin
+      user = User.find_by(email: params[:email])
+    rescue
+      return render json: { message: 'Email not valid' }, status: :bad_request
+    end
+
+    if user&.reset_token == params[:otp]
+      user.password = params[:password]
+      if user.save
+        render json: { message: 'Password updated' }, status: :ok
+      else
+        render json: { message: @user.errors }, status: :bad_request
+      end
+    else
+      render json: { message: 'OTP missmatch' }, status: :bad_request
+    end
   end
 
   private

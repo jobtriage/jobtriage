@@ -9,7 +9,9 @@ Rails.application.routes.draw do
   get  'auth/test',          to: 'auth#test'
   get  'auth/verify/:token', to: 'auth#verify_email'
   get  'auth/resend',        to: 'auth#resend_email'
-
+  post 'auth/change',        to: 'auth#change_password'
+  post 'auth/generateotp',   to: 'auth#generate_otp'
+  post 'auth/verifyotp',     to: 'auth#verify_otp'
   # Routes for auth ends
 
   resources :applications do
