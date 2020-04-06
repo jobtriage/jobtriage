@@ -82,11 +82,7 @@ class AuthController < ApplicationController
 
     if user&.reset_token == params[:otp]
       user.password = params[:password]
-      if user.save
-        render json: { message: 'Password updated' }, status: :ok
-      else
-        render json: { message: @user.errors }, status: :bad_request
-      end
+      render json: { message: 'Password updated' }, status: :ok if user.save
     else
       render json: { message: 'OTP missmatch' }, status: :bad_request
     end
