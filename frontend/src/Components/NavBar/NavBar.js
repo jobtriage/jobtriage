@@ -2,9 +2,12 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
+import ExitToAppOutlined from '@material-ui/icons/ExitToAppOutlined';
 import { Logo } from '../../assets/icons';
 import { List, Divider } from '../../Material-UI/Components';
+import APIService from '../../service/APIService';
 import ListItemWithLink from '../UI/ListItemWithLink/ListItemWithLink';
+import ListItemWithClick from '../UI/ListItemWithClick/ListItemWithClick';
 import { makeStyles } from '../../Material-UI/import';
 
 const useStyles = makeStyles((theme) => ({
@@ -37,6 +40,16 @@ const useStyles = makeStyles((theme) => ({
 const NavBar = props => {
   const classes = useStyles();
   const { children } = props;
+
+  const logout = () => {
+    APIService.logout()
+      .then(() => {
+        document.location = '/';
+      })
+      // eslint-disable-next-line no-console
+      .catch(console.log);
+  };
+
   return (
     <div>
       <nav className={classes.root}>
@@ -58,6 +71,12 @@ const NavBar = props => {
             to="/account"
             textOverrideClass={{ primary: classes.textStyle }}
             icon={<SettingsOutlinedIcon />}
+          />
+          <ListItemWithClick
+            primary="Logout"
+            onClick={logout}
+            textOverrideClass={{ primary: classes.textStyle }}
+            icon={<ExitToAppOutlined />}
           />
         </List>
       </nav>

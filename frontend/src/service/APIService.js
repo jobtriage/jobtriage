@@ -165,6 +165,20 @@ const deleteNote = (applicationId, noteId) => {
  */
 const resendVerificationMail = () => axiosInstance.get(`${apiUrl}/auth/resend`);
 
+
+/**
+ * @param {String} currentPassword
+ * @param {String} password
+ *
+ * @returns {Promise}
+ */
+const changePassword = (currentPassword, password) => {
+  return axiosInstance.post(`${apiUrl}/auth/change`, {
+    current_password: currentPassword,
+    password,
+  });
+};
+
 export default {
   isLoggedIn,
   login,
@@ -181,4 +195,5 @@ export default {
   deleteNote,
   updateNote,
   resendVerificationMail,
+  changePassword,
 };

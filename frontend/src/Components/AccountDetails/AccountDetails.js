@@ -1,41 +1,127 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import NavBar from '../NavBar/NavBar';
 import APIService from '../../service/APIService';
-import { Button } from '../../Material-UI/Components';
+import { Button, Input, Typography } from '../../Material-UI/Components';
+import { makeStyles } from '../../Material-UI/import';
+import { useToast, ToastConstants } from '../../store/context';
 
-import styles from './AccountDetails.module.scss';
 
-const AccountDetails = (props) => {
-  const { email, name } = props;
-  const logout = () => {
-    APIService.logout()
-      .then(() => {
-        document.location = '/';
-      })
-      // eslint-disable-next-line no-console
-      .catch(console.log);
+const useStyles = makeStyles((theme) => ({
+  innerContainer: {
+    margin: '6em',
+    marginLeft: '5em',
+  },
+  h2: {
+    margin: '0 8px',
+  },
+  h3: {
+    margin: '1em 8px',
+  },
+  changePassword: {
+    marginTop: '2em',
+    width: '20%',
+  },
+  error: {
+    color: theme.palette.error.main,
+  },
+  passwordForm: {
+    display: 'flex',
+    flexDirection: 'column',
+    marginLeft: '0.5em',
+  },
+}));
+
+
+const ChangePassword = () => {
+  const showToast = useToast();
+  const classes = useStyles();
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const initializeForm = () => {
+    setError('');
+    setPassword('');
+    setCurrentPassword('');
+    setConfirmPassword('');
+  };
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    if (password === confirmPassword) {
+      APIService.changePassword(currentPassword, password)
+        .then(() => {
+          showToast('Password updated', ToastConstants.SUCCESS);
+          initializeForm();
+        })
+        .catch(() => showToast('Password mismatch', ToastConstants.ERROR));
+    } else {
+      setError('Password and confirm password mismatch');
+    }
   };
 
   return (
-    <div className={styles.Account}>
-      <NavBar>
-        <div className={styles.InnerContainer}>
-          <h2>Account</h2>
-          <h3>
-            Email:
-            {' '}
-            {email}
-          </h3>
-          <h3>
-            Name:
-            {' '}
-            {name}
-          </h3>
-          <Button onClick={logout}>LogOut</Button>
-        </div>
-      </NavBar>
+    <div className={classes.changePassword}>
+      <Typography variant="h6" color="primary">
+        Change password
+      </Typography>
+      <form onSubmit={handleSubmit} className={classes.passwordForm}>
+        <Input
+          type="password"
+          label="current password"
+          required
+          onChange={e => setCurrentPassword(e.target.value)}
+          value={currentPassword}
+        />
+        <Input
+          type="password"
+          label="password"
+          required
+          onChange={e => setPassword(e.target.value)}
+          value={password}
+        />
+        <Input
+          type="password"
+          label="confirm password"
+          required
+          onChange={e => setConfirmPassword(e.target.value)}
+          value={confirmPassword}
+        />
+        <Button name="Update password" type="submit">Update</Button>
+        <p className={classes.error}>
+          {error}
+        </p>
+      </form>
     </div>
+  );
+};
+
+
+const AccountDetails = (props) => {
+  const classes = useStyles();
+  const { email, name } = props;
+
+  return (
+    <NavBar>
+      <div className={classes.innerContainer}>
+        <Typography variant="h6" color="primary">
+          Account
+        </Typography>
+        <Typography variant="body1">
+          <b>Email:</b>
+          {' '}
+          {email}
+        </Typography>
+        <Typography variant="body1">
+          <b>Name:</b>
+          {' '}
+          {name}
+        </Typography>
+        <ChangePassword />
+      </div>
+    </NavBar>
   );
 };
 
