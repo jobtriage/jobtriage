@@ -24,7 +24,7 @@ const SignUp = () => {
     <div className={styles.SignUpPage}>
       <form className={styles.SignUpForm} onSubmit={handleSubmit}>
         <Input type="text" label="name" onChange={e => setName(e.target.value)} value={name} />
-        <Input type="text" label="email" onChange={e => setEmail(e.target.value)} value={email} />
+        <Input type="text" label="email" onChange={e => setEmail(e.target.value)} value={email} helperText="Verification mail will be sent" />
         <Input type="password" label="password" onChange={e => setPassword(e.target.value)} value={password} />
         <Input type="password" label="confirm password" onChange={e => setConfirmPassword(e.target.value)} value={confirmPassword} />
         <Button name="Sign up" type="submit">Sign Up</Button>

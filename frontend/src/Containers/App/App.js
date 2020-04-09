@@ -11,6 +11,7 @@ import LandingPage from '../../Components/LandingPage/LandingPage';
 import AccountDetails from '../../Components/AccountDetails/AccountDetails';
 import Login from '../Onboarding/Login/LoginPage';
 import Signup from '../Onboarding/Signup/SignupPage';
+import ForgotPassword from '../Onboarding/ForgotPassword/ForgotPassword';
 import VerifiedRoute from '../Onboarding/VerifiedRoute/VerifiedRoute';
 import Dashboard from '../Dashboard/Dashboard';
 import ViewJob from '../ViewJob/ViewJob';
@@ -66,6 +67,7 @@ const Routes = () => {
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
+          <Route path="/forgot" component={ForgotPassword} />
           <Route path="/dashboard" component={VerifiedDashboard} />
           <Route path="/account" component={VerifiedAccountDetails} />
           <Route path="/application/:applicationId" component={ViewJob} />
