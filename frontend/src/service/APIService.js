@@ -179,6 +179,30 @@ const changePassword = (currentPassword, password) => {
   });
 };
 
+
+/**
+ * @param {String} email
+ *
+ * @returns {Promise}
+ */
+const generateOTP = email => axiosInstance.post(`${apiUrl}/auth/generateotp`, { email });
+
+
+/**
+ * @param {String} email
+ * @param {String} otp
+ * @param {String} password
+ *
+ * @returns {Promise}
+ */
+const verifyOTP = (email, otp, password) => {
+  return axiosInstance.post(`${apiUrl}/auth/verifyotp`, {
+    email,
+    otp,
+    password,
+  });
+};
+
 export default {
   isLoggedIn,
   login,
@@ -196,4 +220,6 @@ export default {
   updateNote,
   resendVerificationMail,
   changePassword,
+  generateOTP,
+  verifyOTP,
 };

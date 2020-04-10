@@ -31,6 +31,12 @@ const Login = () => {
             Sign up here
           </span>
         </p>
+        <p className={styles.Anchor}>
+          <span onClick={() => history.push('/forgot')}>
+            {' '}
+            Forgot password?
+          </span>
+        </p>
         <p className={styles.Error}>
           {error}
         </p>
