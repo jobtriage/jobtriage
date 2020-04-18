@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { Tab, Tabs } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import APIService from '../../service/APIService';
 import { NavBar, Typography } from '../../Components';
 import BasicDetails from './BaiscDetails';
 import Notes from './Notes/Notes';
+import TimeLog from './TimeLog/TimeLog';
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     flexGrow: 2,
+    width: '100%',
+    flexWrap: 'wrap',
   },
   basicDetail: {
     display: 'flex',
@@ -29,15 +33,28 @@ const Loading = () => {
   );
 };
 
+const TabPanel = ({ index, value, children }) => {
+  return (
+    <div>
+      {index === value && children}
+    </div>
+  );
+};
+
 const ViewJob = props => {
   const classes = useStyles();
   const { match } = props;
   const { applicationId } = match.params;
   const [basicDetail, setBasicDetail] = useState({});
+  const [tab, setTab] = useState(0);
 
   const loadData = () => {
     APIService.getApplicationDetails(applicationId)
       .then(resp => setBasicDetail({ applicationId, ...resp.data.message })).catch(console.log);
+  };
+
+  const handleTabChange = (event, newValue) => {
+    setTab(newValue);
   };
 
   useEffect(() => {
@@ -47,9 +64,26 @@ const ViewJob = props => {
   });
 
   const Body = () => (
-    <div className={classes.root}>
-      <BasicDetails basicDetail={basicDetail} reload={loadData} />
-      <Notes notes={basicDetail.notes} applicationId={applicationId} reload={loadData} />
+    <div>
+      <Tabs
+        value={tab}
+        indicatorColor="primary"
+        textColor="primary"
+        onChange={handleTabChange}
+        aria-label="View job tabs"
+      >
+        <Tab label="Basic" />
+        <Tab label="Notes" />
+      </Tabs>
+      <TabPanel value={tab} index={0}>
+        <div className={classes.root}>
+          <BasicDetails basicDetail={basicDetail} reload={loadData} />
+          <TimeLog basicDetail={basicDetail} reload={loadData} />
+        </div>
+      </TabPanel>
+      <TabPanel value={tab} index={1}>
+        <Notes notes={basicDetail.notes} applicationId={applicationId} reload={loadData} />
+      </TabPanel>
     </div>
   );
 

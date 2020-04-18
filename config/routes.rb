@@ -16,5 +16,6 @@ Rails.application.routes.draw do
 
   resources :applications do
     resources :notes
+    resources :timelogs
   end
 end

@@ -9,6 +9,7 @@ class Application
   field :priority, type: Integer
   field :company, type: Hash
   has_many :notes
+  has_many :timelogs
 
   belongs_to :user
 
@@ -31,6 +32,7 @@ class Application
     res['id'] = id.to_s
     res['user_id'] = user_id.to_s
     res['notes'] = notes.as_json
+    res['timelogs'] = timelogs.as_json
     res
   end
 end

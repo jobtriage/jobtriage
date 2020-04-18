@@ -15,6 +15,12 @@ const useStyles = makeStyles(({
     display: 'flex',
     justifyContent: 'center',
   },
+  root: {
+  },
+  spaceBetween: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
 }));
 
 const BasicDetails = props => {
@@ -54,22 +60,44 @@ const BasicDetails = props => {
         Baisc details
       </Typography>
       <form onSubmit={handleSubmit} className={classes.form}>
-        <div>
-          <Input type="text" label="title" onChange={e => setTitle(e.target.value)} value={title} />
+        <div className={classes.spaceBetween}>
+          <Input
+            type="text"
+            label="title"
+            onChange={e => setTitle(e.target.value)}
+            value={title}
+          />
           <PriorityMenu value={priority} onChange={e => setPriority(e.target.value)} />
           <StatusMenu value={status} onChange={e => setStatus(e.target.value)} />
         </div>
         <Input type="text" label="Job post url" onChange={e => setUrl(e.target.value)} value={url} />
-        <Input type="text" label="description" multiline rows="4" onChange={e => setDescription(e.target.value)} value={description} />
+        <Input
+          type="text"
+          label="description"
+          multiline
+          rows="4"
+          onChange={e => setDescription(e.target.value)}
+          value={description}
+        />
         <Typography variant="h6" color="primary">
           Company details
         </Typography>
-        <div>
-          <Input type="text" label="company name" onChange={e => setCompanyName(e.target.value)} value={companyName} />
-          <Input type="text" label="company link" onChange={e => setCompanyUrl(e.target.value)} value={companyUrl} />
+        <div className={classes.spaceBetween}>
+          <Input
+            type="text"
+            label="company name"
+            onChange={e => setCompanyName(e.target.value)}
+            value={companyName}
+          />
+          <Input
+            type="text"
+            label="company link"
+            onChange={e => setCompanyUrl(e.target.value)}
+            value={companyUrl}
+          />
         </div>
         <div className={classes.displayFlex}>
-          <Button type="submit" style={{ marginTop: '5px', marginBottom: '5px' }}>Update </Button>
+          <Button type="submit" style={{ marginTop: '20px', marginBottom: '5px' }}>Update</Button>
         </div>
       </form>
     </div>

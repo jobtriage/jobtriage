@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  type: 
+  note: MyString
+  time: 2020-04-12 16:28:38
+  application: one
+
+two:
+  type: 
+  note: MyString
+  time: 2020-04-12 16:28:38
+  application: two
