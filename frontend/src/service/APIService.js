@@ -160,6 +160,53 @@ const deleteNote = (applicationId, noteId) => {
   return axiosInstance.delete(`${apiUrl}/applications/${applicationId}/notes/${noteId}`);
 };
 
+
+/**
+ * @param {String} applicationId
+ * @param {String} type
+ * @param {String} note
+ * @param {String} time
+ *
+ * @returns {Promise}
+ */
+const addTimeLog = (applicationId, type, time, note) => {
+  return axiosInstance.post(`${apiUrl}/applications/${applicationId}/timelogs`, {
+    type,
+    time,
+    note,
+  });
+};
+
+
+/**
+ * @param {String} applicationId
+ * @param {String} timeLogId
+ * @param {String} type
+ * @param {String} note
+ * @param {String} time
+ *
+ * @returns {Promise}
+ */
+const updateTimeLog = (applicationId, timeLogId, type, time, note) => {
+  return axiosInstance.put(`${apiUrl}/applications/${applicationId}/timelogs/${timeLogId}`, {
+    type,
+    time,
+    note,
+  });
+};
+
+
+/**
+ * @param {String} applicationId
+ * @param {String} timeLogId
+ *
+ * @returns {Promise}
+ */
+const deleteTimeLog = (applicationId, timeLogId) => {
+  return axiosInstance.delete(`${apiUrl}/applications/${applicationId}/timelogs/${timeLogId}`);
+};
+
+
 /**
  * @returns {Promise}
  */
@@ -222,4 +269,7 @@ export default {
   changePassword,
   generateOTP,
   verifyOTP,
+  addTimeLog,
+  deleteTimeLog,
+  updateTimeLog,
 };

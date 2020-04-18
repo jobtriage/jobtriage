@@ -11,14 +11,14 @@ import ListItemWithClick from '../UI/ListItemWithClick/ListItemWithClick';
 import { makeStyles } from '../../Material-UI/import';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    position: 'fixed',
+  nav: {
     top: '0',
     left: '0',
     zIndex: '1',
     height: '100vh',
+    width: '180px',
+    position: 'fixed',
     backgroundColor: '#f1f1f1',
-    width: '200px',
   },
   logo: {
     margin: theme.spacing(2.5),
@@ -33,7 +33,14 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   container: {
-    marginLeft: '200px',
+    overflow: 'auto',
+    width: '100%',
+    marginLeft: '180px',
+  },
+  root: {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'stretch',
   },
 }));
 
@@ -51,8 +58,8 @@ const NavBar = props => {
   };
 
   return (
-    <div>
-      <nav className={classes.root}>
+    <div className={classes.root}>
+      <nav className={classes.nav}>
         <div className={classes.logoDiv}>
           <NavLink to="/">
             <img src={Logo} alt="logo" className={classes.logo} />

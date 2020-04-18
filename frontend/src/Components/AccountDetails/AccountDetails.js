@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
   },
   changePassword: {
     marginTop: '2em',
-    width: '20%',
   },
   error: {
     color: theme.palette.error.main,
@@ -29,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     marginLeft: '0.5em',
+    maxWidth: '40vh',
   },
 }));
 
