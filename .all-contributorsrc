@@ -54,6 +54,15 @@
         "code",
         "test"
       ]
+    },
+    {
+      "login": "gokul-prog",
+      "name": "Gokulakrishna M",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/55320340?v=4",
+      "profile": "https://github.com/gokul-prog",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
