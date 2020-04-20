@@ -48,7 +48,7 @@ const TimeDialog = props => {
       <DialogTitle style={{ marginLeft: '8px' }} id="add-title">Add Time log</DialogTitle>
       <DialogContent>
         <form className={classes.form} onSubmit={handleSubmit}>
-          <Select label="type" value={type} onChange={e => setType(e.target.value)}>
+          <Select label="Type" value={type} onChange={e => setType(e.target.value)}>
             <MenuItem value="applied">Applied</MenuItem>
             <MenuItem value="interview">Interview</MenuItem>
             <MenuItem value="accepted">Accepted</MenuItem>
@@ -57,7 +57,7 @@ const TimeDialog = props => {
           </Select>
           <DateTimePicker
             style={{ margin: '8px' }}
-            label="eventTime"
+            label="Event time"
             inputVariant="outlined"
             variant="inline"
             value={time}
@@ -65,7 +65,7 @@ const TimeDialog = props => {
           />
           <Input
             type="text"
-            label="content"
+            label="Note"
             multiline
             rows="6"
             onChange={e => setNote(e.target.value)}

@@ -19,7 +19,6 @@ const useStyles = makeStyles(theme => ({
     margin: 5,
     border: `1px solid ${theme.palette.border.main}`,
     borderRadius: '4px',
-
   },
   addBox: {
     display: 'flex',
