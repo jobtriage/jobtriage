@@ -15,6 +15,7 @@ import ForgotPassword from '../Onboarding/ForgotPassword/ForgotPassword';
 import VerifiedRoute from '../Onboarding/VerifiedRoute/VerifiedRoute';
 import Dashboard from '../Dashboard/Dashboard';
 import ViewJob from '../ViewJob/ViewJob';
+import SelfAnalysis from '../SelfAnalysis/SelfAnalysis';
 import { Toast } from '../../Material-UI/Components';
 import { useAppContext } from '../../store/context';
 import styles from './App.module.scss';
@@ -60,6 +61,12 @@ const VerifiedAccountDetails = () => (
   </VerifiedRoute>
 );
 
+const VerifiedSelfAnalysis = () => (
+  <VerifiedRoute>
+    <SelfAnalysis />
+  </VerifiedRoute>
+);
+
 const Routes = () => {
   return (
     <Router>
@@ -69,6 +76,7 @@ const Routes = () => {
           <Route path="/signup" component={Signup} />
           <Route path="/forgot" component={ForgotPassword} />
           <Route path="/dashboard" component={VerifiedDashboard} />
+          <Route path="/self" component={VerifiedSelfAnalysis} />
           <Route path="/account" component={VerifiedAccountDetails} />
           <Route path="/application/:applicationId" component={ViewJob} />
           <Route path="/" component={LandingPage} />

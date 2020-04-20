@@ -14,6 +14,8 @@ class User
   field :reset_token, type: String
 
   has_many :applications
+  has_many :analyses
+  has_one :pitch
 
   validates :email, uniqueness: { message: 'Email already registered' }, presence: true
   validates :name, presence: true

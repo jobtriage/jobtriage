@@ -250,6 +250,54 @@ const verifyOTP = (email, otp, password) => {
   });
 };
 
+
+/**
+ * @returns {Promise}
+ */
+const getPitch = () => axiosInstance.get(`${apiUrl}/pitch`);
+
+
+/**
+ * @param {String} pitch
+ *
+ * @returns {Promise}
+ */
+const updatePitch = (pitch) => axiosInstance.post(`${apiUrl}/pitch`, { pitch });
+
+
+/**
+ * @returns {Promise}
+ */
+const getAnalyses = () => axiosInstance.get(`${apiUrl}/analyses`);
+
+
+/**
+ * @param {String} title
+ * @param {String} content
+ *
+ * @returns {Promise}
+ */
+const addAnalysis = (title, content) => axiosInstance.post(`${apiUrl}/analyses`, { title, content });
+
+
+/**
+ * @param {String} title
+ * @param {String} content
+ *
+ * @returns {Promise}
+ */
+const updateAnalysis = (analysisId, title, content) => {
+  return axiosInstance.put(`${apiUrl}/analyses/${analysisId}`, { title, content });
+};
+
+
+/**
+ * @param {String} analysisId
+ *
+ * @returns {Promise}
+ */
+const deleteAnalysis = (analysisId) => axiosInstance.delete(`${apiUrl}/analyses/${analysisId}`);
+
 export default {
   isLoggedIn,
   login,
@@ -272,4 +320,10 @@ export default {
   addTimeLog,
   deleteTimeLog,
   updateTimeLog,
+  getPitch,
+  updatePitch,
+  getAnalyses,
+  addAnalysis,
+  updateAnalysis,
+  deleteAnalysis,
 };

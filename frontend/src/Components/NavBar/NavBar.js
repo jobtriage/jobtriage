@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
+import { AssignmentOutlined } from '@material-ui/icons';
 import ExitToAppOutlined from '@material-ui/icons/ExitToAppOutlined';
 import { Logo } from '../../assets/icons';
 import { List, Divider } from '../../Material-UI/Components';
@@ -72,6 +73,12 @@ const NavBar = props => {
             to="/dashboard"
             textOverrideClass={{ primary: classes.textStyle }}
             icon={<DashboardOutlinedIcon />}
+          />
+          <ListItemWithLink
+            primary="Self Analysis"
+            to="/self"
+            textOverrideClass={{ primary: classes.textStyle }}
+            icon={<AssignmentOutlined />}
           />
           <ListItemWithLink
             primary="Account"
