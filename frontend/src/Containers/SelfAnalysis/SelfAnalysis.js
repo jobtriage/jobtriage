@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import parse from 'html-react-parser';
 import { makeStyles } from '@material-ui/core/styles';
+import { IconButton } from '@material-ui/core';
 import { Delete, Add } from '@material-ui/icons';
 import { Typography } from '../../Material-UI/Components';
 import TextEditor from '../../Components/TextEditor/TextEditor';
@@ -34,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
     height: '260px',
     overflow: 'hidden',
     cursor: 'pointer',
-    padding: '10px',
   },
   addBox: {
     display: 'flex',
@@ -120,20 +120,24 @@ const AnalysesCard = (props) => {
     reload();
   };
 
+  const deleteAnalysis = () => {
+    APIService.deleteAnalysis(analysisId).then(reload);
+  };
+
   return (
     <div className={classes.card}>
       <div className={classes.cardContent} onClick={handleAddAnalysisOpen}>
         <Typography variant="h6" gutterBottom color="primary">
           {title}
         </Typography>
-        <Typography variant="body1" gutterBottom>
+        <div className="ql-editor">
           {parse(content)}
-        </Typography>
+        </div>
       </div>
       <div className={classes.cardAction}>
-        <Delete
-          style={{ cursor: 'pointer' }}
-        />
+        <IconButton aria-label="Delete analysis" component="span" onClick={deleteAnalysis}>
+          <Delete />
+        </IconButton>
       </div>
       <AnalysisForm
         open={openAddAnalysis}
@@ -185,13 +189,15 @@ const BehaviourAnalysis = () => {
             title={analysis.title}
             content={analysis.content}
             reload={fetchData}
-            key={analyses.id}
+            key={analysis.id}
             analysisId={analysis.id}
           />
         ))}
         <div className={classes.addBox} onClick={handleAddAnalysisOpen}>
           <Typography variant="h6" gutterBottom>
-            <Add />
+            <IconButton aria-label="Add analysis" component="span">
+              <Add />
+            </IconButton>
           </Typography>
         </div>
       </div>

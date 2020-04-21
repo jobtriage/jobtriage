@@ -1,10 +1,11 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import Header from './Header/Header';
 import LandingBody from './LandingBody/LandingBody';
+import { useAppContext } from '../../store/context';
 
-const LandingPage = (props) => {
-  const { email } = props;
+const LandingPage = () => {
+  const { state } = useAppContext();
+  const { email } = state.user;
   const isAuthenticated = email !== undefined;
   return (
     <div>
@@ -14,9 +15,5 @@ const LandingPage = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  const { users } = state;
-  return users;
-};
 
-export default connect(mapStateToProps)(LandingPage);
+export default LandingPage;

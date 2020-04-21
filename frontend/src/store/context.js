@@ -1,6 +1,13 @@
 import React, { useState, useContext } from 'react';
 
-const initialState = { toast: { show: false, message: '', type: 'info' } };
+const initialState = {
+  toast: {
+    show: false, message: '', type: 'info',
+  },
+  user: {
+
+  },
+};
 const AppContext = React.createContext({});
 
 export const AppProvider = ({ children }) => {
@@ -12,6 +19,12 @@ export const AppProvider = ({ children }) => {
       state.toast.show = true;
       state.toast.message = message;
       state.toast.type = type;
+      setState({ ...state });
+    },
+    addUser: (userId, email, name, confirmed) => {
+      state.user = {
+        userId, email, name, confirmed,
+      };
       setState({ ...state });
     },
     closeToast: () => {
@@ -30,5 +43,6 @@ export const AppProvider = ({ children }) => {
 
 export const useAppContext = () => useContext(AppContext);
 export const useToast = () => useAppContext().showToast;
+export const useUser = () => useAppContext().addUser;
 export const ToastConstants = { SUCCESS: 'success', ERROR: 'error' };
 export default AppContext;

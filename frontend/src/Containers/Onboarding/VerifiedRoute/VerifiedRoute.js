@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Button } from '../../../Material-UI/Components';
 import APIService from '../../../service/APIService';
+import { useAppContext } from '../../../store/context';
 
 
 const useStyles = makeStyles(() => ({
@@ -58,7 +58,9 @@ const VerifyEmail = () => {
 
 const VerifiedRoute = (props) => {
   const classes = useStyles();
-  const { confirmed, children } = props;
+  const { state } = useAppContext();
+  const { confirmed } = state.user;
+  const { children } = props;
 
   return (
     <div className={classes.root}>
@@ -67,9 +69,4 @@ const VerifiedRoute = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  const { users } = state;
-  return users;
-};
-
-export default connect(mapStateToProps)(VerifiedRoute);
+export default VerifiedRoute;

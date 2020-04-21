@@ -4,9 +4,8 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { makeStyles } from '@material-ui/styles';
 import APIService from '../../service/APIService';
-import { addUser } from '../../store/actions';
 import LandingPage from '../../Components/LandingPage/LandingPage';
 import AccountDetails from '../../Components/AccountDetails/AccountDetails';
 import Login from '../Onboarding/Login/LoginPage';
@@ -17,23 +16,32 @@ import Dashboard from '../Dashboard/Dashboard';
 import ViewJob from '../ViewJob/ViewJob';
 import SelfAnalysis from '../SelfAnalysis/SelfAnalysis';
 import { Toast } from '../../Material-UI/Components';
-import { useAppContext } from '../../store/context';
-import styles from './App.module.scss';
+import { useAppContext, useUser } from '../../store/context';
 
-const App = ({ addUserInitially }) => {
+
+const useStyles = makeStyles(() => ({
+  app: {
+    fontSize: '16px',
+    color: 'rgb(127, 127, 127)',
+    height: '100vh',
+  },
+}));
+
+
+const App = () => {
+  const addUserHook = useUser();
+
   useEffect(() => {
     APIService.isLoggedIn().then(resp => {
       const {
         user_id: userId, email, name, email_confirmed: confirmed,
       } = resp.data.message;
-      addUserInitially({
-        userId, email, name, confirmed,
-      });
+      addUserHook(userId, email, name, confirmed);
     }).catch((error) => {
       // eslint-disable-next-line no-console
       console.log(error);
     });
-  }, [addUserInitially]);
+  }, []);
 
   const { state, closeToast } = useAppContext();
   return (
@@ -68,9 +76,11 @@ const VerifiedSelfAnalysis = () => (
 );
 
 const Routes = () => {
+  const classes = useStyles();
+
   return (
     <Router>
-      <div className={styles.App}>
+      <div className={classes.app}>
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
@@ -86,10 +96,5 @@ const Routes = () => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addUserInitially: (userDetails) => dispatch(addUser(userDetails)),
-  };
-};
 
-export default connect(null, mapDispatchToProps)(App);
+export default App;

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
 import NavBar from '../NavBar/NavBar';
 import APIService from '../../service/APIService';
 import { Button, Input, Typography } from '../../Material-UI/Components';
 import { makeStyles } from '../../Material-UI/import';
-import { useToast, ToastConstants } from '../../store/context';
+import { useToast, ToastConstants, useAppContext } from '../../store/context';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -99,9 +98,10 @@ const ChangePassword = () => {
 };
 
 
-const AccountDetails = (props) => {
+const AccountDetails = () => {
   const classes = useStyles();
-  const { email, name } = props;
+  const { state } = useAppContext();
+  const { email, name } = state.user;
 
   return (
     <NavBar>
@@ -125,9 +125,5 @@ const AccountDetails = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  const { users } = state;
-  return users;
-};
 
-export default connect(mapStateToProps)(AccountDetails);
+export default AccountDetails;

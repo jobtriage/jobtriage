@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { Input, Button } from '../../../Material-UI/Components';
+import { Input, Button, Typography } from '../../../Material-UI/Components';
 import APIService from '../../../service/APIService';
 import { useToast, ToastConstants } from '../../../store/context';
 
@@ -16,6 +16,11 @@ const useStyles = makeStyles(() => ({
   form: {
     display: 'flex',
     flexDirection: 'column',
+  },
+  formContainer: {
+    border: '1px solid #dedede',
+    padding: '15px 30px',
+    boxShadow: '1px 1px 6px #cacaca',
   },
 }));
 
@@ -42,9 +47,9 @@ const VerifyOPTForm = ({ email }) => {
 
   return (
     <form className={classes.form} onSubmit={handleOTPSubmit}>
-      <Input type="password" label="otp" onChange={e => setOtp(e.target.value)} value={otp} />
-      <Input type="password" label="password" onChange={e => setPassword(e.target.value)} value={password} />
-      <Input type="password" label="confirm password" onChange={e => setConfirmPassword(e.target.value)} value={confirmPassword} />
+      <Input type="password" label="otp" onChange={e => setOtp(e.target.value)} value={otp} required />
+      <Input type="password" label="password" onChange={e => setPassword(e.target.value)} value={password} required />
+      <Input type="password" label="confirm password" onChange={e => setConfirmPassword(e.target.value)} value={confirmPassword} required />
       <Button name="Update password" type="submit">Update password</Button>
     </form>
   );
@@ -70,7 +75,7 @@ const ForgotPassword = () => {
   const GenerateOTPForm = () => {
     return (
       <form className={classes.form} onSubmit={handleOTPGenerate}>
-        <Input type="text" label="email" onChange={e => setEmail(e.target.value)} value={email} autoFocus />
+        <Input type="text" label="email" onChange={e => setEmail(e.target.value)} value={email} autoFocus required />
         <Button name="Send OTP" type="submit">Send OTP</Button>
       </form>
     );
@@ -78,7 +83,14 @@ const ForgotPassword = () => {
 
   return (
     <div className={classes.container}>
-      {otpGenerated ? <VerifyOPTForm email={email} /> : <GenerateOTPForm />}
+      <div className={classes.formContainer}>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <Typography color="primary" variant="h5">
+            Forgot Password
+          </Typography>
+        </div>
+        {otpGenerated ? <VerifyOPTForm email={email} /> : <GenerateOTPForm />}
+      </div>
     </div>
   );
 };
