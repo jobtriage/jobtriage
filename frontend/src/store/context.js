@@ -4,9 +4,8 @@ const initialState = {
   toast: {
     show: false, message: '', type: 'info',
   },
-  user: {
-
-  },
+  user: {},
+  loader: false,
 };
 const AppContext = React.createContext({});
 
@@ -27,6 +26,10 @@ export const AppProvider = ({ children }) => {
       };
       setState({ ...state });
     },
+    showLoader: (show) => {
+      state.loader = show;
+      setState({ ...state });
+    },
     closeToast: () => {
       state.toast.show = false;
       setState({ ...state });
@@ -44,5 +47,6 @@ export const AppProvider = ({ children }) => {
 export const useAppContext = () => useContext(AppContext);
 export const useToast = () => useAppContext().showToast;
 export const useUser = () => useAppContext().addUser;
+export const useLoader = () => useAppContext().showLoader;
 export const ToastConstants = { SUCCESS: 'success', ERROR: 'error' };
 export default AppContext;

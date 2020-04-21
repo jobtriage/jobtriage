@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Input, Button, Typography } from '../../../Material-UI/Components';
 import APIService from '../../../service/APIService';
+import { useLoader } from '../../../store/context';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -43,6 +44,7 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const showLoader = useLoader();
 
   const validateForm = () => {
     if (password !== confirmPassword) {
@@ -60,9 +62,11 @@ const SignUp = () => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     if (validateForm()) {
+      showLoader(true);
       APIService.signUp(name, email, password)
         .then(() => { window.location = '/dashboard'; })
-        .catch(() => setError('Error occurred check inputs'));
+        .catch(() => setError('Error occurred check inputs'))
+        .finally(() => showLoader(false));
     }
   };
 

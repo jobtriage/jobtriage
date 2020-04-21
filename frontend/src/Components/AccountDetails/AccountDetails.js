@@ -3,7 +3,9 @@ import NavBar from '../NavBar/NavBar';
 import APIService from '../../service/APIService';
 import { Button, Input, Typography } from '../../Material-UI/Components';
 import { makeStyles } from '../../Material-UI/import';
-import { useToast, ToastConstants, useAppContext } from '../../store/context';
+import {
+  useToast, ToastConstants, useAppContext, useLoader,
+} from '../../store/context';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -34,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ChangePassword = () => {
   const showToast = useToast();
+  const showLoader = useLoader();
   const classes = useStyles();
   const [currentPassword, setCurrentPassword] = useState('');
   const [password, setPassword] = useState('');
@@ -50,12 +53,14 @@ const ChangePassword = () => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     if (password === confirmPassword) {
+      showLoader(true);
       APIService.changePassword(currentPassword, password)
         .then(() => {
           showToast('Password updated', ToastConstants.SUCCESS);
           initializeForm();
         })
-        .catch(() => showToast('Password mismatch', ToastConstants.ERROR));
+        .catch(() => showToast('Password mismatch', ToastConstants.ERROR))
+        .finally(() => showLoader(false));
     } else {
       setError('Password and confirm password mismatch');
     }

@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Input, Button, Typography } from '../../../Material-UI/Components';
 import APIService from '../../../service/APIService';
-import { useToast, ToastConstants } from '../../../store/context';
+import { useToast, ToastConstants, useLoader } from '../../../store/context';
 
 
 const useStyles = makeStyles(() => ({
@@ -29,6 +29,7 @@ const VerifyOPTForm = ({ email }) => {
   const classes = useStyles();
   const history = useHistory();
   const showToast = useToast();
+  const showLoader = useLoader();
 
   const [otp, setOtp] = useState('');
   const [password, setPassword] = useState('');
@@ -37,9 +38,11 @@ const VerifyOPTForm = ({ email }) => {
   const handleOTPSubmit = evt => {
     evt.preventDefault();
     if (password === confirmPassword) {
+      showLoader(true);
       APIService.verifyOTP(email, otp, password)
         .then(() => history.push('/login'))
-        .catch(err => showToast(err.response.data.message, ToastConstants.ERROR));
+        .catch(err => showToast(err.response.data.message, ToastConstants.ERROR))
+        .finally(() => showLoader(false));
     } else {
       showToast('Password mismatch', ToastConstants.ERROR);
     }
@@ -58,18 +61,21 @@ const VerifyOPTForm = ({ email }) => {
 const ForgotPassword = () => {
   const classes = useStyles();
   const showToast = useToast();
+  const showLoader = useLoader();
 
   const [email, setEmail] = useState('');
   const [otpGenerated, setOtpGenerated] = useState(false);
 
   const handleOTPGenerate = evt => {
     evt.preventDefault();
+    showLoader(true);
     APIService.generateOTP(email)
       .then(() => {
         setOtpGenerated(true);
         showToast('OTP sent', ToastConstants.SUCCESS);
       })
-      .catch(() => showToast('Email not registered', ToastConstants.ERROR));
+      .catch(() => showToast('Email not registered', ToastConstants.ERROR))
+      .finally(() => showLoader(false));
   };
 
   const GenerateOTPForm = () => {
