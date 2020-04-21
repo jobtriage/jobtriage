@@ -4,6 +4,7 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
+import { LinearProgress } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import APIService from '../../service/APIService';
 import LandingPage from '../../Components/LandingPage/LandingPage';
@@ -24,6 +25,11 @@ const useStyles = makeStyles(() => ({
     fontSize: '16px',
     color: 'rgb(127, 127, 127)',
     height: '100vh',
+  },
+  progress: {
+    position: 'fixed',
+    width: '100%',
+    zIndex: '10',
   },
 }));
 
@@ -77,10 +83,12 @@ const VerifiedSelfAnalysis = () => (
 
 const Routes = () => {
   const classes = useStyles();
+  const { state } = useAppContext();
 
   return (
     <Router>
       <div className={classes.app}>
+        {state.loader ? <LinearProgress color="primary" className={classes.progress} /> : ''}
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />

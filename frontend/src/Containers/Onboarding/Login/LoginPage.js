@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Input, Button, Typography } from '../../../Material-UI/Components';
 import APIService from '../../../service/APIService';
-
+import { useLoader } from '../../../store/context';
 
 const useStyles = makeStyles((theme) => ({
   loginPage: {
@@ -41,12 +41,15 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const showLoader = useLoader();
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    showLoader(true);
     APIService.login(email, password)
       .then(() => { window.location = '/dashboard'; })
-      .catch(() => setError('Authentication failed check input'));
+      .catch(() => setError('Authentication failed check input'))
+      .finally(() => showLoader(false));
   };
 
   return (

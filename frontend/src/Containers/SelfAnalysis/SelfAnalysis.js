@@ -10,6 +10,7 @@ import APIService from '../../service/APIService';
 import AnalysisCard from '../../Components/AnalysisCard/AnalysisCard';
 import AnalysisForm from './AddAnalysis';
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 2,

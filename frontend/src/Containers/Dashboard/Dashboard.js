@@ -9,7 +9,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import NavBar from '../../Components/NavBar/NavBar';
 import AddJob from './AddJob/AddJob';
 import APIService from '../../service/APIService';
-import { useToast, ToastConstants } from '../../store/context';
+import { useToast, ToastConstants, useLoader } from '../../store/context';
 
 const data = {
   lanes: [
@@ -77,6 +77,7 @@ const parseApplicationData = appData => {
 
 const Dashboard = () => {
   const showToast = useToast();
+  const showLoader = useLoader();
   const classes = useStyles();
   const history = useHistory();
   const [boardData, setBoardData] = useState(data);
@@ -91,12 +92,13 @@ const Dashboard = () => {
   };
 
   const getJobApplications = () => {
+    showLoader(true);
     APIService.getJobApplications()
       .then(resp => {
         const appData = resp.data.message;
         const parsedData = parseApplicationData(appData);
         setBoardData(parsedData);
-      });
+      }).finally(() => showLoader(false));
   };
 
   useEffect(() => {
