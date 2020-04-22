@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const apiUrl = process.env.REACT_APP_SERVER_URL || 'http://localhost:3000';
+const apiUrl = process.env.REACT_APP_SERVER_URL || '';
 
 const axiosInstance = axios.create(); // Axios instance for 401 redirection
 
