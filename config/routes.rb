@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-
   # Routes for auth
   post 'auth/register',      to: 'auth#register'
   post 'auth/login',         to: 'auth#login'
@@ -21,4 +20,6 @@ Rails.application.routes.draw do
 
   resources :analyses
   resource :pitch
+
+  match '*all', to: 'static#index', via: [:get]
 end
