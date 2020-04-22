@@ -20,3 +20,4 @@ application.yml
 /config/master.key
 .idea
 /public/*
+node_modules
