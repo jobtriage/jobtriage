@@ -39,7 +39,19 @@ Run the following comands.
  - `yarn start`
  -  Open http://localhost:3001 or any port at which React starts.
 
+## Running acceptance tests
+To run acceptance test, first you must have a working backend and frontend. So, look the above sections to set the backend and the frontend.
 
+Run the following commands.
+
+ - `cd frontend`
+ - `yarn acceptance-tests`
+ 
+Above command will run all the acceptance tests. To run a particular test scenario you can be more specific like:
+
+`yarn acceptance-tests tests/acceptance/features/webUILogin/login.feature
+` 
+  
 **If you face any issues during setup/ If you think this doc needs improvement, Kindly raise an issue or PR** 
 
-### Thanks! :purple_heart: 
+### Thanks! :purple_heart:
