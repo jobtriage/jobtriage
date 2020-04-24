@@ -1,31 +1,32 @@
+const LOCAL_LAUNCH_URL = 'http://localhost:3001';
+
 exports.config = {
-  output: './output',
+  output: './tests/acceptance/output',
   helpers: {
     Puppeteer: {
-      url: 'http://localhost',
+      url: LOCAL_LAUNCH_URL,
       show: true,
-      windowSize: '1200x900'
-    }
+      windowSize: '1200x900',
+    },
   },
   include: {
-    I: './steps_file.js'
+    Page: './tests/acceptance/pages/*.js',
   },
   mocha: {},
   bootstrap: null,
   teardown: null,
   hooks: [],
   gherkin: {
-    features: './features/*.feature',
-    steps: ['./step_definitions/steps.js']
+    features: './tests/acceptance/features/*/*.feature',
+    steps: './tests/acceptance/step_definitions/*.js',
   },
   plugins: {
     screenshotOnFail: {
-      enabled: true
+      enabled: true,
     },
     retryFailedStep: {
-      enabled: true
-    }
+      enabled: true,
+    },
   },
-  tests: './*_test.js',
-  name: 'frontend'
-}
+  name: 'frontend',
+};
