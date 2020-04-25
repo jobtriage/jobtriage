@@ -25,6 +25,8 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
+  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
+
   config.action_mailer.delivery_method = :sendmail
   config.action_mailer.perform_deliveries = true
   # Don't care if the mailer can't send.

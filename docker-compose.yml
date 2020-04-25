@@ -6,7 +6,7 @@ services:
       - /data/db
     ports:
       - "27017:27017"
-  web:
+  app:
     build: .
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
@@ -20,5 +20,20 @@ services:
       - USE_EMAIL_VERIFICATION=true
       - RACK_ENV=production
       - notification_email=jobtriage@gmail.com
+      - RAILS_SERVE_STATIC_FILES=true
     env_file:
       - web.env
+
+  web:
+    build:
+      context: .
+      dockerfile: nginx.Dockerfile
+    volumes:
+      - .:/myapp
+    depends_on:
+      - app
+    links:
+      - app
+    ports:
+      - 80:80
+    restart: always

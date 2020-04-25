@@ -9,7 +9,7 @@ development:
       # Provides the hosts the default client can connect to. Must be an array
       # of host:port pairs. (required)
       hosts:
-        - db:27017
+        - localhost:27017
       options:
         # Note that all options listed below are Ruby driver client options (the mongo gem).
         # Please refer to the driver documentation of the version of the mongo gem you are using
@@ -168,6 +168,7 @@ production:
   clients:
     # Defines the default client. (required)
     default:
+      database: jobtriage
       # Defines the name of the default database that Mongoid can connect to.
       # (required).
       hosts:
