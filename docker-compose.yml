@@ -1,0 +1,24 @@
+version: '3'
+services:
+  db:
+    image: mongo
+    volumes:
+      - /data/db
+    ports:
+      - "27017:27017"
+  web:
+    build: .
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    volumes:
+      - .:/myapp
+    ports:
+      - "3000:3000"
+    links:
+      - db
+    environment:
+      - RAILS_ENV=production
+      - USE_EMAIL_VERIFICATION=true
+      - RACK_ENV=production
+      - notification_email=jobtriage@gmail.com
+    env_file:
+      - web.env

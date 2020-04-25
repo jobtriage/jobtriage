@@ -37,7 +37,7 @@ class AuthController < ApplicationController
     user = User.find_by confirm_token: params[:token]
     user&.update_attributes(email_confirmed: true)
 
-    redirect_to ENV['CLIENT_HOST']
+    redirect_to '/'
   end
 
   def resend_email
