@@ -125,6 +125,8 @@ const Dashboard = () => {
           handleDragEnd={handleDrag}
           onCardDelete={cardDelete}
           onCardClick={cardId => history.push(`/application/${cardId}`)}
+          laneStyle={{ backgroundColor: '#d9c8f5' }}
+          cardStyle={{ backgroundColor: '#ffe' }}
         />
       </NavBar>
       <Fab
