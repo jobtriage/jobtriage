@@ -15,6 +15,7 @@ Made with Rails, React, Mongo DB and :purple_heart:
 
  - [React Trello](https://github.com/rcdexta/react-trello) - kanban board
  - [Material UI](https://github.com/mui-org/material-ui) - Material UI
+ - [React quill](https://github.com/zenoamaro/react-quill)- React quill
  
 
 ## Contribute 🤝
