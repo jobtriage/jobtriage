@@ -94,7 +94,7 @@ const PitchView = () => {
               onCancel={() => setDisplayEditor(false)}
             />
           )
-          : (<AnalysisCard content={pitch} onEdit={() => setDisplayEditor(true)} />)}
+          : (<AnalysisCard content={pitch !== '' ? pitch : '<h2>Add your pitch</h2>'} onEdit={() => setDisplayEditor(true)} />)}
       </div>
     </div>
   );

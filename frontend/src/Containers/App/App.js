@@ -7,7 +7,6 @@ import {
 import { LinearProgress } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import APIService from '../../service/APIService';
-import LandingPage from '../../Components/LandingPage/LandingPage';
 import AccountDetails from '../../Components/AccountDetails/AccountDetails';
 import Login from '../Onboarding/Login/LoginPage';
 import Signup from '../Onboarding/Signup/SignupPage';
@@ -97,7 +96,7 @@ const Routes = () => {
           <Route path="/self" component={VerifiedSelfAnalysis} />
           <Route path="/account" component={VerifiedAccountDetails} />
           <Route path="/application/:applicationId" component={ViewJob} />
-          <Route path="/" component={LandingPage} />
+          <Route path="/" component={Login} />
         </Switch>
       </div>
     </Router>

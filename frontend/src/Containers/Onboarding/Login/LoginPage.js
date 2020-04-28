@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Input, Button, Typography } from '../../../Material-UI/Components';
 import APIService from '../../../service/APIService';
-import { useLoader } from '../../../store/context';
+import { useLoader, useAppContext } from '../../../store/context';
 
 const useStyles = makeStyles((theme) => ({
   loginPage: {
@@ -42,6 +42,12 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const showLoader = useLoader();
+  const { state } = useAppContext();
+  const { email: signedMail } = state.user;
+
+  if (signedMail) {
+    history.push('/dashboard');
+  }
 
   const handleSubmit = (evt) => {
     evt.preventDefault();

@@ -1,5 +1,4 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import { AssignmentOutlined } from '@material-ui/icons';
@@ -62,9 +61,9 @@ const NavBar = props => {
     <div className={classes.root}>
       <nav className={classes.nav}>
         <div className={classes.logoDiv}>
-          <NavLink to="/">
+          <a href="https://www.jobtriage.org/" target="_blank" rel="noopener noreferrer">
             <img src={Logo} alt="logo" className={classes.logo} />
-          </NavLink>
+          </a>
         </div>
         <Divider />
         <List component="ul">
