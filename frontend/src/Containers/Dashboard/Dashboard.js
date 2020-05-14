@@ -3,10 +3,10 @@ import { useHistory } from 'react-router-dom';
 import { Fab } from '@material-ui/core';
 // eslint-disable-next-line import/no-unresolved
 import Board from 'react-trello';
-import { Add } from '@material-ui/icons';
+import { Add, VerticalAlignCenterOutlined } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import cloneDeep from 'lodash/cloneDeep';
-import NavBar from '../../Components/NavBar/NavBar';
+import { NavBar, Typography } from '../../Components';
 import AddJob from './AddJob/AddJob';
 import APIService from '../../service/APIService';
 import { useToast, ToastConstants, useLoader } from '../../store/context';
@@ -80,6 +80,7 @@ const Dashboard = () => {
   const showLoader = useLoader();
   const classes = useStyles();
   const history = useHistory();
+  const [applicationsData, setApplicationsData] = React.useState([]);
   const [boardData, setBoardData] = useState(data);
   const [openJobAdd, setOpenJobAdd] = React.useState(false);
 
@@ -96,6 +97,7 @@ const Dashboard = () => {
     APIService.getJobApplications()
       .then(resp => {
         const appData = resp.data.message;
+        setApplicationsData(appData);
         const parsedData = parseApplicationData(appData);
         setBoardData(parsedData);
       }).finally(() => showLoader(false));
@@ -116,10 +118,23 @@ const Dashboard = () => {
     APIService.deleteApplication(id).catch(() => showToast('Error while deleting Job application', ToastConstants.ERROR));
   };
 
+  const isEmptyBoard = () => {
+    return applicationsData.length == 0
+  };
+
   return (
     <div>
       <NavBar>
-        <Board
+      <Typography color="primary" variant="h5">
+        Dashboard
+      </Typography>
+        {isEmptyBoard() && (
+            <Typography style={{marginTop: '20%', textAlign: 'center' , VerticalAlignCenterOutlined}}> Your dashboard is empty!! <br/> Hope you are doing well !! <br/> Add a new application to get started!! </Typography>
+          )
+        }
+
+        {!isEmptyBoard() && (
+          <Board
           data={boardData}
           style={{ backgroundColor: '#fff', height: '95vh' }}
           handleDragEnd={handleDrag}
@@ -128,6 +143,8 @@ const Dashboard = () => {
           laneStyle={{ backgroundColor: '#d9c8f5' }}
           cardStyle={{ backgroundColor: '#ffe' }}
         />
+        )}
+        
       </NavBar>
       <Fab
         color="primary"
