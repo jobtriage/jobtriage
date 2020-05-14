@@ -4,7 +4,7 @@ import { Select } from '../../Material-UI/Components';
 
 const StatusMenu = props => {
   return (
-    <Select label="status" {...props}>
+    <Select label="Status" {...props}>
       <MenuItem value="yettoapply">Yet to apply</MenuItem>
       <MenuItem value="applied">Applied</MenuItem>
       <MenuItem value="inprogress">In Progress</MenuItem>

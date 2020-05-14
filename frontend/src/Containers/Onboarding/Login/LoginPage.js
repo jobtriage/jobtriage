@@ -67,8 +67,8 @@ const Login = () => {
           </Typography>
         </div>
         <form className={classes.loginForm} onSubmit={handleSubmit}>
-          <Input type="text" label="email" onChange={e => setEmail(e.target.value)} value={email} required />
-          <Input type="password" label="password" onChange={e => setPassword(e.target.value)} value={password} required />
+          <Input type="text" label="Email" onChange={e => setEmail(e.target.value)} value={email} required />
+          <Input type="password" label="Password" onChange={e => setPassword(e.target.value)} value={password} required />
           <Button name="Login" type="submit">Login</Button>
           <p className={classes.anchor}>
             Don&apos;t have an account?

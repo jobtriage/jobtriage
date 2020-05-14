@@ -39,7 +39,7 @@ const AnalysisDialog = props => {
     <Dialog open={open} onClose={onClose} aria-labelledby="Add Analysis form">
       <DialogContent>
         <div className={classes.form}>
-          <Input type="text" label="title" required onChange={e => setTitle(e.target.value)} value={title} />
+          <Input type="text" label="Title" required onChange={e => setTitle(e.target.value)} value={title} />
           <TextEditor content={content} onUpdate={handleSubmit} onCancel={onClose} />
         </div>
         <p className={classes.error}>

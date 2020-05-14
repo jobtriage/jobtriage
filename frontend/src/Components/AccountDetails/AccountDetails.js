@@ -74,21 +74,21 @@ const ChangePassword = () => {
       <form onSubmit={handleSubmit} className={classes.passwordForm}>
         <Input
           type="password"
-          label="current password"
+          label="Current Password"
           required
           onChange={e => setCurrentPassword(e.target.value)}
           value={currentPassword}
         />
         <Input
           type="password"
-          label="password"
+          label="Password"
           required
           onChange={e => setPassword(e.target.value)}
           value={password}
         />
         <Input
           type="password"
-          label="confirm password"
+          label="Confirm Password"
           required
           onChange={e => setConfirmPassword(e.target.value)}
           value={confirmPassword}

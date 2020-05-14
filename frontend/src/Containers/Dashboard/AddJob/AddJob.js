@@ -32,18 +32,18 @@ const AddJobDialog = props => {
         onClose();
         setTitle('');
         setCompany('');
-        showToast('Job application added successfully', ToastConstants.SUCCESS);
+        showToast('Job Application added successfully', ToastConstants.SUCCESS);
       })
-      .catch(() => { showToast('Error in adding Job application', ToastConstants.ERROR); });
+      .catch(() => { showToast('Error in adding Job Application', ToastConstants.ERROR); });
   };
 
   return (
     <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title">
-      <DialogTitle style={{ marginLeft: '8px' }} id="form-dialog-title">Add new job</DialogTitle>
+      <DialogTitle style={{ marginLeft: '8px' }} id="form-dialog-title">Add new Job Application</DialogTitle>
       <DialogContent>
         <form className={classes.mainCard} onSubmit={handleSubmit}>
-          <Input type="text" label="title" required onChange={e => setTitle(e.target.value)} value={title} />
-          <Input type="text" label="company" required onChange={e => setCompany(e.target.value)} value={company} />
+          <Input type="text" label="Title" required onChange={e => setTitle(e.target.value)} value={title} />
+          <Input type="text" label="Company" required onChange={e => setCompany(e.target.value)} value={company} />
           <PriorityMenu onChange={e => setPriority(e.target.value)} />
           <StatusMenu onChange={e => setStatus(e.target.value)} />
           <Button type="submit">Add</Button>
