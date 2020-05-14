@@ -136,7 +136,7 @@ const Dashboard = () => {
         {!isEmptyBoard() && (
           <Board
           data={boardData}
-          style={{ backgroundColor: '#fff', height: '95vh' }}
+          style={{ backgroundColor: '#fff', height: 'auto' }}
           handleDragEnd={handleDrag}
           onCardDelete={cardDelete}
           onCardClick={cardId => history.push(`/application/${cardId}`)}
