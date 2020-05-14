@@ -182,7 +182,7 @@ const BehaviourAnalysis = () => {
   return (
     <div>
       <Typography color="primary" variant="subtitle1">
-        Behavioral Analyses
+        Behavioral Analysis
       </Typography>
       <div style={{ margin: '20px' }} className={classes.behaviourDiv}>
         {analyses.map(analysis => (

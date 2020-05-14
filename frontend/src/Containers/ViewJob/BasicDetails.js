@@ -57,7 +57,7 @@ const BasicDetails = props => {
   return (
     <div className={classes.root}>
       <Typography variant="h6" color="primary">
-        Baisc details
+        Basic Details
       </Typography>
       <form onSubmit={handleSubmit} className={classes.form}>
         <div className={classes.spaceBetween}>

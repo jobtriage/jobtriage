@@ -4,7 +4,7 @@ import { Tab, Tabs } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import APIService from '../../service/APIService';
 import { NavBar, Typography } from '../../Components';
-import BasicDetails from './BaiscDetails';
+import BasicDetails from './BasicDetails';
 import Notes from './Notes/Notes';
 import TimeLog from './TimeLog/TimeLog';
 
