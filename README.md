@@ -44,6 +44,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/JesusELuna"><img src="https://avatars0.githubusercontent.com/u/21028855?v=4" width="100px;" alt=""/><br /><sub><b>JesusELuna</b></sub></a><br /><a href="https://github.com/jobtriage/jobtriage/commits?author=JesusELuna" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/HariBhandari07"><img src="https://avatars1.githubusercontent.com/u/34328907?v=4" width="100px;" alt=""/><br /><sub><b>Hari Bhandari</b></sub></a><br /><a href="https://github.com/jobtriage/jobtriage/commits?author=HariBhandari07" title="Code">💻</a> <a href="https://github.com/jobtriage/jobtriage/commits?author=HariBhandari07" title="Tests">⚠️</a></td>
     <td align="center"><a href="https://github.com/gokul-prog"><img src="https://avatars0.githubusercontent.com/u/55320340?v=4" width="100px;" alt=""/><br /><sub><b>Gokulakrishna M</b></sub></a><br /><a href="https://github.com/jobtriage/jobtriage/issues?q=author%3Agokul-prog" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/arjungrylls"><img src="https://avatars0.githubusercontent.com/u/15036503?v=4" width="100px;" alt=""/><br /><sub><b>arjungrylls</b></sub></a><br /><a href="https://github.com/jobtriage/jobtriage/commits?author=arjungrylls" title="Code">💻</a> <a href="https://github.com/jobtriage/jobtriage/issues?q=author%3Aarjungrylls" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
