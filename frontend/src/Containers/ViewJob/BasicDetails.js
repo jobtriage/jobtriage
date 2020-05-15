@@ -57,13 +57,13 @@ const BasicDetails = props => {
   return (
     <div className={classes.root}>
       <Typography variant="h6" color="primary">
-        Baisc details
+        Basic Details
       </Typography>
       <form onSubmit={handleSubmit} className={classes.form}>
         <div className={classes.spaceBetween}>
           <Input
             type="text"
-            label="title"
+            label="Title"
             onChange={e => setTitle(e.target.value)}
             value={title}
           />
@@ -73,7 +73,7 @@ const BasicDetails = props => {
         <Input type="text" label="Job post url" onChange={e => setUrl(e.target.value)} value={url} />
         <Input
           type="text"
-          label="description"
+          label="Description"
           multiline
           rows="4"
           onChange={e => setDescription(e.target.value)}
@@ -85,13 +85,13 @@ const BasicDetails = props => {
         <div className={classes.spaceBetween}>
           <Input
             type="text"
-            label="company name"
+            label="Company Name"
             onChange={e => setCompanyName(e.target.value)}
             value={companyName}
           />
           <Input
             type="text"
-            label="company link"
+            label="Company Link"
             onChange={e => setCompanyUrl(e.target.value)}
             value={companyUrl}
           />

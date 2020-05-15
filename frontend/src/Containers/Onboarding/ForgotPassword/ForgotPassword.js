@@ -50,9 +50,9 @@ const VerifyOPTForm = ({ email }) => {
 
   return (
     <form className={classes.form} onSubmit={handleOTPSubmit}>
-      <Input type="password" label="otp" onChange={e => setOtp(e.target.value)} value={otp} required />
-      <Input type="password" label="password" onChange={e => setPassword(e.target.value)} value={password} required />
-      <Input type="password" label="confirm password" onChange={e => setConfirmPassword(e.target.value)} value={confirmPassword} required />
+      <Input type="password" label="OPT" onChange={e => setOtp(e.target.value)} value={otp} required />
+      <Input type="password" label="Password" onChange={e => setPassword(e.target.value)} value={password} required />
+      <Input type="password" label="Confirm Password" onChange={e => setConfirmPassword(e.target.value)} value={confirmPassword} required />
       <Button name="Update password" type="submit">Update password</Button>
     </form>
   );
@@ -81,7 +81,7 @@ const ForgotPassword = () => {
   const GenerateOTPForm = () => {
     return (
       <form className={classes.form} onSubmit={handleOTPGenerate}>
-        <Input type="text" label="email" onChange={e => setEmail(e.target.value)} value={email} autoFocus required />
+        <Input type="text" label="Email" onChange={e => setEmail(e.target.value)} value={email} autoFocus required />
         <Button name="Send OTP" type="submit">Send OTP</Button>
       </form>
     );

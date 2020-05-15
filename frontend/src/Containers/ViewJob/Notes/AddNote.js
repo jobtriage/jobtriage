@@ -39,8 +39,8 @@ const NoteDialog = props => {
       <DialogTitle style={{ marginLeft: '8px' }} id="form-dialog-title">Add new Note</DialogTitle>
       <DialogContent>
         <form className={classes.form} onSubmit={handleSubmit}>
-          <Input type="text" label="title" required onChange={e => setTitle(e.target.value)} value={title} />
-          <Input type="text" label="content" multiline rows="6" required onChange={e => setContent(e.target.value)} value={content} />
+          <Input type="text" label="Title" required onChange={e => setTitle(e.target.value)} value={title} />
+          <Input type="text" label="Content" multiline rows="6" required onChange={e => setContent(e.target.value)} value={content} />
           <Button type="submit">{isNew ? 'Add' : 'Update'}</Button>
           <p className={classes.error}>
             {error}

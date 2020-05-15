@@ -85,10 +85,10 @@ const SignUp = () => {
           </Typography>
         </div>
         <form className={classes.signUpForm} onSubmit={handleSubmit}>
-          <Input required type="text" label="name" onChange={e => setName(e.target.value)} value={name} />
-          <Input required type="text" label="email" onChange={e => setEmail(e.target.value)} value={email} helperText="Verification mail will be sent" />
-          <Input required type="password" label="password" onChange={e => setPassword(e.target.value)} value={password} />
-          <Input required type="password" label="confirm password" onChange={e => setConfirmPassword(e.target.value)} value={confirmPassword} />
+          <Input required type="text" label="Name" onChange={e => setName(e.target.value)} value={name} />
+          <Input required type="text" label="Email" onChange={e => setEmail(e.target.value)} value={email} helperText="Verification mail will be sent" />
+          <Input required type="password" label="Password" onChange={e => setPassword(e.target.value)} value={password} />
+          <Input required type="password" label="Confirm password" onChange={e => setConfirmPassword(e.target.value)} value={confirmPassword} />
           <Button name="Sign up" type="submit">Sign Up</Button>
           <p className={classes.anchor}>
             Already have an account?
