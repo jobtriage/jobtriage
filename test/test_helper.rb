@@ -68,7 +68,7 @@ class ActiveSupport::TestCase
     json = JSON.parse @response.body, symbolize_names: true
     assert json, 'Response: ' + @response.body
     assert json.key?(:message)
-    json[:message]
+    json
   end
 
   def assert_json_keys(json, *keys)

@@ -52,7 +52,8 @@ const parseApplicationData = appData => {
   const { lanes } = cloneDeep(data);
 
   for (const application of appData) {
-    const { status, _id: id, title, company } = application;
+    const { status, id, title } = application;
+    const { company } = application;
     const priority = getPriority(application.priority);
     getLane(lanes, status).push({
       id, title, description: company.name, label: priority,
@@ -84,7 +85,7 @@ const Dashboard = () => {
     showLoader(true);
     APIService.getJobApplications()
       .then(resp => {
-        const appData = resp.data.message;
+        const appData = resp.data;
         setApplicationsData(appData);
         const parsedData = parseApplicationData(appData);
         setBoardData(parsedData);

@@ -1,39 +1,42 @@
 class ApplicationsController < ApplicationController
-  # Get all Job applications
+
+  before_action :set_applications
+  before_action :set_application, except: %i[index create]
+
   def index
-    render json: { message: current_user.applications }, status: :ok
   end
 
-  # Get job details
   def show
-    application = current_user.applications.find(params[:id])
-    render json: { message: application }, status: :ok
   end
 
-  # Create job application
   def create
-    application = current_user.applications.new(application_params)
-    application.set_company params[:company_name], params[:company_url]
-
-    render json: { message: application }, status: :ok if application.save!
+    @application = @applications.new(application_params)
+    @application.set_company params[:company_name], params[:company_url]
+    render(:show, status: :ok) if @application.save!
   end
 
-  # Update job application
   def update
-    application = current_user.applications.find(params[:id])
     if params[:company_name]
-      application.set_company params[:company_name], params[:company_url]
+      @application.set_company params[:company_name], params[:company_url]
     end
 
-    render json: { message: application }, status: :ok if application.update_attributes!(application_params)
+    render(:show,status: :ok) if @application.update_attributes!(application_params)
   end
 
-  # Delete job application
   def destroy
-    current_user.applications.where(id: params[:id]).destroy
+    @application.destroy
+    render(:show, status: :ok)
   end
 
   private
+
+  def set_application
+    @application = @applications.find(id: params[:id])
+  end
+
+  def set_applications
+    @applications = current_user.applications
+  end
 
   def application_params
     params.permit(:title, :description, :url, :location, :status, :priority)

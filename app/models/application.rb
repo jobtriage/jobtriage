@@ -28,14 +28,4 @@ class Application
     url = url == nil ? self.company[:url] : url
     self.company = { name: name, url: url }
   end
-
-  def as_json(*args)
-    res = super
-    res['_id'] = id.to_s
-    res['id'] = id.to_s
-    res['user_id'] = user_id.to_s
-    res['notes'] = notes.as_json
-    res['timelogs'] = timelogs.as_json
-    res
-  end
 end
