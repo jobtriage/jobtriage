@@ -7,6 +7,7 @@ module ExceptionHandler
   class InvalidToken < StandardError; end
   class ExpiredSignature < StandardError; end
   class DecodeError < StandardError; end
+  class CustomError < StandardError; end
   
   included do
     # Define custom handlers
@@ -15,6 +16,7 @@ module ExceptionHandler
     rescue_from ExceptionHandler::InvalidToken, with: :four_twenty_two
     rescue_from ExceptionHandler::ExpiredSignature, with: :four_ninety_eight
     rescue_from ExceptionHandler::DecodeError, with: :four_zero_one
+    rescue_from ExceptionHandler::CustomError, with: default_error
     rescue_from Exception, with: :default_error
 
   end
@@ -23,23 +25,33 @@ module ExceptionHandler
 
   # JSON response with message; Status code 422 - unprocessable entity
   def four_twenty_two(e)
-   render json: { error: e.message }, status: :unprocessable_entity
+   print_log e
+   render json: { error: 'Unprocessable Request!!!' }, status: :unprocessable_entity
   end
 
   def four_ninety_eight(e)
-    render json: { error: e.message }, status: :unauthorized
+    print_log e
+    render json: { error: 'You are not Authorized!!!'}, status: :unauthorized
   end
 
   # JSON response with message; Status code 401 - Unauthorized
   def four_zero_one(e)
-    render json: { error: e.message }, status: :unauthorized
+    print_log e
+    render json: { error: 'You are not Authorized!!!' }, status: :unauthorized
   end
 
   def unauthorized_request(e)
-    render json: { error: e.message }, status: :unauthorized
+    print_log e
+    render json: { error: 'You are not Authorized!!!' }, status: :unauthorized
   end
 
   def default_error(e)
-    render json: { error: e.message }, status: :internal_server_error
+    print_log e
+    render json: { error: 'Something went Wrong!!!' }, status: :internal_server_error
+  end
+
+  def print_log(e)
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace
   end
 end
