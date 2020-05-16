@@ -30,7 +30,7 @@ class ApplicationsController < ApplicationController
 
   # Delete job application
   def destroy
-    current_user.applications.where(id: params[:id]).delete
+    current_user.applications.where(id: params[:id]).destroy
   end
 
   private
