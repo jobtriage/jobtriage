@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import APIService from '../../service/APIService';
 import {
-  Typography, Input, Button, StatusMenu, PriorityMenu,
+  Typography, Input, Button, DropDownMenu
 } from '../../Components';
 import { useToast, ToastConstants } from '../../store/context';
+import {JOB_APPLICATION_PRIORITY, JOB_APPLICATION_STATUS} from '../../constants/Constants'
 
 const useStyles = makeStyles(({
   form: {
@@ -67,8 +68,8 @@ const BasicDetails = props => {
             onChange={e => setTitle(e.target.value)}
             value={title}
           />
-          <PriorityMenu value={priority} onChange={e => setPriority(e.target.value)} />
-          <StatusMenu value={status} onChange={e => setStatus(e.target.value)} />
+          <DropDownMenu options={JOB_APPLICATION_PRIORITY} value={priority} onChange={e => setPriority(e.target.value)} />
+          <DropDownMenu options={JOB_APPLICATION_STATUS} value={status} onChange={e => setStatus(e.target.value)} />
         </div>
         <Input type="text" label="Job post url" onChange={e => setUrl(e.target.value)} value={url} />
         <Input
