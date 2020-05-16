@@ -39,7 +39,7 @@ const App = () => {
   useEffect(() => {
     APIService.isLoggedIn().then(resp => {
       const {
-        user_id: userId, email, name, email_confirmed: confirmed,
+        id: userId, email, name, email_confirmed: confirmed,
       } = resp.data.message;
       addUserHook(userId, email, name, confirmed);
     }).catch((error) => {

@@ -2,9 +2,11 @@ require 'bcrypt'
 
 class User
   include Mongoid::Document
+  include Mongoid::Timestamps
   include BCrypt
 
   before_create :generate_confirm_token
+  after_create :send_welcome_mail
 
   field :email, type: String
   field :name, type: String
@@ -13,9 +15,9 @@ class User
   field :confirm_token, type: String
   field :reset_token, type: String
 
-  has_many :applications
-  has_many :analyses
-  has_one :pitch
+  has_many :applications, dependent: :destroy
+  has_many :analyses, dependent: :destroy
+  has_one :pitch, dependent: :destroy
 
   validates :email, uniqueness: { message: 'Email already registered' }, presence: true
   validates :name, presence: true
@@ -29,15 +31,6 @@ class User
     self.password_hash = @password
   end
 
-  def as_json(*args)
-    res = super
-    res['_id'] = self.id.to_s
-    res['password_hash'] = '****'
-    res['confirm_token'] = '****'
-    res['email_confirmed'] = true unless ENV['USE_EMAIL_VERIFICATION']
-    res
-  end
-
   def generate_confirm_token
     if self.confirm_token.blank?
       self.confirm_token = SecureRandom.urlsafe_base64.to_s
@@ -46,5 +39,20 @@ class User
 
   def generate_reset_token
     self.reset_token = SecureRandom.hex(4)
+  end
+
+  def email_confirmed?
+    return true unless ENV['USE_EMAIL_VERFICATION']
+    self.email_confirmed
+  end
+
+  def generate_otp
+    generate_reset_token
+    save!
+    UserMailer.with(user: self).forgot_password_email.deliver_now
+  end
+
+  def send_welcome_mail
+    UserMailer.with(user: self).welcome_email.deliver_now
   end
 end
