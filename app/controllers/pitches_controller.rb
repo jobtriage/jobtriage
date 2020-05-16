@@ -1,14 +1,19 @@
 class PitchesController < ApplicationController
+
+  before_action :set_pitch, except: %i[create]
+
   def show
-    render json: { message: pitch }, status: :ok
   end
 
   def create
-    render json: { message: pitch }, status: :ok if pitch.update_attributes!(pitch_params)
+    @pitch = current_user.create_pitch(pitch_params)
+    render(:show, status: :created)
+  rescue StandardError
+    raise CustomError, 'Error in creating Pitch!!!'
   end
 
   def update
-    render json: { message: pitch }, status: :ok if pitch.update_attributes!(pitch_params)
+    render(:show, status: :ok) if @pitch.update_attributes!(pitch_params)
   end
 
   private
@@ -17,9 +22,7 @@ class PitchesController < ApplicationController
     params.permit(:pitch)
   end
 
-  def pitch
-    return current_user.pitch if current_user.pitch
-
-    Pitch.create(user_id: current_user.id, pitch: '')
+  def set_pitch
+    @pitch = current_user.pitch
   end
 end

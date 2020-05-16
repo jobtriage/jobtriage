@@ -1,30 +1,45 @@
 class AnalysesController < ApplicationController
+
+  before_action :set_analyses
+  before_action :set_analysis, except: %i[index create]
+
   def index
-    render json: { message: current_user.analyses }, status: :ok
   end
 
   def show
-    analysis = current_user.analyses.find(params[:id])
-    render json: { message: analysis }, status: :ok
   end
 
   def create
-    analysis = current_user.analyses.new(analyses_params)
-    render json: { message: analysis }, status: :ok if analysis.save!
+    @analysis = current_user.analyses.new(analysis_params)
+    render(:show, status: :created) if @analysis.save!
+  rescue StandardError
+    raise CustomError, 'Error in creating Analysis!!!'
   end
 
   def update
-    analysis = current_user.analyses.find(params[:id])
-    render json: { message: analysis }, status: :ok if analysis.update_attributes!(analyses_params)
+    render(:show, status: :ok) if @analysis.update_attributes!(analysis_params)
+  rescue StandardError
+    raise CustomError, 'Error in updating Analysis!!!'
   end
 
   def destroy
-    current_user.analyses.where(id: params[:id]).delete
+    @analysis.destroy
+    render(:show, status: :ok)
   end
 
   private
 
-  def analyses_params
+  def set_analyses
+    @analyses = current_user.analyses
+  end
+
+  def set_analysis
+    @analysis = @analyses.find(id: params[:id])
+  rescue Mongoid::Errors::DocumentNotFound
+    raise CustomError, 'Analysis Not found!!!'
+  end
+
+  def analysis_params
     params.permit(:title, :content)
   end
 end
