@@ -2,7 +2,7 @@ module ExceptionHandler
   extend ActiveSupport::Concern
 
    # Define custom error subclasses - rescue catches `StandardErrors`
-  class AuthenticationError < StandardError; end
+  class NotAuthenticated < StandardError; end
   class MissingToken < StandardError; end
   class InvalidToken < StandardError; end
   class ExpiredSignature < StandardError; end
@@ -10,7 +10,7 @@ module ExceptionHandler
   
   included do
     # Define custom handlers
-    rescue_from ExceptionHandler::AuthenticationError, with: :unauthorized_request
+    rescue_from ExceptionHandler::NotAuthenticated, with: :unauthorized_request
     rescue_from ExceptionHandler::MissingToken, with: :four_twenty_two
     rescue_from ExceptionHandler::InvalidToken, with: :four_twenty_two
     rescue_from ExceptionHandler::ExpiredSignature, with: :four_ninety_eight

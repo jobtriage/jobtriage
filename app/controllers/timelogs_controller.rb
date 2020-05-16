@@ -16,7 +16,7 @@ class TimelogsController < ApplicationController
   end
 
   def destroy
-    timelogs.find(id: params[:id]).delete
+    timelogs.find(id: params[:id]).destroy
   end
 
   private
