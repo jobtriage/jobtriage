@@ -1,5 +1,7 @@
 class Application
   include Mongoid::Document
+  include Mongoid::Timestamps
+
 
   field :title, type: String
   field :description, type: String
@@ -8,8 +10,9 @@ class Application
   field :status, type: String
   field :priority, type: Integer
   field :company, type: Hash
-  has_many :notes
-  has_many :timelogs
+
+  has_many :notes, dependent: :destroy
+  has_many :timelogs, dependent: :destroy
 
   belongs_to :user
 
