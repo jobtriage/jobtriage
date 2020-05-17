@@ -6,5 +6,5 @@ export { default as AppBar } from '../Material-UI/Components/AppBar/AppBar';
 
 export { default as AccountDetails } from './AccountDetails/AccountDetails';
 export { default as NavBar } from './NavBar/NavBar';
-export { default as StatusMenu } from './StatusMenu/StatusMenu';
-export { default as PriorityMenu } from './PriorityMenu/PriorityMenu';
+
+export { default as DropDownMenu } from './DropDownMenu/DropDownMenu'

@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Dialog, DialogContent, DialogTitle } from '@material-ui/core';
 import { Button, Input } from '../../../Material-UI/Components';
-import { StatusMenu, PriorityMenu } from '../../../Components';
+import { DropDownMenu } from '../../../Components';
 import APIService from '../../../service/APIService';
 import { useToast, ToastConstants } from '../../../store/context';
-
+import {JOB_APPLICATION_PRIORITY, JOB_APPLICATION_STATUS} from '../../../constants/Constants'
 
 const useStyles = makeStyles(() => ({
   mainCard: {
@@ -44,8 +44,8 @@ const AddJobDialog = props => {
         <form className={classes.mainCard} onSubmit={handleSubmit}>
           <Input type="text" label="Title" required onChange={e => setTitle(e.target.value)} value={title} />
           <Input type="text" label="Company" required onChange={e => setCompany(e.target.value)} value={company} />
-          <PriorityMenu onChange={e => setPriority(e.target.value)} />
-          <StatusMenu onChange={e => setStatus(e.target.value)} />
+          <DropDownMenu label="Priority" options={JOB_APPLICATION_PRIORITY} onChange={e => setPriority(e.target.value)} />
+          <DropDownMenu label="Status" options={JOB_APPLICATION_STATUS} onChange={e => setStatus(e.target.value)} />
           <Button type="submit">Add</Button>
         </form>
       </DialogContent>
