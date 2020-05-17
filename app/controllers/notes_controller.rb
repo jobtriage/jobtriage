@@ -13,7 +13,7 @@ class NotesController < ApplicationController
   end
 
   def update
-    render(:show, status: :ok) if note.update_attributes!(notes_params)
+    render(:show, status: :ok) if @note.update_attributes!(notes_params)
   end
 
   def destroy
