@@ -53,13 +53,13 @@ class AuthController < ApplicationController
 
   def change_password
     if current_user.password == params[:current_password]
-      current_user.password = params[:password]
-      if current_user.update
-        render json: { message: 'Password upated' }, status: :ok
-      end
+      current_user.reset_password(params[:password])
+      render json: { message: 'Password upated' }, status: :ok
     else
       render json: { message: 'Password mismatch' }, status: :bad_request
     end
+  rescue StandardError
+    raise CustomError, 'Password Reset Failed!!!'
   end
 
   def generate_otp
@@ -70,14 +70,14 @@ class AuthController < ApplicationController
   end
 
   def verify_otp
-    if @user&.reset_token == params[:otp]
-      @user.password = params[:password]
-      render json: { message: 'Password updated' }, status: :ok if @user.save
+    if @user.reset_token == params[:otp]
+      @user.reset_password(params[:password])
+      render json: { message: 'Password updated' }, status: :ok
     else
       render json: { message: 'OTP missmatch' }, status: :bad_request
     end
   rescue StandardError
-    raise CustomError, 'OTP Verification Failed!!!'
+    raise CustomError, 'OTP Verification and Password Reset Failed!!!'
   end
 
   private
