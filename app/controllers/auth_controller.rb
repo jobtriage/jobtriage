@@ -6,8 +6,7 @@ class AuthController < ApplicationController
   # POST /register
   def register
     @user = User.create(user_params)
-    @user.password = params[:password]
-    if @user.save
+    if @user.reset_password(params[:password])
       render json: { message: 'User created successfully' }, status: :ok
     else
       render json: { message: @user.errors }, status: :bad_request

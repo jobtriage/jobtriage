@@ -19,7 +19,6 @@ class UserTest < ActiveSupport::TestCase
     user = User.new
     user.email = 'test1@test.com'
     user.name = 'test'
-    user.password = 'test'
 
     assert user.save, 'User is not saved for proper data'
     user.delete
