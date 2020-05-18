@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Button } from '../../../Material-UI/Components';
 import APIService from '../../../service/APIService';
 import { useAppContext } from '../../../store/context';
-
+import { NavBar } from '../../../Components'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -64,7 +64,7 @@ const VerifiedRoute = (props) => {
 
   return (
     <div className={classes.root}>
-      {confirmed ? children : <VerifyEmail />}
+      {confirmed ?  <NavBar> {children} </NavBar> : <VerifyEmail />}
     </div>
   );
 };

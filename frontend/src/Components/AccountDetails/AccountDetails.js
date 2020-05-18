@@ -109,24 +109,22 @@ const AccountDetails = () => {
   const { email, name } = state.user;
 
   return (
-    <NavBar>
-      <div className={classes.innerContainer}>
-        <Typography variant="h6" color="primary">
-          Account
-        </Typography>
-        <Typography variant="body1">
-          <b>Email:</b>
-          {' '}
-          {email}
-        </Typography>
-        <Typography variant="body1">
-          <b>Name:</b>
-          {' '}
-          {name}
-        </Typography>
-        <ChangePassword />
-      </div>
-    </NavBar>
+    <div className={classes.innerContainer}>
+      <Typography variant="h6" color="primary">
+         Account
+       </Typography>
+       <Typography variant="body1">
+         <b>Email:</b>
+         {' '}
+         {email}
+       </Typography>
+       <Typography variant="body1">
+         <b>Name:</b>
+         {' '}
+         {name}
+       </Typography>
+       <ChangePassword />
+    </div>
   );
 };
 

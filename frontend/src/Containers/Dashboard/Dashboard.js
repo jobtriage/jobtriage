@@ -10,6 +10,7 @@ import { NavBar, Typography } from '../../Components';
 import AddJob from './AddJob/AddJob';
 import APIService from '../../service/APIService';
 import { useToast, ToastConstants, useLoader } from '../../store/context';
+import { JOB_APPLICATION_PRIORITY, JOB_APPLICATION_STATUS } from '../../constants/Constants'
 
 const data = {
   lanes: [
@@ -40,31 +41,18 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const getPriority = priority => {
-  let status = 'High';
-  if (priority === 1) {
-    status = 'Low';
-  } if (priority === 2) {
-    status = 'Medium';
-  }
-  return status;
+  return JOB_APPLICATION_PRIORITY.find(obj => obj.value == priority).label;
 };
 
 const getLane = (lanes, status) => {
-  let { cards } = lanes[0];
-  if (status === 'applied') cards = lanes[1].cards;
-  if (status === 'inprogress') cards = lanes[2].cards;
-  if (status === 'accepted') cards = lanes[3].cards;
-  if (status === 'rejected') cards = lanes[4].cards;
-
-  return cards;
+  return lanes.find(lane => lane.id == status).cards;
 };
 
 const parseApplicationData = appData => {
   const { lanes } = cloneDeep(data);
 
   for (const application of appData) {
-    const { status, _id: id, title } = application;
-    const { company } = application;
+    const { status, _id: id, title, company } = application;
     const priority = getPriority(application.priority);
     getLane(lanes, status).push({
       id, title, description: company.name, label: priority,
@@ -124,7 +112,6 @@ const Dashboard = () => {
 
   return (
     <div>
-      <NavBar>
       <Typography color="primary" variant="h5">
         Dashboard
       </Typography>
@@ -145,7 +132,6 @@ const Dashboard = () => {
         />
         )}
         
-      </NavBar>
       <Fab
         color="primary"
         aria-label="Add job"
