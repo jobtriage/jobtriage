@@ -37,11 +37,11 @@ const TimeDialog = props => {
     if (isNew) {
       APIService.addTimeLog(applicationId, type, time, note)
         .then(onChange)
-        .catch(() => setError('Error in adding notes'));
+        .catch(() => setError('Error in adding time logs'));
     } else {
       APIService.updateTimeLog(applicationId, timeLogId, type, time, note)
         .then(onChange)
-        .catch(() => setError('Error in updating notes'));
+        .catch(() => setError('Error in updating time logs'));
     }
   };
 
