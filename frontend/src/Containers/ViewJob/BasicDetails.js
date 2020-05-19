@@ -17,6 +17,7 @@ const useStyles = makeStyles(({
     justifyContent: 'center',
   },
   root: {
+    marginLeft: 30
   },
   spaceBetween: {
     display: 'flex',
@@ -58,7 +59,7 @@ const BasicDetails = props => {
   return (
     <div className={classes.root}>
       <Typography variant="h6" color="primary">
-        Basic Details
+        Application Details
       </Typography>
       <form onSubmit={handleSubmit} className={classes.form}>
         <div className={classes.spaceBetween}>
@@ -68,23 +69,11 @@ const BasicDetails = props => {
             onChange={e => setTitle(e.target.value)}
             value={title}
           />
-          <DropDownMenu options={JOB_APPLICATION_PRIORITY} value={priority} onChange={e => setPriority(e.target.value)} />
-          <DropDownMenu options={JOB_APPLICATION_STATUS} value={status} onChange={e => setStatus(e.target.value)} />
+          <DropDownMenu label="Priority" options={JOB_APPLICATION_PRIORITY} value={priority} onChange={e => setPriority(e.target.value)} />
+          <DropDownMenu label="Status" options={JOB_APPLICATION_STATUS} value={status} onChange={e => setStatus(e.target.value)} />
         </div>
-        <Input type="text" label="Job post url" onChange={e => setUrl(e.target.value)} value={url} />
-        <Input
-          type="text"
-          label="Description"
-          multiline
-          rows="4"
-          onChange={e => setDescription(e.target.value)}
-          value={description}
-        />
-        <Typography variant="h6" color="primary">
-          Company details
-        </Typography>
         <div className={classes.spaceBetween}>
-          <Input
+        <Input
             type="text"
             label="Company Name"
             onChange={e => setCompanyName(e.target.value)}
@@ -97,6 +86,15 @@ const BasicDetails = props => {
             value={companyUrl}
           />
         </div>
+        <Input type="text" label="Job post url" onChange={e => setUrl(e.target.value)} value={url} />
+        <Input
+          type="text"
+          label="Description"
+          multiline
+          rows="4"
+          onChange={e => setDescription(e.target.value)}
+          value={description}
+        />
         <div className={classes.displayFlex}>
           <Button type="submit" style={{ marginTop: '20px', marginBottom: '5px' }}>Update</Button>
         </div>

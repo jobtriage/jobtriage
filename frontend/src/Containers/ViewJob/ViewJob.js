@@ -72,7 +72,7 @@ const ViewJob = props => {
         onChange={handleTabChange}
         aria-label="View job tabs"
       >
-        <Tab label="Basic" />
+        <Tab label="Details" />
         <Tab label="Notes" />
       </Tabs>
       <TabPanel value={tab} index={0}>
