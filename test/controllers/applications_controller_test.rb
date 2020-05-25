@@ -50,6 +50,7 @@ class ApplicationsControllerTest < ActionDispatch::IntegrationTest
       status: 'applied',
       priority: 1,
       company_name: 'Job triage'
-    end
+
+    assert_response :internal_server_error
   end
 end
