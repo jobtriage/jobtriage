@@ -12,14 +12,10 @@ class AnalysesController < ApplicationController
   def create
     @analysis = current_user.analyses.new(analysis_params)
     render(:show, status: :created) if @analysis.save!
-  rescue StandardError
-    raise CustomError, 'Error in creating Analysis!!!'
   end
 
   def update
     render(:show, status: :ok) if @analysis.update_attributes!(analysis_params)
-  rescue StandardError
-    raise CustomError, 'Error in updating Analysis!!!'
   end
 
   def destroy
@@ -35,8 +31,6 @@ class AnalysesController < ApplicationController
 
   def set_analysis
     @analysis = @analyses.find(id: params[:id])
-  rescue Mongoid::Errors::DocumentNotFound
-    raise CustomError, 'Analysis Not found!!!'
   end
 
   def analysis_params
