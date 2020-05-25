@@ -46,6 +46,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/gokul-prog"><img src="https://avatars0.githubusercontent.com/u/55320340?v=4" width="100px;" alt=""/><br /><sub><b>Gokulakrishna M</b></sub></a><br /><a href="https://github.com/jobtriage/jobtriage/issues?q=author%3Agokul-prog" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/arjungrylls"><img src="https://avatars0.githubusercontent.com/u/15036503?v=4" width="100px;" alt=""/><br /><sub><b>arjungrylls</b></sub></a><br /><a href="https://github.com/jobtriage/jobtriage/commits?author=arjungrylls" title="Code">💻</a> <a href="https://github.com/jobtriage/jobtriage/issues?q=author%3Aarjungrylls" title="Bug reports">🐛</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="http://sajang.com.np"><img src="https://avatars3.githubusercontent.com/u/52366632?v=4" width="100px;" alt=""/><br /><sub><b>Saw-jan Gurung</b></sub></a><br /><a href="https://github.com/jobtriage/jobtriage/issues?q=author%3Asaw-jan" title="Bug reports">🐛</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-enable -->
