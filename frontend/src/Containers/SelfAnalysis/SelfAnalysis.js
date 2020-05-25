@@ -217,16 +217,12 @@ const SelfAnalysis = () => {
   const classes = useStyles();
 
   return (
-    <div>
-      <NavBar>
-        <div className={classes.root}>
-          <Typography color="primary" variant="h5">
-            Self Analysis
-          </Typography>
-          <PitchView />
-          <BehaviourAnalysis />
-        </div>
-      </NavBar>
+    <div className={classes.root}>
+      <Typography color="primary" variant="h5">
+        Self Analysis
+      </Typography>
+       <PitchView />
+       <BehaviourAnalysis />
     </div>
   );
 };

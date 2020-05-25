@@ -12,7 +12,7 @@ We request you all to follow the design guidelines given [here](/DESIGN_GUIDELIN
 
 ## Setting up the backend 
 - Install the gems using `bundle install`
- - Start mongodb server in local as you prefered
+ - Start mongodb server in local as you preferred
  - Start server using `rails s`
  - Test server using `rails test`
  - Check the [API doc here](https://documenter.getpostman.com/view/3705194/SzKWuxaB?version=latest)
