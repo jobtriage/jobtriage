@@ -48,6 +48,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="http://sajang.com.np"><img src="https://avatars3.githubusercontent.com/u/52366632?v=4" width="100px;" alt=""/><br /><sub><b>Saw-jan Gurung</b></sub></a><br /><a href="https://github.com/jobtriage/jobtriage/issues?q=author%3Asaw-jan" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/pgrimaud"><img src="https://avatars1.githubusercontent.com/u/1866496?v=4" width="100px;" alt=""/><br /><sub><b>Pierre Grimaud</b></sub></a><br /><a href="https://github.com/jobtriage/jobtriage/commits?author=pgrimaud" title="Code">💻</a> <a href="https://github.com/jobtriage/jobtriage/commits?author=pgrimaud" title="Documentation">📖</a></td>
   </tr>
 </table>
 
