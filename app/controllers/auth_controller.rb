@@ -53,7 +53,7 @@ class AuthController < ApplicationController
     if current_user.password == params[:current_password]
       current_user.password = params[:password]
       if current_user.update
-        render json: { message: 'Password upated' }, status: :ok
+        render json: { message: 'Password updated' }, status: :ok
       end
     else
       render json: { message: 'Password mismatch' }, status: :bad_request
@@ -84,7 +84,7 @@ class AuthController < ApplicationController
       user.password = params[:password]
       render json: { message: 'Password updated' }, status: :ok if user.save
     else
-      render json: { message: 'OTP missmatch' }, status: :bad_request
+      render json: { message: 'OTP mismatch' }, status: :bad_request
     end
   end
 
