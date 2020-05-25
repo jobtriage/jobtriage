@@ -19,9 +19,10 @@ class ActiveSupport::TestCase
         @user = User.new
         @user.email = 'test@test.com'
         @user.name = 'test'
+        @user.password = 'test'
       end
     end
-    return @user if @user.reset_password('test')
+    return @user if @user.save!
   end
 
   def get_jwt_token(user_id)

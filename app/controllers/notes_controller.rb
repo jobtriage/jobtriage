@@ -29,14 +29,10 @@ class NotesController < ApplicationController
 
   def set_note
     @note = @notes.find(id: params[:id])
-  rescue Mongoid::Errors::DocumentNotFound
-    raise CustomError, 'Note Not found!!!'
   end
 
   def set_application
     @application = current_user.applications.find(id: params[:application_id])
-  rescue Mongoid::Errors::DocumentNotFound
-    raise CustomError, 'Application Not found!!!'
   end
 
   def notes_params

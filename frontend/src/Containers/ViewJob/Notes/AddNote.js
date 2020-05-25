@@ -19,7 +19,7 @@ const NoteDialog = props => {
   const classes = useStyles();
 
   const {
-    open, onClose, onChange, applicationId, isNew, title: titleOld, content: contentOld, id,
+    open, onClose, onChange, applicationId, isNew, title: titleOld, content: contentOld, id, label
   } = props;
   const [title, setTitle] = useState(isNew ? '' : titleOld);
   const [content, setContent] = useState(isNew ? '' : contentOld);
@@ -36,7 +36,7 @@ const NoteDialog = props => {
 
   return (
     <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title">
-      <DialogTitle style={{ marginLeft: '8px' }} id="form-dialog-title">Add new Note</DialogTitle>
+      <DialogTitle style={{ marginLeft: '8px' }} id="form-dialog-title">{label}</DialogTitle>
       <DialogContent>
         <form className={classes.form} onSubmit={handleSubmit}>
           <Input type="text" label="Title" required onChange={e => setTitle(e.target.value)} value={title} />

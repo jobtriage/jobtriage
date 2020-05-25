@@ -81,27 +81,27 @@ const TimeLogItem = props => {
 
   return (
     <Paper className={classes.timeLogItem} elevation={3}>
-      <Typography variant="body2" style={{ width: '10%' }}>
-        {type}
-      </Typography>
-      <Typography variant="body2" style={{ width: '20%' }}>
+       <Typography variant="body2" style={{ width: '20%' }}>
         {formatedTime}
+      </Typography>
+      <Typography variant="body2" style={{ width: '10%' }}>
+        {type.toUpperCase()}
       </Typography>
       <BootstrapTooltip title={note} style={{ width: '40%' }} arrow placement="top">
         <FormatedNote />
       </BootstrapTooltip>
       <div className={classes.displayFlex} style={{ justifyContent: 'space-between' }}>
-        <IconButton aria-label="Delete time log" component="span" onClick={handleDelete}>
-          <Delete color="error" />
-        </IconButton>
-        <IconButton aria-label="Edit time log" component="span" onClick={handleAddTimeLogOpen}>
-          <Edit color="primary" />
-        </IconButton>
-        <a href={getCalenderLink(type, time, note)} label="Add to calender" target="_blank" rel="noopener noreferrer">
+      <a href={getCalenderLink(type, time, note)} label="Add to calender" target="_blank" rel="noopener noreferrer">
           <IconButton aria-label="Add to calender" component="span">
             <CalendarTodayOutlined />
           </IconButton>
         </a>
+        <IconButton aria-label="Edit time log" component="span" onClick={handleAddTimeLogOpen}>
+          <Edit color="primary" />
+        </IconButton>
+        <IconButton aria-label="Delete time log" component="span" onClick={handleDelete}>
+          <Delete color="error" />
+        </IconButton>
       </div>
 
       <TimeLogForm
@@ -148,7 +148,7 @@ const TimeLog = props => {
     <MuiPickersUtilsProvider utils={DayJsAdapter}>
       <div className={classes.root}>
         <Typography variant="h6" color="primary">
-          Time Log
+          Time Logs
         </Typography>
         {timelogs.length === 0 ? <EmptyLogView /> : ''}
         {timelogs.map(timelog => (

@@ -82,6 +82,7 @@ const NotesCard = (props) => {
         title={title}
         content={content}
         id={id}
+        label={"Edit Note"}
       />
     </div>
   );
@@ -132,6 +133,7 @@ const Notes = props => {
         onClose={handleAddNoteClose}
         onChange={reload}
         applicationId={applicationId}
+        label={"Add New Note"}
         isNew
       />
     </div>

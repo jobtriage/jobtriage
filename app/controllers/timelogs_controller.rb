@@ -29,14 +29,10 @@ class TimelogsController < ApplicationController
 
   def set_timelog
     @time_log = @time_logs.find(id: params[:id])
-  rescue Mongoid::Errors::DocumentNotFound
-    raise CustomError, 'TimeLog Not found!!!'
   end
 
   def set_application
     @application = current_user.applications.find(id: params[:application_id])
-  rescue Mongoid::Errors::DocumentNotFound
-    raise CustomError, 'Application Not found!!!'
   end
 
   def timelog_params

@@ -46,12 +46,10 @@ class ApplicationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'Should throw error if all parameters were not passed' do
-    exception = assert_raises  ExceptionHandler::CustomError do
-      post_request applications_url,
+    post_request applications_url,
       status: 'applied',
       priority: 1,
       company_name: 'Job triage'
     end
-    assert_equal exception.message, 'Error in creating Job Application!!!'
   end
 end

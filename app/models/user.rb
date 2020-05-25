@@ -26,10 +26,9 @@ class User
     @password ||= Password.new(password_hash)
   end
 
-  def reset_password(new_password)
+  def password=(new_password)
     @password = Password.create(new_password)
     self.password_hash = @password
-    save!
   end
 
   def generate_confirm_token
