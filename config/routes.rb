@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   post 'auth/change',        to: 'auth#change_password'
   post 'auth/generateotp',   to: 'auth#generate_otp'
   post 'auth/verifyotp',     to: 'auth#verify_otp'
+  delete 'auth/deleteuser',     to: 'auth#delete_user'
   # Routes for auth ends
 
   resources :applications do
