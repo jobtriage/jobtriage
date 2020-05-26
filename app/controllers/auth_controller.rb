@@ -1,5 +1,5 @@
 class AuthController < ApplicationController
-  skip_before_action :authenticate_request, only: %i[login register verify_email generate_otp verify_otp] 
+  skip_before_action :authenticate_request, only: %i[login register verify_email generate_otp verify_otp delete_user] 
 
   # POST /register
   def register
@@ -27,6 +27,25 @@ class AuthController < ApplicationController
   def logout
     cookies.delete :token
     render json: { message: 'Logged out'}, status: :ok
+  end
+  
+  # DELETE /delete_user 
+  def delete_user
+    token = authenticate_user
+    if token
+      @email = params[:email]
+      @res = User.delete_all( { email: @email } )
+      if @res == 1
+        response = { message: "User with email '" + @email + "' deleted successfully" }
+        render json: response, status: :ok
+      else
+        response = { message: "Cannot delete user with email '" + @email + "'"}
+        render json: response, status: :bad_request
+      end
+      cookies.delete :token
+    else
+      render json: { message: 'Authorization failed: Invalid login!' }, status: :bad_request
+    end
   end
 
   def test
