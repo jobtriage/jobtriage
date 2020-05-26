@@ -1,5 +1,5 @@
 class AuthController < ApplicationController
-  skip_before_action :authenticate_request, only: %i[login register verify_email generate_otp verify_otp] 
+  skip_before_action :authenticate_request, only: %i[login register verify_email generate_otp verify_otp delete_user] 
 
   # POST /register
   def register
