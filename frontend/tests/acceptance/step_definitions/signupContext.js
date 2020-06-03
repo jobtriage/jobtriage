@@ -3,7 +3,7 @@ const signupPage = require("../pages/signupPage");
 const loginPage = require("../pages/loginPage");
 const dashboard = require("../pages/dashboardPage");
 const { users } = require("../globals");
-const { registerUser, deleteUser, loginUser } = require("../api");
+const { registerUser, deleteUser, loginUser } = require("../helpers/apiHelper");
 
 const ELEMENT = signupPage.elements;
 const FIELD = signupPage.fields;
@@ -12,75 +12,53 @@ Given("the user has browsed to signup page", () => {
   I.amOnPage(signupPage.url);
 });
 
-Given("the user with name {string}, email {string} and password {string} already exists", async (name, email, password) => {
-  await registerUser(name, email, password);
-});
-
-// @validsignup
-When(
-  "the user tries to sign up with name {string}, valid email {string}, password {string} and confirm password {string}",
-  async (name, email, password, confirmPassword) => {
-    await signupPage.signUp(name, email, password, confirmPassword);
-    await I.wait(5);
-    users.push({ email: email, password: password });
-  }
-);
-
-// @emptyfields, @invalidemail
-When(
-  "the user tries to sign up with name {string}, email {string}, password {string} and confirm password {string}",
-  (name, email, password, confirmPassword) => {
-    signupPage.tryInvalidSignup(name, email, password, confirmPassword);
-  }
-);
-
-// @unmatchedpass, @registeredemail
-When("the user tries to sign up with the following data:", (table) => {
+Given("the user with following details already exists:", (table) => {
   const data = table.parse().hashes()[0];
-  signupPage.tryInvalidSignup(data.name, data.email, data.password, data.confirmPassword);
+  registerUser(data.name, data.email, data.password);
 });
 
-When("the user tries to go to login page", () => {
+// @validsignup, @registeredemail, @invalidemail, @unmatchedpass, @emptyfields
+When("the user signs up with the following data using the webUI:", async (table) => {
+  const data = table.parse().hashes()[0];
+  if (data.confirmPassword) await signupPage.signUp(data.name, data.email, data.password, data.confirmPassword);
+  else await signupPage.signUp(data.name, data.email, data.password, data.password);
+});
+
+When("the user clicks go to login page button", () => {
   signupPage.goToLogin();
 });
 
 Then("the user should be redirected to login page", () => {
-  I.dontSee(ELEMENT.signup_btn);
-  I.dontSeeInCurrentUrl(signupPage.url);
   I.seeInCurrentUrl(loginPage.url);
 });
 
 Then("the user should be redirected to dashboard", async () => {
   I.seeInCurrentUrl(dashboard.url);
+  I.waitForText("Dashboard");
+  I.see("Dashboard");
 });
 
-Then("the user should be able to login with email {string} and password {string}", async (email, password) => {
-  await loginUser(email, password);
+Then("the user should be able to login with email {string} and password {string}", (email, password) => {
+  users.push({ email: email, password: password });
+  loginUser(email, password);
 });
 
-Then(
-  "the user entered name {string}, email {string}, password {string} or confirm password {string} should be preserved",
-  (name, email, password, confirmPassword) => {
-    I.seeInField(FIELD.name, name);
-    I.seeInField(FIELD.email, email);
-    I.seeInField(FIELD.password, password);
-    I.seeInField(FIELD.confirmPassword, confirmPassword);
-  }
-);
-
-Then("an invalid email message {string} should be displayed", (message) => {
-  I.waitForElement(ELEMENT.error_lbl);
-  I.see(message, ELEMENT.error_lbl);
+Then("the input fields should have following values:", (table) => {
+  const data = table.parse().hashes()[0];
+  I.seeInField(FIELD.name, data.name);
+  I.seeInField(FIELD.email, data.email);
+  I.seeInField(FIELD.password, data.password);
+  I.seeInField(FIELD.confirmPassword, data.confirmPassword);
 });
 
-Then("a password mis-match error message {string} should be displayed", (message) => {
-  I.waitForElement(ELEMENT.error_lbl);
-  I.see(message, ELEMENT.error_lbl);
+Then("the user should not be created", () => {
+  I.seeInCurrentUrl(signupPage.url);
+  I.dontSee(ELEMENT.error_label);
 });
 
-Then("an already registered error message {string} should be displayed", (message) => {
-  I.waitForElement(ELEMENT.error_lbl);
-  I.see(message, ELEMENT.error_lbl);
+Then("an error message {string} should be displayed", (message) => {
+  I.waitForElement(ELEMENT.error_label);
+  I.see(message, ELEMENT.error_label);
 });
 
 After(() => {
