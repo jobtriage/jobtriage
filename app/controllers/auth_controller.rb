@@ -49,7 +49,8 @@ class AuthController < ApplicationController
   end
 
   def test
-    render json: { message: current_user }, status: :ok
+    @user = current_user
+    render 'users/show'
   end
 
   def verify_email

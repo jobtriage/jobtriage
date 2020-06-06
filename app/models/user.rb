@@ -30,13 +30,9 @@ class User
     self.password_hash = @password
   end
 
-  def as_json(*args)
-    res = super
-    res['_id'] = self.id.to_s
-    res['password_hash'] = '****'
-    res['confirm_token'] = '****'
-    res['email_confirmed'] = true unless ENV['USE_EMAIL_VERIFICATION']
-    res
+  def email_confirmed?
+    return true unless ENV['USE_EMAIL_VERFICATION']
+    self.email_confirmed
   end
 
   def generate_confirm_token
