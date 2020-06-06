@@ -2,6 +2,7 @@ require 'bcrypt'
 
 class User
   include Mongoid::Document
+  include Mongoid::Timestamps
   include BCrypt
 
   before_create :generate_confirm_token
@@ -13,9 +14,9 @@ class User
   field :confirm_token, type: String
   field :reset_token, type: String
 
-  has_many :applications
-  has_many :analyses
-  has_one :pitch
+  has_many :applications, dependent: :destroy
+  has_many :analyses, dependent: :destroy
+  has_one :pitch, dependent: :destroy
 
   validates :email, uniqueness: { message: 'Email already registered' }, presence: true
   validates :name, presence: true
