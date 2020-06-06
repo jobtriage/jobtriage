@@ -1,32 +1,41 @@
 class TimelogsController < ApplicationController
+
+  before_action :set_application
+  before_action :set_timelogs
+  before_action :set_timelog,  only: %i[update show destroy]
+
   def index
-    render json: { message: timelogs }, status: :ok
   end
 
   def create
-    timelog = timelogs.create!(timelog_params)
-    render json: { message: timelog }, status: :created
+    @time_log = @time_logs.create!(timelog_params)
+    render(:show, status: :created)
   end
 
   def update
-    timelog = timelogs.find(id: params[:id])
-    if timelog.update_attributes!(timelog_params)
-      render json: { message: timelog }, status: :ok
-    end
+    render(:show, status: :ok) if @time_log.update_attributes!(timelog_params)
   end
 
   def destroy
-    timelogs.find(id: params[:id]).destroy
+    @time_log.destroy
+    render(:show, status: :ok)
   end
 
   private
 
-  def timelogs
-    application = current_user.applications.find(id: params[:application_id])
-    @timelogs = application.timelogs
+  def set_timelogs
+    @time_logs = @application.timelogs
+  end
+
+  def set_timelog
+    @time_log = @time_logs.find(id: params[:id])
+  end
+
+  def set_application
+    @application = current_user.applications.find(id: params[:application_id])
   end
 
   def timelog_params
-    params.require(:timelog).permit(:type, :note, :time, :application_id)
+    params.require(:timelog).permit(:type, :note, :time)
   end
 end
