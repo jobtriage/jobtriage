@@ -10,11 +10,12 @@ const useStyles = makeStyles(() => ({
     },
   }));
 
-const LinearProgressWrapper = () => {
+const LinearProgressWrapper = props => {
     const classes = useStyles();
+    const { color } = props;
     return (
         <div>
-            <LinearProgress color="primary" className={classes.progress} />
+            <LinearProgress color={color || "primary"} className={classes.progress} />
         </div>
     )
 };

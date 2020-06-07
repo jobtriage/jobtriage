@@ -9,11 +9,12 @@ const useStyles = makeStyles(() => ({
     },
   }));
 
-const CircularProgressWrapper = () => {
+const CircularProgressWrapper = props => {
     const classes = useStyles();
+    const { color, size, thickness } = props;
     return (
         <div>
-            <CircularProgress color="primary" className={classes.progress}  size={300} thickness={2}/>
+            <CircularProgress color={color || "primary"} className={classes.progress}  size={size || 300} thickness={thickness || 2}/>
         </div>
     );
 };
