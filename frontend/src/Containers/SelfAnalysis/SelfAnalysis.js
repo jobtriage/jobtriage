@@ -77,7 +77,7 @@ const PitchView = () => {
   };
 
   useEffect(() => {
-    APIService.getPitch().then(resp => setPitch(resp.data.message.pitch));
+    APIService.getPitch().then(resp => setPitch(resp.data.pitch));
   }, []);
 
   return (
@@ -159,7 +159,7 @@ const BehaviourAnalysis = () => {
   const [openAddAnalysis, setOpenAddAnalysis] = useState(false);
 
   const fetchData = () => {
-    APIService.getAnalyses().then(resp => setAnalyses(resp.data.message));
+    APIService.getAnalyses().then(resp => setAnalyses(resp.data));
   };
 
   const loadState = () => {

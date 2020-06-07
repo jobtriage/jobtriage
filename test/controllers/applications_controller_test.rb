@@ -13,7 +13,7 @@ class ApplicationsControllerTest < ActionDispatch::IntegrationTest
     get_request application_url(application)
 
     resp = assert_json_response
-    assert_json_keys resp, :_id, :company, :description, :location, :status, :priority
+    assert_json_keys resp, :id, :company, :description, :location, :status, :priority
   end
 
   test 'Should save job application' do
@@ -24,7 +24,7 @@ class ApplicationsControllerTest < ActionDispatch::IntegrationTest
       company_name: 'Job triage'
 
     resp = assert_json_response
-    assert_json_keys resp, :_id, :company, :description, :location, :status, :priority
+    assert_json_keys resp, :id, :company, :description, :location, :status, :priority
   end
 
   test 'Should update job details' do
@@ -36,7 +36,7 @@ class ApplicationsControllerTest < ActionDispatch::IntegrationTest
       company_name: 'Job triage'
 
     resp = assert_json_response
-    assert_json_keys resp, :_id, :company, :description, :location, :status, :priority
+    assert_json_keys resp, :id, :company, :description, :location, :status, :priority
   end
 
   test 'Should delete job details' do

@@ -50,7 +50,7 @@ const ViewJob = props => {
 
   const loadData = () => {
     APIService.getApplicationDetails(applicationId)
-      .then(resp => setBasicDetail({ applicationId, ...resp.data.message })).catch(console.log);
+      .then(resp => setBasicDetail({ applicationId, ...resp.data })).catch(console.log);
   };
 
   const handleTabChange = (event, newValue) => {

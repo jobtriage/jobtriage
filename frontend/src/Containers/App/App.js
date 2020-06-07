@@ -39,9 +39,9 @@ const App = () => {
   useEffect(() => {
     APIService.isLoggedIn().then(resp => {
       const {
-        user_id: userId, email, name, email_confirmed: confirmed,
-      } = resp.data.message;
-      addUserHook(userId, email, name, confirmed);
+        id, email, name, email_confirmed: confirmed,
+      } = resp.data;
+      addUserHook(id, email, name, confirmed);
     }).catch((error) => {
       // eslint-disable-next-line no-console
       console.log(error);
