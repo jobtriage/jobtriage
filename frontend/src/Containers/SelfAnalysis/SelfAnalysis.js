@@ -5,7 +5,6 @@ import { IconButton } from '@material-ui/core';
 import { Delete, Add } from '@material-ui/icons';
 import { Typography } from '../../Material-UI/Components';
 import TextEditor from '../../Components/TextEditor/TextEditor';
-import NavBar from '../../Components/NavBar/NavBar';
 import APIService from '../../service/APIService';
 import AnalysisCard from '../../Components/AnalysisCard/AnalysisCard';
 import AnalysisForm from './AddAnalysis';
