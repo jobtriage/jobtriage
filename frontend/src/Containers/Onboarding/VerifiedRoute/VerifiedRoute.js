@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Button } from '../../../Material-UI/Components';
 import APIService from '../../../service/APIService';
 import { useAppContext } from '../../../store/context';
-import { NavBar, CircularLoader } from '../../../Components'
+import { NavBar, HorizontalLoader } from '../../../Components'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -67,7 +67,7 @@ const VerifiedRoute = (props) => {
       {email ? 
         <div>
           {confirmed ?  <NavBar> {children} </NavBar> : <VerifyEmail />}
-        </div> :  <CircularLoader /> 
+        </div> :  <HorizontalLoader /> 
       }
     </div>
   );

@@ -16,7 +16,7 @@ import ViewJob from '../ViewJob/ViewJob';
 import SelfAnalysis from '../SelfAnalysis/SelfAnalysis';
 import { Toast } from '../../Material-UI/Components';
 import { useAppContext, useUser } from '../../store/context';
-import { CircularLoader } from '../../Components';
+import { HorizontalLoader } from '../../Components';
 
 const useStyles = makeStyles(() => ({
   app: {
@@ -81,7 +81,7 @@ const Routes = () => {
   return (
     <Router>
       <div className={classes.app}>
-        {state.loader ? <CircularLoader />: ''}
+        {state.loader ? <HorizontalLoader />: ''}
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />

@@ -6,7 +6,7 @@ import Board from 'react-trello';
 import { Add, VerticalAlignCenterOutlined } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import cloneDeep from 'lodash/cloneDeep';
-import { Typography, CircularLoader } from '../../Components';
+import { Typography, HorizontalLoader } from '../../Components';
 import AddJob from './AddJob/AddJob';
 import APIService from '../../service/APIService';
 import { useToast, ToastConstants, useLoader } from '../../store/context';
@@ -149,7 +149,7 @@ const Dashboard = () => {
           onChange={getJobApplications}
         />
       </div>
-    : <CircularLoader />
+    : <HorizontalLoader />
   };
   </div>
   );

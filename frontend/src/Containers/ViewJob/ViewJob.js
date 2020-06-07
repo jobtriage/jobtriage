@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Tab, Tabs } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import APIService from '../../service/APIService';
-import { NavBar, Typography, CircularLoader } from '../../Components';
+import { NavBar, Typography, HorizontalLoader } from '../../Components';
 import BasicDetails from './BasicDetails';
 import Notes from './Notes/Notes';
 import TimeLog from './TimeLog/TimeLog';
@@ -85,7 +85,7 @@ const ViewJob = props => {
         <Typography variant="h6">
           <NavLink to="/dashboard" className={classes.underLine}>Back</NavLink>
         </Typography>
-        {basicDetail.title ? <Body /> : <CircularLoader />}
+        {basicDetail.title ? <Body /> : <HorizontalLoader />}
       </NavBar>
     </div>
   );
