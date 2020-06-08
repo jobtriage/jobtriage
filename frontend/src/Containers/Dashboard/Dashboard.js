@@ -6,7 +6,7 @@ import Board from 'react-trello';
 import { Add, VerticalAlignCenterOutlined } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import cloneDeep from 'lodash/cloneDeep';
-import { NavBar, Typography } from '../../Components';
+import { Typography, HorizontalLoader } from '../../Components';
 import AddJob from './AddJob/AddJob';
 import APIService from '../../service/APIService';
 import { useToast, ToastConstants, useLoader } from '../../store/context';
@@ -69,7 +69,7 @@ const Dashboard = () => {
   const showLoader = useLoader();
   const classes = useStyles();
   const history = useHistory();
-  const [applicationsData, setApplicationsData] = React.useState([]);
+  const [applicationsData, setApplicationsData] = React.useState();
   const [boardData, setBoardData] = useState(data);
   const [openJobAdd, setOpenJobAdd] = React.useState(false);
 
@@ -113,40 +113,45 @@ const Dashboard = () => {
 
   return (
     <div>
-      <Typography color="primary" variant="h5">
-        Dashboard
-      </Typography>
-        {isEmptyBoard() && (
-            <Typography style={{marginTop: '20%', textAlign: 'center' , VerticalAlignCenterOutlined}}> Your dashboard is empty!! <br/> Hope you are doing well !! <br/> Add a new application to get started!! </Typography>
-          )
-        }
+    { applicationsData ? 
+      <div>
+        <Typography color="primary" variant="h5">
+          Dashboard
+        </Typography>
+          {isEmptyBoard() && (
+              <Typography style={{marginTop: '20%', textAlign: 'center' , VerticalAlignCenterOutlined}}> Your dashboard is empty!! <br/> Hope you are doing well !! <br/> Add a new application to get started!! </Typography>
+            )
+          }
 
-        {!isEmptyBoard() && (
-          <Board
-          data={boardData}
-          style={{ backgroundColor: '#fff', height: 'auto' }}
-          handleDragEnd={handleDrag}
-          onCardDelete={cardDelete}
-          onCardClick={cardId => history.push(`/application/${cardId}`)}
-          laneStyle={{ backgroundColor: '#d9c8f5' }}
-          cardStyle={{ backgroundColor: '#ffe' }}
+          {!isEmptyBoard() && (
+            <Board
+            data={boardData}
+            style={{ backgroundColor: '#fff', height: 'auto' }}
+            handleDragEnd={handleDrag}
+            onCardDelete={cardDelete}
+            onCardClick={cardId => history.push(`/application/${cardId}`)}
+            laneStyle={{ backgroundColor: '#d9c8f5' }}
+            cardStyle={{ backgroundColor: '#ffe' }}
+          />
+          )}
+          
+        <Fab
+          color="primary"
+          aria-label="Add job"
+          className={classes.fab}
+          onClick={handleJobAddOpen}
+        >
+          <Add />
+        </Fab>
+        <AddJob
+          open={openJobAdd}
+          onClose={handleJobAddClose}
+          onChange={getJobApplications}
         />
-        )}
-        
-      <Fab
-        color="primary"
-        aria-label="Add job"
-        className={classes.fab}
-        onClick={handleJobAddOpen}
-      >
-        <Add />
-      </Fab>
-      <AddJob
-        open={openJobAdd}
-        onClose={handleJobAddClose}
-        onChange={getJobApplications}
-      />
-    </div>
+      </div>
+    : <HorizontalLoader />
+  };
+  </div>
   );
 };
 

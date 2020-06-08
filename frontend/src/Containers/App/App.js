@@ -4,7 +4,6 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
-import { LinearProgress } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import APIService from '../../service/APIService';
 import AccountDetails from '../../Components/AccountDetails/AccountDetails';
@@ -17,19 +16,14 @@ import ViewJob from '../ViewJob/ViewJob';
 import SelfAnalysis from '../SelfAnalysis/SelfAnalysis';
 import { Toast } from '../../Material-UI/Components';
 import { useAppContext, useUser } from '../../store/context';
-
+import { HorizontalLoader } from '../../Components';
 
 const useStyles = makeStyles(() => ({
   app: {
     fontSize: '16px',
     color: 'rgb(127, 127, 127)',
     height: '100vh',
-  },
-  progress: {
-    position: 'fixed',
-    width: '100%',
-    zIndex: '10',
-  },
+  }
 }));
 
 
@@ -87,7 +81,7 @@ const Routes = () => {
   return (
     <Router>
       <div className={classes.app}>
-        {state.loader ? <LinearProgress color="primary" className={classes.progress} /> : ''}
+        {state.loader ? <HorizontalLoader />: ''}
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
