@@ -10,7 +10,7 @@ import { Typography, HorizontalLoader } from '../../Components';
 import AddJob from './AddJob/AddJob';
 import APIService from '../../service/APIService';
 import { useToast, ToastConstants, useLoader } from '../../store/context';
-import { JOB_APPLICATION_PRIORITY, JOB_APPLICATION_STATUS } from '../../constants/Constants'
+import { JOB_APPLICATION_PRIORITY } from '../../constants/Constants';
 
 const data = {
   lanes: [
@@ -40,12 +40,26 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const EmptyBoard = () => (
+  <Typography style={{ marginTop: '20%', textAlign: 'center', VerticalAlignCenterOutlined }}>
+    {' '}
+    Your dashboard is empty!!
+    <br />
+    {' '}
+    Hope you are doing well !!
+    <br />
+    {' '}
+    Add a new application to get started!!
+    {' '}
+  </Typography>
+);
+
 const getPriority = priority => {
-  return JOB_APPLICATION_PRIORITY.find(obj => obj.value == priority).label;
+  return JOB_APPLICATION_PRIORITY.find(obj => obj.value === priority).label;
 };
 
 const getLane = (lanes, status) => {
-  return lanes.find(lane => lane.id == status).cards;
+  return lanes.find(lane => lane.id === status).cards;
 };
 
 const parseApplicationData = appData => {
@@ -108,50 +122,48 @@ const Dashboard = () => {
   };
 
   const isEmptyBoard = () => {
-    return applicationsData.length == 0
+    return applicationsData.length === 0;
   };
 
   return (
     <div>
-    { applicationsData ? 
-      <div>
-        <Typography color="primary" variant="h5">
-          Dashboard
-        </Typography>
-          {isEmptyBoard() && (
-              <Typography style={{marginTop: '20%', textAlign: 'center' , VerticalAlignCenterOutlined}}> Your dashboard is empty!! <br/> Hope you are doing well !! <br/> Add a new application to get started!! </Typography>
-            )
-          }
+      { applicationsData
+        ? (
+          <div>
+            <Typography color="primary" variant="h5">
+              Dashboard
+            </Typography>
+            { isEmptyBoard() && <EmptyBoard /> }
 
-          {!isEmptyBoard() && (
+            {!isEmptyBoard() && (
             <Board
-            data={boardData}
-            style={{ backgroundColor: '#fff', height: 'auto' }}
-            handleDragEnd={handleDrag}
-            onCardDelete={cardDelete}
-            onCardClick={cardId => history.push(`/application/${cardId}`)}
-            laneStyle={{ backgroundColor: '#d9c8f5' }}
-            cardStyle={{ backgroundColor: '#ffe' }}
-          />
-          )}
-          
-        <Fab
-          color="primary"
-          aria-label="Add job"
-          className={classes.fab}
-          onClick={handleJobAddOpen}
-        >
-          <Add />
-        </Fab>
-        <AddJob
-          open={openJobAdd}
-          onClose={handleJobAddClose}
-          onChange={getJobApplications}
-        />
-      </div>
-    : <HorizontalLoader />
-  };
-  </div>
+              data={boardData}
+              style={{ backgroundColor: '#fff', height: 'auto' }}
+              handleDragEnd={handleDrag}
+              onCardDelete={cardDelete}
+              onCardClick={cardId => history.push(`/application/${cardId}`)}
+              laneStyle={{ backgroundColor: '#d9c8f5' }}
+              cardStyle={{ backgroundColor: '#ffe' }}
+            />
+            )}
+
+            <Fab
+              color="primary"
+              aria-label="Add job"
+              className={classes.fab}
+              onClick={handleJobAddOpen}
+            >
+              <Add />
+            </Fab>
+            <AddJob
+              open={openJobAdd}
+              onClose={handleJobAddClose}
+              onChange={getJobApplications}
+            />
+          </div>
+        )
+        : <HorizontalLoader />}
+    </div>
   );
 };
 

@@ -31,7 +31,7 @@ class User
   end
 
   def email_confirmed?
-    return true unless ENV['USE_EMAIL_VERFICATION']
+    return true unless ENV['USE_EMAIL_VERIFICATION']
     self.email_confirmed
   end
 
