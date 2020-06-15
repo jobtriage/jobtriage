@@ -7,6 +7,7 @@ import { NavBar, Typography, HorizontalLoader } from '../../Components';
 import BasicDetails from './BasicDetails';
 import Notes from './Notes/Notes';
 import TimeLog from './TimeLog/TimeLog';
+import { useLoader } from '../../store/context';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -35,14 +36,19 @@ const TabPanel = ({ index, value, children }) => {
 
 const ViewJob = props => {
   const classes = useStyles();
+  const showLoader = useLoader();
   const { match } = props;
   const { applicationId } = match.params;
   const [basicDetail, setBasicDetail] = useState({});
   const [tab, setTab] = useState(0);
 
   const loadData = () => {
+    showLoader(true);
     APIService.getApplicationDetails(applicationId)
-      .then(resp => setBasicDetail({ applicationId, ...resp.data })).catch(console.log);
+      .then(resp => {
+        showLoader(false);
+        setBasicDetail({ applicationId, ...resp.data });
+      }).catch(console.log);
   };
 
   const handleTabChange = (event, newValue) => {
@@ -85,7 +91,7 @@ const ViewJob = props => {
         <Typography variant="h6">
           <NavLink to="/dashboard" className={classes.underLine}>Back</NavLink>
         </Typography>
-        {basicDetail.title ? <Body /> : <HorizontalLoader />}
+        {basicDetail.title ? <Body /> : '' }
       </NavBar>
     </div>
   );
