@@ -11,9 +11,4 @@ class UserMailer < ApplicationMailer
     @user = params[:user]
     mail(to: @user.email, subject: 'Reset OTP for Job Triage')
   end
-
-  def deactivation_email
-    @user = params[:user]
-    mail(to: @user.email, subject: 'Account deactivation')
-  end
 end

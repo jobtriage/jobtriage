@@ -1,9 +1,10 @@
 class ApplicationController < ActionController::API
   include ActionController::Cookies
-  include ExceptionHandler
 
   before_action :authenticate_request
   attr_reader :current_user
+
+  include ExceptionHandler
 
   def options
     head :ok
