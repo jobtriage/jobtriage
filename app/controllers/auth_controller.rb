@@ -3,9 +3,16 @@ class AuthController < ApplicationController
 
   # POST /register
   def register
-    @user = User.build_user(params)
-      
-    render 'users/show', status: :ok  if @user.save
+    @user = User.create(user_params)
+    @user.password = params[:password]
+    if @user.save
+      authenticate_user
+      UserMailer.with(user: @user).welcome_email.deliver_now
+      response = { message: 'User created successfully' }
+      render json: response, status: :ok
+    else
+      render json: { message: @user.errors }, status: :bad_request
+    end
   end
 
   def login
@@ -26,9 +33,16 @@ class AuthController < ApplicationController
   def delete_user
     token = authenticate_user
     if token
-      @user.destroy
+      @email = params[:email]
+      @res = User.delete_all( { email: @email } )
+      if @res == 1
+        response = { message: "User with email '" + @email + "' deleted successfully" }
+        render json: response, status: :ok
+      else
+        response = { message: "Cannot delete user with email '" + @email + "'"}
+        render json: response, status: :bad_request
+      end
       cookies.delete :token
-      render 'users/show', status: :ok
     else
       render json: { message: 'Authorization failed: Invalid login!' }, status: :bad_request
     end
@@ -51,7 +65,7 @@ class AuthController < ApplicationController
       current_user.generate_confirm_token
       current_user.update
     end
-    current_user.send_welcome_email
+    UserMailer.with(user: current_user).welcome_email.deliver_now
     render json: { message: 'Mail sent' }, status: :ok
   end
 
@@ -67,19 +81,28 @@ class AuthController < ApplicationController
   end
 
   def generate_otp
-    set_user
-    @user.generate_reset_token
-    @user.update
-    @user.send_forgot_password_email
+    user = User.find_by(email: params[:email])
+    if user
+      user.generate_reset_token
+      user.update
+      UserMailer.with(user: user).forgot_password_email.deliver_now
 
-    render json: { message: 'OTP sent check mail' }, status: :ok
+      render json: { message: 'OTP sent check mail' }, status: :ok
+    else
+      render json: { message: 'Email not registered' }, status: :bad_request
+    end
   end
 
   def verify_otp
-    set_user
-    if @user.reset_token == params[:otp]
-      @user.password = params[:password]
-      render json: { message: 'Password updated' }, status: :ok if @user.save
+    begin
+      user = User.find_by(email: params[:email])
+    rescue
+      return render json: { message: 'Email not valid' }, status: :bad_request
+    end
+
+    if user&.reset_token == params[:otp]
+      user.password = params[:password]
+      render json: { message: 'Password updated' }, status: :ok if user.save
     else
       render json: { message: 'OTP mismatch' }, status: :bad_request
     end
@@ -92,22 +115,13 @@ class AuthController < ApplicationController
   end
 
   def authenticate_user
-    set_user
-    if @user.password == params[:password]
-      return set_cookies(@user)
+    user = User.find_by(email: params[:email])
+    if user.password == params[:password]
+      token = JsonWebToken.encode(user_id: user.id.to_s)
+      cookies[:token] = { value: token, expires: 100.days.from_now, httponly: true }
+      return token
     end
+
     nil
-  end
-
-  def set_cookies(user)
-    token = JsonWebToken.encode(user_id: user.id.to_s)
-    cookies[:token] = { value: token, expires: 100.days.from_now, httponly: true }
-    return token
-  end
-
-  def set_user
-    @user = User.find_by(email: params[:email])
-  rescue Mongoid::Errors::DocumentNotFound
-    raise NotAuthenticated, 'Invalid Email' unless @user
   end
 end
