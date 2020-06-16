@@ -2,8 +2,8 @@ const { I } = inject();
 const signupPage = require("../pages/signupPage");
 const loginPage = require("../pages/loginPage");
 const dashboard = require("../pages/dashboardPage");
-const { users } = require("../globals");
-const { registerUser, deleteUser, loginUser } = require("../helpers/apiHelper");
+const { users } = require("../helpers/globals");
+const { registerUser, deleteUser, loginUser } = require("../helpers/api/user");
 
 const ELEMENT = signupPage.elements;
 const FIELD = signupPage.fields;
@@ -17,7 +17,6 @@ Given("the user with following details already exists:", (table) => {
   registerUser(data.name, data.email, data.password);
 });
 
-// @validsignup, @registeredemail, @invalidemail, @unmatchedpass, @emptyfields
 When("the user signs up with the following data using the webUI:", async (table) => {
   const data = table.parse().hashes()[0];
   if (data.confirmPassword) await signupPage.signUp(data.name, data.email, data.password, data.confirmPassword);
