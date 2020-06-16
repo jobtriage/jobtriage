@@ -1,63 +1,52 @@
 const axios = require("axios");
-const { users } = require("../globals");
-
-const serverUrl = process.env.API_SERVER_URL || "http://localhost:3000";
+const { users, serverUrl } = require("../globals");
+const { I } = inject();
 
 module.exports = {
-  registerUser: (name, email, password) => {
+  register: async (name, email, password) => {
     try {
-      axios
-        .post(`${serverUrl}/auth/register`, { name: name, email: email, password: password })
-        .then(({ data }) => {
-          users.push({ email: email, password: password });
-          return console.log(data.message);
-        })
-        .catch((err) =>
-          console.log(
-            `Cannot register new user\n` +
-              `Error: ${err.response.status} - ${err.response.statusText}\n` +
-              `<< Error Details >>${err.response.data.error}\n`
-          )
-        );
-    } catch (e) {
-      return console.log(e);
+      var res = await axios.post(`${serverUrl}/auth/register`, { name, email, password });
+      I.say(res.data.message);
+    } catch (err) {
+      console.log(
+        `Cannot register new user\n` +
+          `'${err.response.data.message.email}'\n` +
+          `Error: ${err.response.status} - ${err.response.statusText}\n`
+      );
+      throw new Error(err);
     }
   },
-  deleteUser: () => {
+  delete: () => {
     if (users.length != 0) {
-      users.forEach((user) => {
+      users.forEach(async (user) => {
         try {
-          axios
-            .delete(`${serverUrl}/auth/deleteuser`, { params: { email: user.email, password: user.password } })
-            .then(({ data }) => console.log(data.message))
-            .catch((err) =>
-              console.log(
-                `Cannot delete created user\n` +
-                  `Error: ${err.response.status} - ${err.response.statusText}\n` +
-                  `<< Error Details >>${err.response.data.error}\n`
-              )
-            );
-        } catch (e) {
-          return console.log(e);
+          var res = await axios.delete(`${serverUrl}/auth/deleteuser`, {
+            params: { email: user.email, password: user.password },
+          });
+          I.say(res.data.message);
+        } catch (err) {
+          console.log(
+            `Cannot delete created user\n` +
+              `Error: ${err.response.status} - ${err.response.statusText}\n` +
+              `<< Error Details >>${err.response.data.error}\n`
+          );
+          throw new Error(err);
         }
       });
       users.length = 0;
     }
   },
-  loginUser: (email, password) => {
+  login: async (email, password) => {
     try {
-      axios
-        .post(`${serverUrl}/auth/login`, { email, password })
-        .then(() => console.log("Login Successful"))
-        .catch((err) =>
-          console.log(
-            `Cannot login user\n` +
-              `Error: ${err.response.status} - ${err.response.statusText}\n` +
-              `<< Error Details >>${err.response.data.error}\n`
-          )
-        );
-    } catch (e) {
-      return console.log(e);
+      await axios.post(`${serverUrl}/auth/login`, { email, password });
+      I.say("Login Successful");
+    } catch (err) {
+      console.log(
+        `Cannot login user\n` +
+          `Error: ${err.response.status} - ${err.response.statusText}\n` +
+          `<< Error Details >>${err.response.data.error}\n`
+      );
+      throw new Error(err);
     }
   },
 };

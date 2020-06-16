@@ -3,7 +3,7 @@ const signupPage = require("../pages/signupPage");
 const loginPage = require("../pages/loginPage");
 const dashboard = require("../pages/dashboardPage");
 const { users } = require("../helpers/globals");
-const { registerUser, deleteUser, loginUser } = require("../helpers/api/user");
+const User = require("../helpers/api/user");
 
 const ELEMENT = signupPage.elements;
 const FIELD = signupPage.fields;
@@ -12,9 +12,9 @@ Given("the user has browsed to signup page", () => {
   I.amOnPage(signupPage.url);
 });
 
-Given("the user with following details already exists:", (table) => {
+Given("the user with following details already exists:", async (table) => {
   const data = table.parse().hashes()[0];
-  registerUser(data.name, data.email, data.password);
+  await User.register(data.name, data.email, data.password);
 });
 
 When("the user signs up with the following data using the webUI:", async (table) => {
@@ -37,9 +37,9 @@ Then("the user should be redirected to dashboard", async () => {
   I.see("Dashboard");
 });
 
-Then("the user should be able to login with email {string} and password {string}", (email, password) => {
+Then("the user should be able to login with email {string} and password {string}", async (email, password) => {
   users.push({ email: email, password: password });
-  loginUser(email, password);
+  await User.login(email, password);
 });
 
 Then("the input fields should have following values:", (table) => {
@@ -61,5 +61,5 @@ Then("an error message {string} should be displayed", (message) => {
 });
 
 After(() => {
-  deleteUser();
+  User.delete();
 });
