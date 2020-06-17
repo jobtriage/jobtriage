@@ -19,7 +19,8 @@ Given("the user with following details already exists:", async (table) => {
 
 When("the user signs up with the following data using the webUI:", async (table) => {
   const data = table.parse().hashes()[0];
-  if (data.confirmPassword) await signupPage.signUp(data.name, data.email, data.password, data.confirmPassword);
+  if (data.hasOwnProperty("confirmPassword"))
+    await signupPage.signUp(data.name, data.email, data.password, data.confirmPassword);
   else await signupPage.signUp(data.name, data.email, data.password, data.password);
 });
 
@@ -28,12 +29,11 @@ When("the user clicks go to login page button", () => {
 });
 
 Then("the user should be redirected to login page", () => {
-  I.seeInCurrentUrl(loginPage.url);
+  I.seeElement(loginPage.buttons.login);
 });
 
 Then("the user should be redirected to dashboard", async () => {
-  I.seeInCurrentUrl(dashboard.url);
-  I.waitForText("Dashboard");
+  I.waitForElement(dashboard.dashboardContainer, 10);
   I.see("Dashboard");
 });
 

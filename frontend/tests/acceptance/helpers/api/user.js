@@ -7,6 +7,7 @@ module.exports = {
   register: async (name, email, password) => {
     try {
       var res = await axios.post(`${serverUrl}/auth/register`, { name, email, password });
+      users.push({ email, password });
       I.say(res.data.message);
     } catch (err) {
       console.log(
