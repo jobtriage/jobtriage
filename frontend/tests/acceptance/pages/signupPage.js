@@ -1,7 +1,7 @@
 const { I } = inject();
 
 module.exports = {
-  url: "/signup",
+  url: '/signup',
   fields: {
     name: '//label[contains(text(),"Name")]/parent::div/div/input[contains(@class, "MuiInputBase-input")]',
     email: '//label[contains(text(),"Email")]/parent::div/div/input[contains(@class, "MuiInputBase-input")]',
@@ -9,12 +9,12 @@ module.exports = {
     confirmPassword:
       '//label[contains(text(),"Confirm password")]/parent::div/div/input[contains(@class, "MuiInputBase-input")]',
   },
-  signUp(name, email, password, confirmPassword) {
+  async signUp(name, email, password, confirmPassword) {
     I.waitForVisible(this.fields.name);
     I.fillField(this.fields.name, name);
     I.fillField(this.fields.email, email);
     I.fillField(this.fields.password, password);
     I.fillField(this.fields.confirmPassword, confirmPassword);
-    I.click("Sign Up");
+    await I.click('Sign Up');
   },
 };

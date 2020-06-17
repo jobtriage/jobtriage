@@ -1,14 +1,13 @@
 const { I } = inject();
 const loginPage = require('../pages/loginPage');
 const dashboard = require('../pages/dashboardPage');
-const signupPage = require('../pages/signupPage');
+const axios = require('axios');
 
-Given('the user has browsed to the homepage', () => I.amOnPage('/'));
+const apiUrl = process.env.REACT_APP_SERVER_URL || 'http://localhost:3000';
 
-When('the user signs up with name {string}, email {string} password {string} and confirmation password {string} using the webUI',
-  (name, email, password, confirmationPassword) => {
-    signupPage.signUp(name, email, password, confirmationPassword);
-  });
+Given('the user has signed up with name {string}, email {string} password {string}', (name, email, password) => {
+  axios.post(`${apiUrl}/auth/register`, { name, email, password });
+});
 
 When('the user browses to the login page', () => I.amOnPage(loginPage.url));
 
