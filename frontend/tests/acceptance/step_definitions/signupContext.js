@@ -12,7 +12,7 @@ When('the user browses to the signup page using the webUI', () => I.amOnPage(sig
 
 Then('the user should be able to login with email {string} and password {string}', async (email, password) => {
   try {
-    await axios.post(`${apiUrl}/auth/login/`, { email, password });
+    await axios.post(`${apiUrl}/auth/login`, { email, password });
   } catch (error) {
     throw new Error(`Cannot login user with email ${email}
      Status code: ${error.response.status}
