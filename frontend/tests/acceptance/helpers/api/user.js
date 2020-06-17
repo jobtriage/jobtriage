@@ -1,5 +1,6 @@
 const axios = require("axios");
-const { users, serverUrl } = require("../globals");
+const { users } = require("../globals");
+const { serverUrl } = require("../constants");
 const { I } = inject();
 
 module.exports = {
