@@ -1,8 +1,36 @@
-language: ruby
+laanguage: ruby
 rvm:
-  - 2.5.5
-script:
-  - bundle exec rails test
+  - 2.7.0
+sudo: true
 services:
   - mongodb
-  
+  - xvfb
+env:
+  global:
+    - API_SERVER_URL="http://localhost:3000"
+    - CLIENT_HOST="http://localhost:3001"
+    - HOST_URL="http://localhost:3000"
+    - notification_email="sender@mail.com"
+    - RAILS_ENV="test"
+
+before_install:
+  - gem install bundler -v 2.1.4
+  - nvm install v13.9.0
+  - nvm use v13.9.0
+
+install:
+  - bundle install
+  - cd $TRAVIS_BUILD_DIR/frontend/
+  - yarn install
+  - cd $TRAVIS_BUILD_DIR/
+before_script:
+  - rails s &
+  - cd $TRAVIS_BUILD_DIR/frontend/
+  - export PORT=3001 ; yarn start &
+  - until curl -s http://localhost:3000; do sleep 5; done
+  - until curl -s http://localhost:3001; do sleep 5; done
+  - cd $TRAVIS_BUILD_DIR/
+script:
+  - bundle exec rails test
+  - cd $TRAVIS_BUILD_DIR/frontend/
+  - npx codeceptjs run --steps
