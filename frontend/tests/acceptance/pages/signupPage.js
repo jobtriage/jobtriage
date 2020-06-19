@@ -1,19 +1,48 @@
 const { I } = inject();
 
 module.exports = {
-  url: '/signup',
+  url: "/signup",
   fields: {
-    name: '//label[contains(text(),"name")]/parent::div/div/input[contains(@class, "MuiInputBase-input")]',
-    email: '//label[contains(text(),"email")]/parent::div/div/input[contains(@class, "MuiInputBase-input")]',
-    password: '//label[contains(text(),"password")]/parent::div/div/input[contains(@class, "MuiInputBase-input")]',
-    confirmPassword: '//label[contains(text(),"confirm password")]/parent::div/div/input[contains(@class, "MuiInputBase-input")]',
+    name: '//label[contains(text(),"Name")]/parent::div//input[contains(@class, "MuiInputBase-input")]',
+    email: '//label[contains(text(),"Email")]/parent::div//input[contains(@class, "MuiInputBase-input")]',
+    password: '//label[contains(text(),"Password")]/parent::div//input[contains(@class, "MuiInputBase-input")]',
+    confirmPassword:
+      '//label[contains(text(),"Confirm password")]/parent::div//input[contains(@class, "MuiInputBase-input")]',
   },
-  signUp(name, email, password, confirmPassword) {
-    I.waitForVisible(this.fields.name);
+  elements: {
+    error_label: '//form/p[contains(@class,"makeStyles-error-")]',
+    login_label: '//form//span[contains(.,"Login here")]',
+    signup_button: '//form/button/span[contains(.,"Sign Up")]',
+  },
+  async signUp(name, email, password, confirmPassword) {
+    this.fillname(name);
+    this.fillEmail(email);
+    this.fillPassword(password);
+    this.fillConfirmPassword(confirmPassword);
+    await this.clickSignUp();
+  },
+  fillname(name) {
+    I.waitForElement(this.fields.name);
     I.fillField(this.fields.name, name);
+  },
+  fillEmail(email) {
+    I.waitForElement(this.fields.email);
     I.fillField(this.fields.email, email);
+  },
+  fillPassword(password) {
+    I.waitForElement(this.fields.password);
     I.fillField(this.fields.password, password);
+  },
+  fillConfirmPassword(confirmPassword) {
+    I.waitForElement(this.fields.confirmPassword);
     I.fillField(this.fields.confirmPassword, confirmPassword);
-    I.click('Sign Up');
+  },
+  async clickSignUp() {
+    I.waitForElement(this.elements.signup_button);
+    await I.click(this.elements.signup_button);
+  },
+  goToLogin() {
+    I.waitForElement(this.elements.login_label);
+    I.click(this.elements.login_label);
   },
 };

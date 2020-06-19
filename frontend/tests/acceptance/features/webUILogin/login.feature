@@ -2,6 +2,7 @@ Feature: login a user
   As a user
   I want to login to my dashboard
 
+  @login
   Scenario: login a user
     Given the user has signed up with name "user1", email "user1@gmail.com" password "password"
     When the user browses to the login page
