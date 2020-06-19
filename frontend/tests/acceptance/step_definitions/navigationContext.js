@@ -1,6 +1,5 @@
 const { I } = inject();
 const navigationPage = require("../pages/navigationPage");
-const loginPage = require("../pages/loginPage");
 const userAPI = require("../helpers/api/user");
 const selfAnalysisPage = require("../pages/selfAnalysisPage");
 const accountPage = require("../pages/accountPage");
