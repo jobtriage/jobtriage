@@ -34,6 +34,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
+const getData = (id) => {
+  APIService.getDataDump(id).then(()=> {
+  })
+}
+
 const ChangePassword = () => {
   const showToast = useToast();
   const showLoader = useLoader();
@@ -106,7 +111,9 @@ const ChangePassword = () => {
 const AccountDetails = () => {
   const classes = useStyles();
   const { state } = useAppContext();
-  const { email, name } = state.user;
+  const { userId: id, email, name } = state.user;
+  console.log(id);
+  console.log(state.user);
 
   return (
     <div className={classes.innerContainer}>
@@ -124,6 +131,8 @@ const AccountDetails = () => {
          {name}
        </Typography>
        <ChangePassword />
+
+       <Button name = "Export Data" onClick={getData(id)}>Export Data</Button>
     </div>
   );
 };

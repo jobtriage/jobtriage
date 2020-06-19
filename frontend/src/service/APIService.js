@@ -126,6 +126,15 @@ const updateJobApplication = (applicationId, jobDetail) => {
  */
 const getApplicationDetails = (applicationId) => axiosInstance.get(`${apiUrl}/applications/${applicationId}`);
 
+/**
+ * Get data dump
+ *
+ * @param {String} userId
+ *
+ * @returns {Promise}
+ */
+const getDataDump = (userId) => axiosInstance.get(`${apiUrl}/users/${userId}/data`);
+
 
 /**
  * @param {String} applicationId
@@ -327,4 +336,5 @@ export default {
   addAnalysis,
   updateAnalysis,
   deleteAnalysis,
+  getDataDump,
 };
