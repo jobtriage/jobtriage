@@ -1,24 +1,45 @@
 const { I } = inject();
-const loginPage = require('../pages/loginPage');
-const dashboard = require('../pages/dashboardPage');
-const axios = require('axios');
-const { users } = require('../helpers/globals');
+const loginPage = require("../pages/loginPage");
+const dashboard = require("../pages/dashboardPage");
+const userAPI = require("../helpers/api/user");
 
-const apiUrl = process.env.REACT_APP_SERVER_URL || 'http://localhost:3000';
+Given(
+  "the user has signed up with name {string}, email {string} password {string}",
+  async (name, email, password) => {
+    await userAPI.register(name, email, password);
+  }
+);
 
-Given('the user has browsed to the homepage', () => I.amOnPage('/'));
+Given("the user has browsed to the homepage", () => I.amOnPage("/"));
 
-When('the user has signed up with name {string}, email {string} password {string}', (name, email, password) => {
-  try {
-    axios.post(`${apiUrl}/auth/register`, { name, email, password });
-    users.push({ email: email, password: password });
-  } catch (err) {}
+When(
+  "the user logs in with email {string} and password {string} using the webUI",
+  (email, password) => {
+    loginPage.login(email, password);
+  }
+);
+
+Then("the user should be redirected to the dashboard page", () =>
+  I.seeElement(dashboard.dashboardContainer)
+);
+
+Given("the user has browsed to the login page using the webUI", () => {
+  I.amOnPage(loginPage.url);
 });
 
-When('the user browses to the login page', () => I.amOnPage(loginPage.url));
-
-When('the user logs in with email {string} and password {string} using the webUI', (email, password) => {
+When("the user logs in with the following credentials using the webUI:", (table) => {
+  let usersTable = table.parse().hashes();
+  email = usersTable[0].email;
+  password = usersTable[0].password;
   loginPage.login(email, password);
 });
 
-Then('user should be redirected to the dashboard page', () => I.seeElement(dashboard.dashboardContainer));
+Then("an error message {string} should be displayed", (message) => {
+  I.seeElement(loginPage.text.error);
+  I.see(message, loginPage.text.error);
+});
+
+Then("the user should stay on the login page", () => {
+  loginPage.amOnThisPage();
+});
+
