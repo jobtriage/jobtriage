@@ -100,7 +100,7 @@
       "profile": "http://balamurugan.info",
       "contributions": [
         "design"
-       ]
+      ]
     },
     {
       "login": "bibekthapa619",
@@ -108,7 +108,8 @@
       "avatar_url": "https://avatars3.githubusercontent.com/u/57626775?v=4",
       "profile": "https://github.com/bibekthapa619",
       "contributions": [
-        "bug"
+        "bug",
+        "test"
       ]
     }
   ],
