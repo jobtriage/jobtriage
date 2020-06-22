@@ -5,63 +5,51 @@ const { I } = inject();
 module.exports = {
   deleteJobApplication: async (token) => {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    getJobApplications(token)
-      .then((jobs) => {
-        if (jobs.length != 0) {
-          jobs.forEach((job) => {
-            const priority = getPriorityID(job.priority);
-            try {
-              axios
-                .delete(`${serverUrl}/applications/${job.id}`, {
-                  params: { title: job.title, status: job.status, priority: priority, company_name: job.company },
-                })
-                .then(() => console.log('Database Cleared'))
-                .catch((err) => {
-                  console.log(
-                    `Cannot delete job application\n` +
-                      `Error: ${err.response.status} - ${err.response.statusText}\n` +
-                      `<< Error Details >>${err.response.data.error}\n`
-                  );
-                  throw new Error(err);
-                });
-            } catch (e) {
-              return console.log(e);
-            }
-          });
-          jobApplications.length = 0;
-        }
-      })
-      .catch((err) => {
-        console.log(
-          `Cannot fetch job applications\n` +
-            `Error: ${err.response.status} - ${err.response.statusText}\n` +
-            `<< Error Details >>${err.response.data.error}\n`
-        );
-        throw new Error(err);
-      });
+    try {
+      jobs = await getJobApplications(token);
+      if (jobs.length != 0) {
+        jobs.forEach(async (job) => {
+          const priority = getPriorityID(job.priority);
+          try {
+            await axios.delete(`${serverUrl}/applications/${job.id}`, {
+              params: { title: job.title, status: job.status, priority: priority, company_name: job.company },
+            });
+            I.say('Job applications cleared');
+          } catch (err) {
+            console.log(
+              `Cannot delete job application\n` +
+                `Error: ${err.response.status} - ${err.response.statusText}\n` +
+                `<< Error Details >>${err.response.data.error}\n`
+            );
+            throw new Error(err);
+          }
+        });
+      }
+    } catch (err) {
+      console.log(
+        `Cannot fetch job applications\n` +
+          `Error: ${err.response.status} - ${err.response.statusText}\n` +
+          `<< Error Details >>${err.response.data.error}\n`
+      );
+      throw new Error(err);
+    }
   },
 };
 
 async function getJobApplications(token) {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  let result = [];
+  let jobs = [];
   try {
-    result = await axios
-      .get(`${serverUrl}/applications`)
-      .then(({ data }) => {
-        return data;
-      })
-      .catch((err) =>
-        console.log(
-          `Cannot get job applications\n` +
-            `Error: ${err.response.status} - ${err.response.statusText}\n` +
-            `<< Error Details >>${err.response.data.error}\n`
-        )
-      );
-  } catch (e) {
-    return console.log(e);
+    jobs = await axios.get(`${serverUrl}/applications`).then(({ data }) => data);
+  } catch (err) {
+    console.log(
+      `Cannot fetch job applications\n` +
+        `Error: ${err.response.status} - ${err.response.statusText}\n` +
+        `<< Error Details >>${err.response.data.error}\n`
+    );
+    throw new Error(err);
   }
-  return result;
+  return jobs;
 }
 
 function getPriorityID(priority) {

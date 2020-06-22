@@ -12,6 +12,7 @@ module.exports = {
     select_options: '//div[contains(@class,"MuiPopover-paper")]//li',
     error_label: '//div[contains(.,"Error in adding Job Application")]',
     success_label: '//div[contains(.,"Job Application added successfully")]',
+    trello_board: '//div[contains(@class,"react-trello-board")]',
   },
   addNewJobApplication(title, company, priority, status) {
     this.fillTitle(title);

@@ -1,25 +1,21 @@
 const { I } = inject();
 const newJobDialog = require('../pages/addNewJobApplicationForm');
 const dashboard = require('../pages/dashboardPage');
-const { loginUser, registerUser, deleteJobApplication } = require('../helpers/apiHelper');
-const { appUrl } = require('../globals');
+const { deleteJobApplication } = require('../helpers/api/job_application');
+const USER_API = require('../helpers/api/user');
 
 const ELEMENT = newJobDialog.elements;
 
-Given('the user has been registered with the following details:', async (table) => {
+Given('a user has been registered with the following details:', async (table) => {
   const user = table.parse().hashes()[0];
-  registerUser(user.name, user.email, user.password);
+  await USER_API.register(user.name, user.email, user.password);
 });
 
-Given(
-  'the user has logged in to the dashboard with email {string} and password {string} using the webUI',
-  async (email, password) => {
-    I.amOnPage(appUrl);
-    await loginUser(email, password).then(({ token }) => {
-      I.setCookie({ name: 'token', value: token });
-    });
-  }
-);
+Given('the user has logged in to the dashboard with email {string} and password {string}', async (email, password) => {
+  await USER_API.login(email, password).then(({ token }) => {
+    I.setCookie({ name: 'token', value: token, domain: 'localhost:3001/' });
+  });
+});
 
 Given('the user has opened add new job application dialog form from the dashboard', () => {
   I.amOnPage(dashboard.url);
@@ -46,12 +42,13 @@ Then('a success message {string} should pop up', (message) => {
 });
 
 Then(
-  'the newly added job application of title {string} should be added inside {string} status board in the dashboard',
+  'the job application of title {string} should be added in {string} status board in the dashboard',
   async (title, status) => {
+    I.seeElement(ELEMENT.trello_board);
     within(dashboard.getJobStatusBoard(status), () => {
       I.see(title);
     });
-    tearDown();
+    await tearDown();
   }
 );
 
@@ -62,6 +59,6 @@ Then('an error message {string} should pop up', (message) => {
 
 async function tearDown() {
   const token = await I.grabCookie('token');
-  deleteJobApplication(token);
+  await deleteJobApplication(token.value);
   I.clearCookie();
 }
