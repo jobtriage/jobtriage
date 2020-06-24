@@ -1,6 +1,6 @@
-const axios = require("axios");
-const { users } = require("../globals");
-const { serverUrl } = require("../constants");
+const axios = require('axios');
+const { users } = require('../globals');
+const { serverUrl } = require('../constants');
 const { I } = inject();
 
 module.exports = {
@@ -41,8 +41,8 @@ module.exports = {
   login: async (email, password) => {
     try {
       let res = await axios.post(`${serverUrl}/auth/login`, { email, password });
-      I.say("Login Successful");
-      return {token:res.data.message.token, success:true}
+      I.say('Login Successful');
+      return { token: res.data.message.token, success: true };
     } catch (err) {
       console.log(
         `Cannot login user\n` +
