@@ -4,7 +4,7 @@ const { addJobApplication, deleteJobApplication } = require('../helpers/api/job_
 const USER_API = require('../helpers/api/user');
 const updateJob = require('../pages/updateJobApplicationPage');
 
-let Token, firstJob, secondJob;
+let apiToken, firstJob, secondJob;
 
 Given('a user has been registered with the following details:', async (table) => {
   const user = table.parse().hashes()[0];
@@ -15,7 +15,7 @@ Given(
   'the user has logged in to the dashboard with email {string} and password {string} using the webUI',
   async (email, password) => {
     await USER_API.login(email, password).then(async ({ token }) => {
-      Token = token;
+      apiToken = token;
       I.setCookie({ name: 'token', value: token, domain: 'localhost:3001/' });
     });
   }
@@ -25,7 +25,7 @@ Given('the following job application already exists:', async (table) => {
   const jobs = table.parse().hashes();
   jobs.forEach(async (job) => {
     const data = {
-      token: Token,
+      token: apiToken,
       title: job.title,
       company: job.company,
       priority: job.priority,
@@ -35,7 +35,7 @@ Given('the following job application already exists:', async (table) => {
   });
 });
 
-When('the user moves job application from {string} to {string} status board', (source, destination) => {
+When('the user moves job application from {string} to {string} status board using the webUI', (source, destination) => {
   I.amOnPage(dashboard.url);
   I.dragAndDrop(dashboard.dragFrom(source), dashboard.dragTo(destination));
 });
@@ -57,7 +57,7 @@ Then(
 );
 
 When(
-  'the user moves second job application above the first job application within {string} status board',
+  'the user moves second job application above the first job application within {string} status board using the webUI',
   async (status) => {
     I.amOnPage(dashboard.url);
     within(dashboard.getJobStatusBoard(status), async () => {
@@ -90,12 +90,15 @@ Then('the job application of title {string} should not appear in {string} status
   });
 });
 
-When('the user clicks job application of title {string} from {string} status board', async (title, status) => {
-  I.amOnPage(dashboard.url);
-  within(dashboard.getJobStatusBoard(status), () => {
-    dashboard.gotoUpdateJob(title);
-  });
-});
+When(
+  'the user clicks job application of title {string} from {string} status board using the webUI',
+  async (title, status) => {
+    I.amOnPage(dashboard.url);
+    within(dashboard.getJobStatusBoard(status), () => {
+      dashboard.gotoUpdateJob(title);
+    });
+  }
+);
 
 Then('the user should be redirected to update job application page and should see following data:', async (table) => {
   const job = table.parse().hashes()[0];
