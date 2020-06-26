@@ -8,7 +8,7 @@ Given("the user has browsed to the account page", () => {
 });
 
 When(
-	"the user tries to update password with the following credentials using the webUI",
+	"the user updates password with the following credentials using the webUI",
 	(table) => {
 		tableData = table.parse().hashes()[0];
 		accountPage.updatePassword(
@@ -45,7 +45,7 @@ Then(
 );
 
 Then(
-	"a password matching error message {string} should be displayed",
+	"a password mismatch error message {string} should be displayed",
 	(message) => {
 		I.seeElement(accountPage.text.passwordMismatch);
 		I.see(message, accountPage.text.passwordMismatch);

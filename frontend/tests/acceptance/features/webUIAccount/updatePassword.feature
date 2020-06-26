@@ -10,11 +10,10 @@ Feature: update the account password
 
   @blankPasswordUpdate
   Scenario Outline: update password with blank credentials
-    When the user tries to update password with the following credentials using the webUI
+    When the user updates password with the following credentials using the webUI
       | currentPassword   | newPassword   | confirmPassword   |
       | <currentPassword> | <newPassword> | <confirmPassword> |
     Then the user should stay on the account page
-    And the user must be able to login with email "user1@gmail.com" and password "password"
     Examples:
       | currentPassword | newPassword | confirmPassword |
       |                 | newPassword | newPassword     |
@@ -23,7 +22,7 @@ Feature: update the account password
 
   @invalidCurrentPasswordUpdate
   Scenario: update password with invalid current credentials
-    When the user tries to update password with the following credentials using the webUI
+    When the user updates password with the following credentials using the webUI
       | currentPassword | newPassword | confirmPassword |
       | password123     | newPassword | newPassword     |
     Then the user should be displayed a popup with message "Password mismatch"
@@ -31,15 +30,15 @@ Feature: update the account password
 
   @unmatchPasswordUpdate
   Scenario: update password with unmatching new password
-    When the user tries to update password with the following credentials using the webUI
+    When the user updates password with the following credentials using the webUI
       | currentPassword | newPassword | confirmPassword |
       | password        | newPassword | Password        |
-    Then a password matching error message "Password and confirm password mismatch" should be displayed
+    Then a password mismatch error message "Password and confirm password mismatch" should be displayed
     And the user must be able to login with email "user1@gmail.com" and password "password"
 
   @validUpdate
   Scenario: update password with valid fields
-    When the user tries to update password with the following credentials using the webUI
+    When the user updates password with the following credentials using the webUI
       | currentPassword | newPassword | confirmPassword |
       | password        | newPassword | newPassword     |
     Then the user should be displayed a popup with message "Password updated"
