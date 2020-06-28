@@ -6,7 +6,15 @@ exports.config = {
     Puppeteer: {
       url: LOCAL_LAUNCH_URL,
       show: true,
-      windowSize: '1200x900',
+      windowSize: '1440x900',
+      waitForNavigation: ['networkidle0', 'domcontentloaded'],
+      chrome: {
+        args: ['--no-sandbox', '--window-size=1440,900'],
+        defaultViewport: {
+          width: 1440,
+          height: 900,
+        },
+      },
     },
   },
   include: {

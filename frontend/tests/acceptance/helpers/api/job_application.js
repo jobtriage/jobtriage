@@ -3,6 +3,26 @@ const { serverUrl } = require('../constants');
 const { I } = inject();
 
 module.exports = {
+  addJobApplication: async (data) => {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+    try {
+      const priority = getPriorityID(data.priority);
+      await axios.post(`${serverUrl}/applications`, {
+        title: data.title,
+        status: data.status,
+        priority: priority,
+        company_name: data.company,
+      });
+      I.say('Job application added');
+    } catch (err) {
+      console.log(
+        `Cannot add job application\n` +
+          `Error: ${err.response.status} - ${err.response.statusText}\n` +
+          `<< Error Details >>${err.response.data.error}\n`
+      );
+      throw new Error(err);
+    }
+  },
   deleteJobApplication: async (token) => {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     try {
