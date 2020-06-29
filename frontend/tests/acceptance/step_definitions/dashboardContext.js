@@ -11,15 +11,12 @@ Given('a user has been registered with the following details:', async (table) =>
   await USER_API.register(user.name, user.email, user.password);
 });
 
-Given(
-  'the user has logged in to the dashboard with email {string} and password {string} using the webUI',
-  async (email, password) => {
-    await USER_API.login(email, password).then(async ({ token }) => {
-      apiToken = token;
-      I.setCookie({ name: 'token', value: token, domain: 'localhost:3001/' });
-    });
-  }
-);
+Given('the user has logged in to the dashboard with email {string} and password {string}', async (email, password) => {
+  await USER_API.login(email, password).then(async ({ token }) => {
+    apiToken = token;
+    I.setCookie({ name: 'token', value: token, domain: 'localhost:3001/' });
+  });
+});
 
 Given('the following job application already exists:', async (table) => {
   const jobs = table.parse().hashes();

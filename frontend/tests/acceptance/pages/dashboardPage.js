@@ -49,4 +49,7 @@ module.exports = {
   gotoUpdateJob(title) {
     I.click(`${this.elements.job_title}[contains(text(),"${title}")]`);
   },
+  amOnThisPage() {
+    I.seeElement(this.dashboardContainer);
+  },
 };

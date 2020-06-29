@@ -6,17 +6,6 @@ const USER_API = require('../helpers/api/user');
 
 const ELEMENT = newJobDialog.elements;
 
-Given('a user has been registered with the following details:', async (table) => {
-  const user = table.parse().hashes()[0];
-  await USER_API.register(user.name, user.email, user.password);
-});
-
-Given('the user has logged in to the dashboard with email {string} and password {string}', async (email, password) => {
-  await USER_API.login(email, password).then(({ token }) => {
-    I.setCookie({ name: 'token', value: token, domain: 'localhost:3001/' });
-  });
-});
-
 Given('the user has opened add new job application dialog form from the dashboard', () => {
   I.amOnPage(dashboard.url);
   I.retry({ retries: 3, maxTimeout: 1000 }).waitForElement(dashboard.elements.addnewjob_button);
