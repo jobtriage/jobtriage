@@ -8,7 +8,7 @@ Feature: Update job application
       | name | email          | password |
       | test | test@email.com | testpass |
     And the user has logged in to the dashboard with email "test@email.com" and password "testpass"
-    And the following job application exists:
+    And the following job application already exists:
       | title          | company     | priority | status       |
       | Office Manager | ABC Company | Medium   | Yet to Apply |
     And the user has navigated to update job application page to update the job application of title "Office Manager" using the webUI

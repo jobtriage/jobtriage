@@ -1,40 +1,11 @@
 const { I } = inject();
-const { addJobApplication, deleteJobApplication } = require('../helpers/api/job_application');
-const USER_API = require('../helpers/api/user');
+const { deleteJobApplication } = require('../helpers/api/job_application');
 const updateJobPage = require('../pages/updateJobApplicationPage');
 const dashboardPage = require('../pages/dashboardPage');
 const navigationPage = require('../pages/navigationPage');
 
 const FIELDS = updateJobPage.fields;
 const ELEMENTS = updateJobPage.elements;
-
-let apiToken;
-
-Given('a user has been registered with the following details:', async (table) => {
-  const user = table.parse().hashes()[0];
-  await USER_API.register(user.name, user.email, user.password);
-});
-
-Given('the user has logged in to the dashboard with email {string} and password {string}', async (email, password) => {
-  await USER_API.login(email, password).then(async ({ token }) => {
-    apiToken = token;
-    I.setCookie({ name: 'token', value: token, domain: 'localhost:3001/' });
-  });
-});
-
-Given('the following job application exists:', async (table) => {
-  const jobs = table.parse().hashes();
-  jobs.forEach(async (job) => {
-    const data = {
-      token: apiToken,
-      title: job.title,
-      company: job.company,
-      priority: job.priority,
-      status: job.status.toLowerCase().replace(/ /g, ''),
-    };
-    await addJobApplication(data);
-  });
-});
 
 Given(
   'the user has navigated to update job application page to update the job application of title {string} using the webUI',
