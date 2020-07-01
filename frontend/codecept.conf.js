@@ -9,7 +9,7 @@ exports.config = {
       windowSize: '1440x900',
       waitForNavigation: ['networkidle0', 'domcontentloaded'],
       chrome: {
-        args: ['--no-sandbox', '--window-size=1440,900'],
+        args: ['--disable-dev-shm-usage', '--no-sandbox', '--window-size=1440,900'],
         defaultViewport: {
           width: 1440,
           height: 900,

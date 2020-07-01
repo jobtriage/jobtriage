@@ -3,9 +3,8 @@ const { deleteJobApplication } = require('../helpers/api/job_application');
 const { addNote, deleteNote } = require('../helpers/api/notes');
 const updateJobPage = require('../pages/updateJobApplicationPage');
 const notesPage = require('../pages/notesPage');
+const { elementWaitTime } = require('../helpers/globals');
 
-const FIELDS = notesPage.fields;
-const ELEMENTS = notesPage.elements;
 let jobID;
 
 Given('the user is in the notes page', async () => {
@@ -19,6 +18,7 @@ When('the user adds a new note with following details:', async (table) => {
 });
 
 Then('the newly created note of title {string} and content {string} should appear', async (title, content) => {
+  I.waitForElement(notesPage.elements.getNoteContext(title), 5);
   within(notesPage.elements.notesContainer, () => {
     I.see(title);
     I.see(content);
@@ -26,7 +26,7 @@ Then('the newly created note of title {string} and content {string} should appea
   await tearDown();
 });
 
-Given('the following job note exists:', async (table) => {
+Given('the following job has been created:', async (table) => {
   jobID = await getJobId();
   const note = table.parse().hashes()[0];
   const token = await I.grabCookie('token');
@@ -47,6 +47,7 @@ When('the user updates the job note of title {string} with following details:', 
 });
 
 Then('the note should be updated with new title {string} and new content {string}', async (title, content) => {
+  I.waitForElement(notesPage.elements.getNoteContext(title), elementWaitTime);
   within(notesPage.elements.notesContainer, () => {
     I.see(title);
     I.see(content);
@@ -58,7 +59,7 @@ When('the user deletes job note of title {string} using the webUI', (title) => {
   notesPage.deleteNote(title);
 });
 
-Then('the job note of title {string} should be removed', async (title) => {
+Then('the job note of title {string} should not exist', async (title) => {
   within(notesPage.elements.notesContainer, () => {
     I.refreshPage();
     updateJobPage.gotoNotes();

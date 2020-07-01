@@ -9,12 +9,13 @@ module.exports = {
   elements: {
     timelog_title: '//h6[text()="Time Logs"]',
     empty_message: '//h5[text()="No timelogs added yet"]',
+    openaddtimelog_dialog: '//div[#aria-labelledby="Add time log"]',
+    openedittimelog_button: '//span[@aria-label="Edit time log"]',
     addtimelog_button: '//button/span[contains(text(),"Add")]',
     updatetimelog_button: '//button/span[contains(text(),"Update")]',
-    edittimelog_button: '//span[@aria-label="Edit time log"]',
     deletetimelog_button: '//span[@aria-label="Delete time log"]',
     addtocalender_button: '//span[@label="Add to calender"]',
-    addtimelog_dialog: '//div[#aria-labelledby="Add time log"]',
     select_options: '//div[contains(@class,"MuiPopover-paper")]//li',
+    timelog_container: '//div[contains(@class, "makeStyles-timeLogItem")]',
   },
 };

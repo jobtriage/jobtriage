@@ -3,14 +3,15 @@ Feature: Add notes to job application
   I want to add notes to my job applications
   So that I can remark my job applications
 
-  Background: User has access to dashboard
+  Background: Valid user has access to the dashboard
     Given a user has been registered with the following details:
       | name | email          | password |
       | test | test@email.com | testpass |
-    And the user has logged in to the dashboard with email "test@email.com" and password "testpass"
-    And the following job application already exists:
+    And the user has logged in with email "test@email.com" and password "testpass"
+    And the following job application has been created:
       | title          | company     | priority | status       |
       | Office Manager | ABC Company | Medium   | Yet to Apply |
+    And the use has navigated to the dashboard
     And the user has navigated to update job application page to update the job application of title "Office Manager" using the webUI
 
   @addnewnote
@@ -26,7 +27,7 @@ Feature: Add notes to job application
 
   @updatenote
   Scenario Outline: Update job note
-  Given the following job note exists:
+  Given the following job has been created:
     | title     | content            |
     | TestTitle | Some contents here |
   And the user is in the notes page
@@ -36,13 +37,13 @@ Feature: Add notes to job application
   Then the note should be updated with new title "<title>" and new content "<content>"
   Examples:
     | title    | content                |
-    | NewTitle | Some new contents here |
+    | NewTitle | More new contents here |
 
   @deletenote
   Scenario: Delete job note
-  Given the following job note exists:
+  Given the following job has been created:
     | title     | content            |
     | TestTitle | Some contents here |
   And the user is in the notes page
   When the user deletes job note of title "TestTitle" using the webUI
-  Then the job note of title "TestTitle" should be removed
+  Then the job note of title "TestTitle" should not exist

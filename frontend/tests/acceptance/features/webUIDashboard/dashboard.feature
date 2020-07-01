@@ -7,11 +7,11 @@ Feature: Organize job applications
     Given a user has been registered with the following details:
       | name | email          | password |
       | test | test@email.com | testpass |
-    And the user has logged in to the dashboard with email "test@email.com" and password "testpass"
+    And the user has logged in with email "test@email.com" and password "testpass"
 
   @movejobs
   Scenario Outline: Move job application from one status heading to another status heading
-    Given the following job application already exists:
+    Given the following job application has been created:
       | title          | company     | priority | status          |
       | Office Manager | ABC Company | Medium   | <initialStatus> |
     When the user moves job application from "<initialStatus>" to "<dragTOStatus>" status board using the webUI
@@ -27,7 +27,7 @@ Feature: Organize job applications
 
   @movewithin
   Scenario Outline: Move job application within a status board
-    Given the following job application already exists:
+    Given the following job application has been created:
       | title          | company     | priority   | status   |
       | Office Manager | ABC Company | Medium     | <status> |
       | Sales Manager  | XYZ Company | Low        | <status> |
@@ -43,7 +43,7 @@ Feature: Organize job applications
     
   @deletejob
   Scenario Outline: Delete job application from dashboard
-    Given the following job application already exists:
+    Given the following job application has been created:
       | title          | company     | priority | status   |
       | Office Manager | ABC Company | Medium   | <status> |
     When the user deletes job application of "<status>" status board using webUI
@@ -58,7 +58,7 @@ Feature: Organize job applications
   
   @gotoupdatejob
   Scenario Outline: Go to update job application page from dashboard
-    Given the following job application already exists:
+    Given the following job application has been created:
       | title          | company     | priority | status   |
       | Office Manager | ABC Company | Medium   | <status> |
     When the user clicks job application of title "Office Manager" from "<status>" status board using the webUI

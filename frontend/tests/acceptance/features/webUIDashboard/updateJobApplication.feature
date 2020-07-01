@@ -7,10 +7,11 @@ Feature: Update job application
     Given a user has been registered with the following details:
       | name | email          | password |
       | test | test@email.com | testpass |
-    And the user has logged in to the dashboard with email "test@email.com" and password "testpass"
-    And the following job application already exists:
+    And the user has logged in with email "test@email.com" and password "testpass"
+    And the following job application has been created:
       | title          | company     | priority | status       |
       | Office Manager | ABC Company | Medium   | Yet to Apply |
+    And the use has navigated to the dashboard
     And the user has navigated to update job application page to update the job application of title "Office Manager" using the webUI
 
   @updatewithemptytitle
@@ -34,12 +35,12 @@ Feature: Update job application
     | Sales Manager | Low      | Applied | XYZ Company | http://xyz.com/ | http://xyz.com/jobpost/ | Some description about job |
 
   @navigatetabs
-  Scenario: Navigate between from details to notes tab
+  Scenario: Navigate from details to the notes tab
   When the user clicks notes tab
   Then the notes page should be displayed
 
   @navigatetabs
-  Scenario: Navigate between from notes to details tab
+  Scenario: Navigate from notes to the details tab
   Given the user is in the notes page
   When the user clicks details tab
   Then the details page should be displayed

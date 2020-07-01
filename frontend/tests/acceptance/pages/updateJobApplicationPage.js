@@ -18,6 +18,9 @@ module.exports = {
     details_title: '//h6[text()="Application Details"]',
     notes_title: '//h6[text()="Notes"]',
     select_options: '//div[contains(@class,"MuiPopover-paper")]//li',
+    selectOptions(option) {
+      return `//div[contains(@class,"MuiPopover-paper")]//li[contains(.,"${option}")]`;
+    },
     error_message_label: '//div[text()="Update failed"]',
     success_message_label: '//div[text()="Update success"]',
   },
@@ -38,52 +41,52 @@ module.exports = {
     this.clickUpdateJob();
   },
   fillTitle(title) {
-    I.waitForElement(this.fields.title);
+    I.waitForElement(this.fields.title, 5);
     I.clearField(this.fields.title);
     I.fillField(this.fields.title, title);
   },
   selectPriority(priority) {
-    I.waitForElement(this.fields.priority);
+    I.waitForElement(this.fields.priority, 5);
     I.click(this.fields.priority);
-    I.click(this.elements.select_options + '[contains(.,"' + priority + '")]');
+    I.click(this.elements.selectOptions(priority));
     I.dontSeeElement(this.elements.select_options);
   },
   selectStatus(status) {
-    I.waitForElement(this.fields.status);
+    I.waitForElement(this.fields.status, 5);
     I.click(this.fields.status);
-    I.click(this.elements.select_options + '[contains(.,"' + status + '")]');
+    I.click(this.elements.selectOptions(status));
     I.dontSeeElement(this.elements.select_options);
   },
   fillCompany(company) {
-    I.waitForElement(this.fields.company);
+    I.waitForElement(this.fields.company, 5);
     I.clearField(this.fields.company);
     I.fillField(this.fields.company, company);
   },
   fillCompanyLink(company_link) {
-    I.waitForElement(this.fields.company_link);
+    I.waitForElement(this.fields.company_link, 5);
     I.clearField(this.fields.company_link);
     I.fillField(this.fields.company_link, company_link);
   },
   fillJobUrl(job_post_url) {
     I.clearField(this.fields.job_post_url);
-    I.waitForElement(this.fields.job_post_url);
+    I.waitForElement(this.fields.job_post_url, 5);
     I.fillField(this.fields.job_post_url, job_post_url);
   },
   fillDescription(description) {
-    I.waitForElement(this.fields.description);
+    I.waitForElement(this.fields.description, 5);
     I.clearField(this.fields.description);
     I.fillField(this.fields.description, description);
   },
   clickUpdateJob() {
-    I.waitForElement(this.elements.update_button);
+    I.waitForElement(this.elements.update_button, 5);
     I.click(this.elements.update_button);
   },
   gotoNotes() {
-    I.waitForElement(this.elements.notes_button);
+    I.waitForElement(this.elements.notes_button, 5);
     I.click(this.elements.notes_button);
   },
   gotoDetails() {
-    I.waitForElement(this.elements.details_button);
+    I.waitForElement(this.elements.details_button, 5);
     I.click(this.elements.details_button);
   },
 };
