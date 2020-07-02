@@ -53,7 +53,10 @@ const AddJobDialog = props => {
           <p className={classes.dialogLabel}> Priority </p>
           <ButtonGroup>
             {JOB_APPLICATION_PRIORITY.map(element => (
-              <Button onClick={()=> { setPriority(element.value) }}> {element.label} </Button>
+              <Button onClick={()=> { setPriority(element.value) }}
+                 color={priority === element.value ? 'primary': 'default'}> 
+                {element.label} 
+              </Button>
               ))
             }
           </ButtonGroup>
