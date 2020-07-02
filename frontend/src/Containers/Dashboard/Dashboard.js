@@ -66,11 +66,12 @@ const parseApplicationData = appData => {
   const { lanes } = cloneDeep(data);
 
   for (const application of appData) {
-    const { status, id, title } = application;
+    const { status, id, title, location } = application;
     const { company } = application;
     const priority = getPriority(application.priority);
+    const description = location ? `${company.name}, ${location}` : company.name
     getLane(lanes, status).push({
-      id, title, description: company.name, label: priority,
+      id, title, description, label: priority,
     });
   }
 
