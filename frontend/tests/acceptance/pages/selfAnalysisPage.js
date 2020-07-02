@@ -1,12 +1,11 @@
 const { I } = inject();
 
 module.exports = {
-	url: "/self",
-	text: {
-		selfAnalysis: '//h5[contains(text(),"Self Analysis")]',
+  url: '/self',
+  text: {
+    selfAnalysis: '//h5[contains(text(),"Self Analysis")]',
   },
-  amOnThisPage()
-  {
+  amOnThisPage() {
     I.seeElement(this.text.selfAnalysis);
-  }
+  },
 };

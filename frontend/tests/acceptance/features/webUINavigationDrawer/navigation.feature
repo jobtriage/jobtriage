@@ -10,6 +10,7 @@ Feature: navigation
 
   @dashboardNavigation
   Scenario: navigate to dashboard page
+    Given the user is in the Account page
     When the user clicks on dashboard option on the drawer using the webUI
     Then the user should be redirected to the dashboard page
 

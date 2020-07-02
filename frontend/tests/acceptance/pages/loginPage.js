@@ -28,8 +28,7 @@ module.exports = {
   clickLogin() {
     I.click(this.buttons.login);
   },
-  amOnThisPage()
-  {
+  amOnThisPage() {
     I.seeElement(this.buttons.login);
-  }
+  },
 };

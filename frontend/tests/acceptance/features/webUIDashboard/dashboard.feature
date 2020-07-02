@@ -7,7 +7,7 @@ Feature: Organize job applications
     Given a user has been registered with the following details:
       | name | email          | password |
       | test | test@email.com | testpass |
-    And the user has logged in to the dashboard with email "test@email.com" and password "testpass" using the webUI
+    And the user has logged in to the dashboard with email "test@email.com" and password "testpass"
 
   @movejobs
   Scenario Outline: Move job application from one status heading to another status heading
