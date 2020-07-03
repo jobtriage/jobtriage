@@ -55,7 +55,7 @@ Then('the user should not be created', () => {
 });
 
 Then('an error message {string} should be displayed', (message) => {
-  I.waitForElement(ELEMENT.error_label);
+  I.waitForElement(ELEMENT.error_label, 5);
   I.see(message, ELEMENT.error_label);
 });
 

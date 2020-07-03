@@ -22,16 +22,16 @@ module.exports = {
     this.clickAdd();
   },
   fillTitle(title) {
-    I.waitForElement(this.fields.title);
+    I.waitForElement(this.fields.title, 5);
     I.fillField(this.fields.title, title);
   },
   fillCompany(company) {
-    I.waitForElement(this.fields.company);
+    I.waitForElement(this.fields.company, 5);
     I.fillField(this.fields.company, company);
   },
   selectPriority(priority) {
     if (priority) {
-      I.waitForElement(this.fields.priority);
+      I.waitForElement(this.fields.priority, 5);
       I.click(this.fields.priority);
       I.click(this.elements.select_options + '[contains(.,"' + priority + '")]');
       I.dontSeeElement(this.elements.select_options);
@@ -39,14 +39,14 @@ module.exports = {
   },
   selectStatus(status) {
     if (status) {
-      I.waitForElement(this.fields.status);
+      I.waitForElement(this.fields.status, 5);
       I.click(this.fields.status);
       I.click(this.elements.select_options + '[contains(.,"' + status + '")]');
       I.dontSeeElement(this.elements.select_options);
     }
   },
   clickAdd() {
-    I.waitForElement(this.elements.add_job_application_button);
+    I.waitForElement(this.elements.add_job_application_button, 5);
     I.click(this.elements.add_job_application_button);
   },
 };

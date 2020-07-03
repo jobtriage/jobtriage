@@ -1,7 +1,7 @@
 const { I } = inject();
 
 module.exports = {
-  url: "/signup",
+  url: '/signup',
   fields: {
     name: '//label[contains(text(),"Name")]/parent::div//input[contains(@class, "MuiInputBase-input")]',
     email: '//label[contains(text(),"Email")]/parent::div//input[contains(@class, "MuiInputBase-input")]',
@@ -22,27 +22,27 @@ module.exports = {
     await this.clickSignUp();
   },
   fillname(name) {
-    I.waitForElement(this.fields.name);
+    I.waitForElement(this.fields.name, 5);
     I.fillField(this.fields.name, name);
   },
   fillEmail(email) {
-    I.waitForElement(this.fields.email);
+    I.waitForElement(this.fields.email, 5);
     I.fillField(this.fields.email, email);
   },
   fillPassword(password) {
-    I.waitForElement(this.fields.password);
+    I.waitForElement(this.fields.password, 5);
     I.fillField(this.fields.password, password);
   },
   fillConfirmPassword(confirmPassword) {
-    I.waitForElement(this.fields.confirmPassword);
+    I.waitForElement(this.fields.confirmPassword), 5;
     I.fillField(this.fields.confirmPassword, confirmPassword);
   },
   async clickSignUp() {
-    I.waitForElement(this.elements.signup_button);
+    I.waitForElement(this.elements.signup_button, 5);
     await I.click(this.elements.signup_button);
   },
   goToLogin() {
-    I.waitForElement(this.elements.login_label);
+    I.waitForElement(this.elements.login_label, 5);
     I.click(this.elements.login_label);
   },
 };

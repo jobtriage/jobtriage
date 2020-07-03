@@ -8,7 +8,7 @@ const ELEMENT = newJobDialog.elements;
 
 Given('the user has opened add new job application dialog form from the dashboard', () => {
   I.amOnPage(dashboard.url);
-  I.retry({ retries: 3, maxTimeout: 1000 }).waitForElement(dashboard.elements.addnewjob_button);
+  I.waitForElement(dashboard.elements.addnewjob_button, 5);
   I.click(dashboard.elements.addnewjob_button);
 });
 
@@ -26,7 +26,7 @@ Then('the add new job application dialog form should be closed', () => {
 });
 
 Then('a success message {string} should pop up', (message) => {
-  I.waitForElement(ELEMENT.success_label);
+  I.waitForElement(ELEMENT.success_label, 5);
   I.see(message, ELEMENT.success_label);
 });
 
@@ -42,7 +42,7 @@ Then(
 );
 
 Then('an error message {string} should pop up', (message) => {
-  I.waitForElement(ELEMENT.error_label);
+  I.waitForElement(ELEMENT.error_label, 5);
   I.see(message, ELEMENT.error_label);
 });
 
