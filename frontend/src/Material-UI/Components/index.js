@@ -9,3 +9,4 @@ export { default as ListItemText } from './List/ListItem/ListItemText/ListItemTe
 export { default as ListItemIcon } from './List/ListItem/ListItemIcon/ListItemIcon';
 export { default as Divider } from './Divider/Divider';
 export { default as Toast } from './Toast/Toast';
+export { default as ButtonGroup } from './ButtonGroup/ButtonGroup';

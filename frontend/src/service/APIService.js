@@ -94,12 +94,13 @@ const deleteApplication = id => axiosInstance.delete(`${apiUrl}/applications/${i
  *
  * @returns {Promise}
  */
-const addJobApplication = (title, status, priority, companyName) => {
+const addJobApplication = (title, status, priority, companyName, location) => {
   return axiosInstance.post(`${apiUrl}/applications`, {
     title,
     status,
     priority,
     company_name: companyName,
+    location
   });
 };
 

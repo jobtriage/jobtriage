@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Dialog, DialogContent, DialogTitle } from '@material-ui/core';
-import { Button, Input } from '../../../Material-UI/Components';
+import { Button, ButtonGroup, Input } from '../../../Material-UI/Components';
 import { DropDownMenu } from '../../../Components';
 import APIService from '../../../service/APIService';
 import { useToast, ToastConstants } from '../../../store/context';
@@ -13,6 +13,10 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     flexDirection: 'column',
   },
+  dialogLabel: {
+    marginLeft: '0.5em',
+    color: 'gray'
+  }
 }));
 
 const AddJobDialog = props => {
@@ -23,15 +27,17 @@ const AddJobDialog = props => {
   const [company, setCompany] = useState('');
   const [status, setStatus] = useState('');
   const [priority, setPriority] = useState('');
+  const [location, setLocation] = useState('');
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    APIService.addJobApplication(title, status, priority, company)
+    APIService.addJobApplication(title, status, priority, company, location)
       .then(() => {
         onChange();
         onClose();
         setTitle('');
         setCompany('');
+        setLocation('')
         showToast('Job Application added successfully', ToastConstants.SUCCESS);
       })
       .catch(() => { showToast('Error in adding Job Application', ToastConstants.ERROR); });
@@ -44,8 +50,18 @@ const AddJobDialog = props => {
         <form className={classes.mainCard} onSubmit={handleSubmit}>
           <Input type="text" label="Title" required onChange={e => setTitle(e.target.value)} value={title} />
           <Input type="text" label="Company" required onChange={e => setCompany(e.target.value)} value={company} />
-          <DropDownMenu label="Priority" options={JOB_APPLICATION_PRIORITY} onChange={e => setPriority(e.target.value)} />
+          <p className={classes.dialogLabel}> Priority </p>
+          <ButtonGroup>
+            {JOB_APPLICATION_PRIORITY.map(element => (
+              <Button onClick={()=> { setPriority(element.value) }}
+                 color={priority === element.value ? 'primary': 'default'}> 
+                {element.label} 
+              </Button>
+              ))
+            }
+          </ButtonGroup>
           <DropDownMenu label="Status" options={JOB_APPLICATION_STATUS} onChange={e => setStatus(e.target.value)} />
+          <Input type="text" label="Location" required onChange={e => setLocation(e.target.value)} value={location} />
           <Button type="submit">Add</Button>
         </form>
       </DialogContent>
