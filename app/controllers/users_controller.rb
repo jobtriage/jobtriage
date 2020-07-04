@@ -6,7 +6,7 @@ class UsersController < ApplicationController
     end
 
     def data
-        send_data @user.generate_data_dump, filename: "#{@user.name}.csv", type: "application/csv"
+        send_data @user.generate_data_dump, filename: "#{@user.name}.pdf", type: "application/pdf"
     end
 
     private
