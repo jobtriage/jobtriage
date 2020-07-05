@@ -21,19 +21,19 @@ module.exports = {
     I.seeElement(this.text.account);
   },
   clickUpdate() {
-    I.waitForElement(this.buttons.update);
+    I.waitForElement(this.buttons.update, 5);
     I.click(this.buttons.update);
   },
   fillCurrentPassword(password) {
-    I.waitForElement(this.fields.currentPassword);
+    I.waitForElement(this.fields.currentPassword, 5);
     I.fillField(this.fields.currentPassword, password);
   },
   fillNewPassword(password) {
-    I.waitForElement(this.fields.newPassword);
+    I.waitForElement(this.fields.newPassword, 5);
     I.fillField(this.fields.newPassword, password);
   },
   fillConfirmPassword(password) {
-    I.waitForElement(this.fields.confirmPassword);
+    I.waitForElement(this.fields.confirmPassword, 5);
     I.fillField(this.fields.confirmPassword, password);
   },
   updatePassword(currentPassword, newPassword, confirmPassword) {

@@ -13,8 +13,8 @@ Feature: Add a new job application
   @addnewjob
   Scenario Outline: Add a new job application
     When the user adds a new job application with the following data:
-      | title   | company   | priority   | status   |
-      | <title> | <company> | <priority> | <status> |
+      | title   | company   | priority   | status   | location        |
+      | <title> | <company> | <priority> | <status> | Omaha, Nebraska |
     Then a success message "Job Application added successfully" should pop up
     And the job application of title "<title>" should be added in "<status>" status board in the dashboard
     Examples:
@@ -28,14 +28,14 @@ Feature: Add a new job application
   @unselectedoptions
   Scenario Outline: Add new job application with unselected options
     When the user adds a new job application with the following data:
-      | title   | company   | priority   | status   |
-      | <title> | <company> | <priority> | <status> |
+      | title          | company     | priority   | status   | location        |
+      | Office Manager | ABC Company | <priority> | <status> | Omaha, Nebraska |
     Then an error message "Error in adding Job Application" should pop up
     Examples:
-      | title          | company     | priority | status       |
-      | Office Manager | ABC Company |          |              |
-      | Office Manager | ABC Company |          | In Progress  |
-      | Office Manager | ABC Company | Low      |              |
+      | priority | status       |
+      |          |              |
+      |          | In Progress  |
+      | Low      |              |
       
   @canceladd
   Scenario: Cancel adding new job application
