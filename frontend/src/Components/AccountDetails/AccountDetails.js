@@ -34,9 +34,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const getData = (id) => {
-  APIService.getDataDump(id).then(()=> {
-  })
+const getData = (id, name) => {
+  APIService.getDataDump(id).then((response)=> {
+    let  blob = new Blob([response.data], { type: 'application/pdf' });
+    let url = window.URL.createObjectURL(blob);
+    let a = document.createElement('a');
+    a.href = url;
+    a.download = `${name}.pdf`;
+    a.click();
+  });
 }
 
 const ChangePassword = () => {
@@ -132,7 +138,7 @@ const AccountDetails = () => {
        </Typography>
        <ChangePassword />
 
-       <Button name = "Export Data" onClick={getData(id)}>Export Data</Button>
+       <Button name = "Export Data" onClick={() => getData(id, name)}>Export Data</Button>
     </div>
   );
 };
