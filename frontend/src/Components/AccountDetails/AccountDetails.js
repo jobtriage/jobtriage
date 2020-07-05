@@ -118,8 +118,6 @@ const AccountDetails = () => {
   const classes = useStyles();
   const { state } = useAppContext();
   const { userId: id, email, name } = state.user;
-  console.log(id);
-  console.log(state.user);
 
   return (
     <div className={classes.innerContainer}>
