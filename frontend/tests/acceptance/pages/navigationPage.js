@@ -8,19 +8,19 @@ module.exports = {
     logout: '//nav/ul/li//span[contains(text(),"Logout")]',
   },
   clickDashboard() {
-    I.waitForVisible(this.menuOptions.dashboard);
+    I.waitForVisible(this.menuOptions.dashboard, 5);
     I.click(this.menuOptions.dashboard);
   },
   clickSelfAnalysis() {
-    I.waitForVisible(this.menuOptions.selfAnalysis);
+    I.waitForVisible(this.menuOptions.selfAnalysis, 5);
     I.click(this.menuOptions.selfAnalysis);
   },
   clickAccount() {
-    I.waitForVisible(this.menuOptions.account);
+    I.waitForVisible(this.menuOptions.account, 5);
     I.click(this.menuOptions.account);
   },
   clickLogout() {
-    I.waitForVisible(this.menuOptions.logout);
+    I.waitForVisible(this.menuOptions.logout, 5);
     I.click(this.menuOptions.logout);
   },
 };

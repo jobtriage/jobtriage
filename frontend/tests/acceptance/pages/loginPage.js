@@ -18,11 +18,11 @@ module.exports = {
     error: '//form/p[contains(text(),"Authentication failed check input")]',
   },
   fillEmail(email) {
-    I.waitForVisible(this.fields.email);
+    I.waitForVisible(this.fields.email, 5);
     I.fillField(this.fields.email, email);
   },
   fillPassword(password) {
-    I.waitForVisible(this.fields.password);
+    I.waitForVisible(this.fields.password, 5);
     I.fillField(this.fields.password, password);
   },
   clickLogin() {

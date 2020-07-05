@@ -13,7 +13,7 @@ module.exports = {
     job_container: '//div[contains(@class,"sc-fzoLsD")]',
   },
   getJobStatusBoard(jobStatus) {
-    I.waitForElement(this.elements.job_status_board_title);
+    I.waitForElement(this.elements.job_status_board_title, 5);
     return `${this.statusContext(jobStatus)}${this.elements.job_container}`;
   },
   getJobTitle(title) {
@@ -21,7 +21,7 @@ module.exports = {
   },
   async dragAndDropWithin(jobStatus) {
     await I.scrollTo(`${this.statusContext(jobStatus)}`);
-    await I.waitForElement(this.statusContext(jobStatus));
+    await I.waitForElement(this.statusContext(jobStatus, 5));
     await I.dragAndDrop(
       `${this.statusContext(jobStatus)}${this.elements.draggable_container}[2]${this.elements.job_title}`,
       `${this.dragTo(jobStatus)}`
