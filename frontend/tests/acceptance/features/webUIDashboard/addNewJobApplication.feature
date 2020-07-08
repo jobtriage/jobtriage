@@ -7,7 +7,7 @@ Feature: Add a new job application
     Given a user has been registered with the following details:
       | name | email          | password |
       | test | test@email.com | testpass |
-    And the user has logged in to the dashboard with email "test@email.com" and password "testpass"
+    And the user has logged in with email "test@email.com" and password "testpass"
     And the user has opened add new job application dialog form from the dashboard
 
   @addnewjob

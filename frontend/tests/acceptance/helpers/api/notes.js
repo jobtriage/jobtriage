@@ -3,39 +3,35 @@ const { serverUrl } = require('../constants');
 const { I } = inject();
 
 module.exports = {
-  addJobApplication: async (data) => {
+  addNote: async (data) => {
     axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
     try {
-      const priority = getPriorityID(data.priority);
-      await axios.post(`${serverUrl}/applications`, {
+      await axios.post(`${serverUrl}/applications/${data.jobId}/notes`, {
         title: data.title,
-        status: data.status,
-        priority: priority,
-        company_name: data.company,
+        content: data.content,
       });
-      I.say('Job application added');
+      I.say('Job note added');
     } catch (err) {
       console.log(
-        `Cannot add job application\n` +
+        `Cannot add job note\n` +
           `Error: ${err.response.status} - ${err.response.statusText}\n` +
           `<< Error Details >>${err.response.data.error}\n`
       );
       throw new Error(err);
     }
   },
-  deleteJobApplication: async (token) => {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  deleteNote: async (data) => {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
     try {
-      jobs = await getJobApplications(token);
-      if (jobs.length != 0) {
-        jobs.forEach(async (job) => {
-          const priority = getPriorityID(job.priority);
+      notes = await getJobNotes(data.jobId, data.token);
+      if (notes.length != 0) {
+        notes.forEach(async (note) => {
           try {
-            await axios.delete(`${serverUrl}/applications/${job.id}`);
-            I.say('Job applications cleared');
+            await axios.delete(`${serverUrl}/applications/${data.jobId}/notes/${note.id}`);
+            I.say('Job note cleared');
           } catch (err) {
             console.log(
-              `Cannot delete job application\n` +
+              `Cannot delete job notes\n` +
                 `Error: ${err.response.status} - ${err.response.statusText}\n` +
                 `<< Error Details >>${err.response.data.error}\n`
             );
@@ -45,7 +41,7 @@ module.exports = {
       }
     } catch (err) {
       console.log(
-        `Cannot fetch job applications\n` +
+        `Cannot fetch job notes\n` +
           `Error: ${err.response.status} - ${err.response.statusText}\n` +
           `<< Error Details >>${err.response.data.error}\n`
       );
@@ -54,29 +50,18 @@ module.exports = {
   },
 };
 
-async function getJobApplications(token) {
+async function getJobNotes(jobId, token) {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  let jobs = [];
+  let notes = [];
   try {
-    jobs = await axios.get(`${serverUrl}/applications`).then(({ data }) => data);
+    notes = await axios.get(`${serverUrl}/applications/${jobId}/notes`).then(({ data }) => data);
   } catch (err) {
     console.log(
-      `Cannot fetch job applications\n` +
+      `Cannot fetch job notes\n` +
         `Error: ${err.response.status} - ${err.response.statusText}\n` +
         `<< Error Details >>${err.response.data.error}\n`
     );
     throw new Error(err);
   }
-  return jobs;
-}
-
-function getPriorityID(priority) {
-  switch (priority) {
-    case 'Low':
-      return 1;
-    case 'Medium':
-      return 2;
-    case 'High':
-      return 3;
-  }
+  return notes;
 }

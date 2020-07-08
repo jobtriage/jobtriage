@@ -4,17 +4,6 @@ const userAPI = require('../helpers/api/user');
 const selfAnalysisPage = require('../pages/selfAnalysisPage');
 const accountPage = require('../pages/accountPage');
 
-Given('the user has logged in with email {string} and password {string}', async (email, password) => {
-  res = await userAPI.login(email, password);
-  if (res !== undefined && res.success) {
-    await I.setCookie({
-      name: 'token',
-      value: res.token,
-      domain: 'localhost:3001/',
-    });
-  }
-});
-
 Given('the user has browsed to the dashboard page', () => {
   I.amOnPage('/dashboard');
 });
