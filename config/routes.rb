@@ -15,6 +15,12 @@ Rails.application.routes.draw do
     delete 'auth/deleteuser',     to: 'auth#delete_user'
     # Routes for auth ends
 
+    resources :users, only: %i[show] do
+      member do
+        get 'data'
+      end
+    end
+
     resources :applications do
       resources :notes
       resources :timelogs

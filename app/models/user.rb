@@ -44,4 +44,9 @@ class User
   def generate_reset_token
     self.reset_token = SecureRandom.hex(4)
   end
+
+  def generate_data_dump
+    UserDumpGenerator.generate(self)
+  end
+
 end

@@ -34,6 +34,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
+const getData = (id, name) => {
+  APIService.getDataDump(id).then((response)=> {
+    let  blob = new Blob([response.data], { type: 'application/pdf' });
+    let url = window.URL.createObjectURL(blob);
+    let a = document.createElement('a');
+    a.href = url;
+    a.download = `${name}.pdf`;
+    a.click();
+  });
+}
+
 const ChangePassword = () => {
   const showToast = useToast();
   const showLoader = useLoader();
@@ -106,7 +117,7 @@ const ChangePassword = () => {
 const AccountDetails = () => {
   const classes = useStyles();
   const { state } = useAppContext();
-  const { email, name } = state.user;
+  const { userId: id, email, name } = state.user;
 
   return (
     <div className={classes.innerContainer}>
@@ -124,6 +135,8 @@ const AccountDetails = () => {
          {name}
        </Typography>
        <ChangePassword />
+
+       <Button name = "Export Data" onClick={() => getData(id, name)}>Export Data</Button>
     </div>
   );
 };
