@@ -9,13 +9,185 @@ module.exports = {
   elements: {
     timelog_title: '//h6[text()="Time Logs"]',
     empty_message: '//h5[text()="No timelogs added yet"]',
-    openaddtimelog_dialog: '//div[#aria-labelledby="Add time log"]',
+    openaddtimelog_dialog: '//button/span[contains(text(),"Add")]',
     openedittimelog_button: '//span[@aria-label="Edit time log"]',
-    addtimelog_button: '//button/span[contains(text(),"Add")]',
-    updatetimelog_button: '//button/span[contains(text(),"Update")]',
+    addtimelog_button: '//div[contains(@class,"MuiDialogContent-root")]//button/span[contains(text(),"Add")]',
+    updatetimelog_button: '//div[contains(@class,"MuiDialogContent-root")]//button/span[contains(text(),"Update")]',
     deletetimelog_button: '//span[@aria-label="Delete time log"]',
-    addtocalender_button: '//span[@label="Add to calender"]',
+    addtocalender_button: '//span[@aria-label="Add to calender"]',
     select_options: '//div[contains(@class,"MuiPopover-paper")]//li',
-    timelog_container: '//div[contains(@class, "makeStyles-timeLogItem")]',
+    timelog_container: '//h6[text()="Time Logs"]/parent::div',
+    timelog_dialog: '//div[@id="add-title"]',
+    getTimeLogContext(type) {
+      return `//p[text()="${type.toUpperCase()}"]/parent::div`;
+    },
+  },
+  datePicker: {
+    datePicker_container: '//div[contains(@class,"MuiPickersBasePicker-container")]',
+    open_year: '//div[1]/button[contains(@class,"MuiPickersToolbarButton-toolbarBtn")]//h6',
+    open_day_month: '//button[contains(@class,"MuiPickersToolbarButton-toolbarBtn")][1]//h4',
+    open_hour: '//button[contains(@class,"MuiPickersToolbarButton-toolbarBtn")][1]//span/h3',
+    open_minute: '//button[contains(@class,"MuiPickersToolbarButton-toolbarBtn")][2]//span/h3',
+    month_container: '//div[contains(@class,"MuiPickersSlideTransition-transitionContainer")]/p',
+    next_month: '//div[contains(@class,"MuiPickersCalendarHeader-switchHeader")]/button[2]//*[name()="svg"]',
+    previous_month: '//div[contains(@class,"MuiPickersCalendarHeader-switchHeader")]/button[1]//*[name()="svg"]',
+    getYear(year) {
+      return `//div[contains(@class,"MuiPickersYearSelection-container")]/div[text()="${year}"]`;
+    },
+    getMonth(month) {
+      return `//div[contains(@class,"MuiPickersClock-clock")]/span[text()="${month}"]`;
+    },
+    getDay(day) {
+      return `//div[@role="presentation"]//p[text()="${day}"]`;
+    },
+    day: '',
+    getHour(hour) {
+      return `//div[contains(@class,"MuiPickersClock-clock")]/span[text()="${hour}"]`;
+    },
+    getMinute(minute) {
+      return `//div[contains(@class,"MuiPickersClock-clock")]/span[text()="${minute}"]`;
+    },
+    getPeriod(period) {
+      return `//button//h6[contains(text(),"${period}")]`;
+    },
+  },
+  addTimeLog(log) {
+    I.waitForElement(this.elements.openaddtimelog_dialog, 5);
+    I.click(this.elements.openaddtimelog_dialog);
+    this.selectType(log.type);
+    this.selectEventTime(log);
+    this.fillNote(log.note);
+    this.clickAdd();
+  },
+  updateTimeLog(type, log) {
+    const el_update = `${this.elements.getTimeLogContext(type)}${this.elements.openedittimelog_button}`;
+    I.waitForElement(el_update, 5);
+    I.click(el_update);
+    this.selectType(log.type);
+    this.selectEventTime(log);
+    this.fillNote(log.note);
+    this.clickUpdate();
+  },
+  deleteTimeLog(type) {
+    const el_delete = `${this.elements.getTimeLogContext(type)}${this.elements.deletetimelog_button}`;
+    I.waitForElement(el_delete, 5);
+    I.click(el_delete);
+  },
+  addToCalender(type) {
+    const el_addtocalender = `${this.elements.getTimeLogContext(type)}${this.elements.addtocalender_button}`;
+    I.waitForElement(el_addtocalender, 5);
+    I.click(el_addtocalender);
+  },
+  selectType(type) {
+    if (type) {
+      I.waitForElement(this.fields.type, 5);
+      I.click(this.fields.type);
+      I.click(this.elements.select_options + '[contains(.,"' + type + '")]');
+      I.dontSeeElement(this.elements.select_options);
+    }
+  },
+  selectEventTime(calender) {
+    I.click(this.fields.time);
+    I.waitForElement(this.datePicker.datePicker_container, 5);
+    this.selectYear(calender.year);
+    this.selectMonth(calender.month);
+    this.selectDay(calender.day);
+    this.selectHour(calender.hour);
+    this.selectMinute(calender.minute);
+    this.selectPeriod(calender.period);
+    I.click(this.elements.timelog_dialog);
+  },
+  selectYear(year) {
+    I.waitForElement(this.datePicker.open_year, 5);
+    I.click(this.datePicker.open_year);
+    const el_year = this.datePicker.getYear(year);
+    I.waitForElement(el_year, 5);
+    I.scrollTo(el_year);
+    I.click(el_year);
+  },
+  async selectMonth(month) {
+    I.waitForElement(this.datePicker.open_day_month, 5);
+    I.click(this.datePicker.open_day_month);
+
+    const selected = await I.waitForFunction(
+      function recurse(month) {
+        const months = [
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December',
+        ];
+        const m_y = '//div[contains(@class,"MuiPickersSlideTransition-transitionContainer")]/p';
+        const next = '//div[contains(@class,"MuiPickersCalendarHeader-switchHeader")]/button[2]';
+        const previous = '//div[contains(@class,"MuiPickersCalendarHeader-switchHeader")]/button[1]';
+        const el_m = document.evaluate(m_y, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+        const el_next = document.evaluate(next, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
+          .singleNodeValue;
+        const el_previous = document.evaluate(previous, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
+          .singleNodeValue;
+        let cur_month = el_m.innerText.split(' ')[0];
+        if (cur_month === month) {
+          return true;
+        } else {
+          if (months.indexOf(cur_month) < months.indexOf(month)) {
+            el_next.click();
+            recurse(month);
+          } else if (months.indexOf(cur_month) > months.indexOf(month)) {
+            el_previous.click();
+            recurse(month);
+          }
+        }
+      },
+      [month],
+      100
+    );
+  },
+  async selectDay(day) {
+    const el_day = this.datePicker.getDay(day);
+    I.waitForElement(el_day, 5);
+    I.click(el_day);
+  },
+  selectHour(hour) {
+    I.waitForElement(this.datePicker.open_hour, 5);
+    I.click(this.datePicker.open_hour);
+    const el_hour = this.datePicker.getHour(hour);
+    I.waitForElement(el_hour, 5);
+    I.click(el_hour);
+  },
+  selectMinute(minute) {
+    I.waitForElement(this.datePicker.open_minute, 5);
+    I.click(this.datePicker.open_minute);
+    const el_minute = this.datePicker.getMinute(minute);
+    I.waitForElement(el_minute, 5);
+    I.click(el_minute);
+  },
+  selectPeriod(period) {
+    const el_period = this.datePicker.getPeriod(period);
+    I.waitForElement(el_period, 5);
+    I.click(el_period);
+  },
+  fillNote(note) {
+    I.waitForInvisible(this.datePicker.datePicker_container, 5);
+    I.waitForElement(this.fields.note, 5);
+    I.click(this.fields.note);
+    I.pressKey(['CommandOrControl', 'A']);
+    I.pressKey('Backspace');
+    I.fillField(this.fields.note, note);
+  },
+  clickAdd() {
+    I.waitForElement(this.elements.addtimelog_button, 5);
+    I.click(this.elements.addtimelog_button);
+  },
+  clickUpdate() {
+    I.waitForElement(this.elements.updatetimelog_button, 5);
+    I.click(this.elements.updatetimelog_button);
   },
 };
