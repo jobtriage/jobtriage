@@ -2,12 +2,12 @@ const { I } = inject();
 const { deleteJobApplication } = require('../helpers/api/job_application');
 const { addTimeLog, deleteTimeLog } = require('../helpers/api/timelog');
 const timeLogPage = require('../pages/timeLogPage');
-const { split } = require('lodash');
+const { getMonthNumber, formatDay, formatHour } = require('../helpers/calendarHelper');
 
 let jobID;
 
 When('the user adds a new time log with following details:', async (table) => {
-  jobID = await getJobId();
+  jobID = await getCurrentJobId();
   const log = table.parse().hashes()[0];
   timeLogPage.addTimeLog(log);
 });
@@ -23,7 +23,7 @@ Then('the new time log should be displayed with following details:', async (tabl
 });
 
 Given('the following time log has been created:', async (table) => {
-  jobID = await getJobId();
+  jobID = await getCurrentJobId();
   const log = table.parse().hashes()[0];
   const token = await I.grabCookie('token');
 
@@ -32,7 +32,7 @@ Given('the following time log has been created:', async (table) => {
   }`;
 
   const data = {
-    jobId: await getJobId(),
+    jobId: await getCurrentJobId(),
     token: token.value,
     type: log.type.toLowerCase(),
     note: log.note,
@@ -47,7 +47,7 @@ When('the user updates the time log of type {string} with following details:', (
   timeLogPage.updateTimeLog(type, log);
 });
 
-Then('the time log should be updated with new type {string} and new note {string}', async (type, note) => {
+Then('the time log should have the type {string} and note {string}', async (type, note) => {
   I.refreshPage();
   within(timeLogPage.elements.timelog_container, () => {
     I.see(type.toUpperCase());
@@ -67,46 +67,17 @@ Then('the time log of type {string} should not exist', (type) => {
   });
 });
 
-When('the user clicks add to calender button of time log having type {string} using the webUI', (type) => {
-  timeLogPage.addToCalender(type);
+When('he user adds time log with type {string} to the calendar using the WebUI', (type) => {
+  timeLogPage.addToCalendar(type);
 });
 
-Then('the user should be redirected to google calender', async () => {
+Then('the user should be redirected to google calendar', async () => {
   I.switchToNextTab();
   I.waitInUrl('google.com/', 5);
   I.seeInCurrentUrl('google.com/');
   I.switchToPreviousTab();
   await tearDown();
 });
-
-function getMonthNumber(month) {
-  const months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
-  if (months.indexOf(month) + 1 < 10) return `0${months.indexOf(month) + 1}`;
-  else return months.indexOf(month) + 1;
-}
-
-function formatDay(day) {
-  if (day.split('').count == 2) return day;
-  else return `0${day}`;
-}
-
-function formatHour(hour, period) {
-  if (period === 'AM') return hour;
-  else if (parseInt(hour) <= 12) return parseInt(hour) + 12;
-}
 
 async function tearDown() {
   const token = await I.grabCookie('token');
@@ -119,7 +90,7 @@ async function tearDown() {
   I.clearCookie();
 }
 
-async function getJobId() {
+async function getCurrentJobId() {
   const url = await I.grabCurrentUrl();
   return url.split('/').pop();
 }

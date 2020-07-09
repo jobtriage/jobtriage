@@ -1,4 +1,5 @@
 const { I } = inject();
+const { monthNames } = require('../helpers/calendarHelper');
 
 module.exports = {
   fields: {
@@ -14,10 +15,13 @@ module.exports = {
     addtimelog_button: '//div[contains(@class,"MuiDialogContent-root")]//button/span[contains(text(),"Add")]',
     updatetimelog_button: '//div[contains(@class,"MuiDialogContent-root")]//button/span[contains(text(),"Update")]',
     deletetimelog_button: '//span[@aria-label="Delete time log"]',
-    addtocalender_button: '//span[@aria-label="Add to calender"]',
+    addtocalendar_button: '//span[@aria-label="Add to calender"]',
     select_options: '//div[contains(@class,"MuiPopover-paper")]//li',
     timelog_container: '//h6[text()="Time Logs"]/parent::div',
     timelog_dialog: '//div[@id="add-title"]',
+    getSelectOption(type) {
+      return `${this.select_options}[contains(.,"${type}")]`;
+    },
     getTimeLogContext(type) {
       return `//p[text()="${type.toUpperCase()}"]/parent::div`;
     },
@@ -29,8 +33,8 @@ module.exports = {
     open_hour: '//button[contains(@class,"MuiPickersToolbarButton-toolbarBtn")][1]//span/h3',
     open_minute: '//button[contains(@class,"MuiPickersToolbarButton-toolbarBtn")][2]//span/h3',
     month_container: '//div[contains(@class,"MuiPickersSlideTransition-transitionContainer")]/p',
-    next_month: '//div[contains(@class,"MuiPickersCalendarHeader-switchHeader")]/button[2]//*[name()="svg"]',
-    previous_month: '//div[contains(@class,"MuiPickersCalendarHeader-switchHeader")]/button[1]//*[name()="svg"]',
+    next_month: '//div[contains(@class,"MuiPickersCalendarHeader-switchHeader")]/button[2]',
+    previous_month: '//div[contains(@class,"MuiPickersCalendarHeader-switchHeader")]/button[1]',
     getYear(year) {
       return `//div[contains(@class,"MuiPickersYearSelection-container")]/div[text()="${year}"]`;
     },
@@ -57,7 +61,7 @@ module.exports = {
     this.selectType(log.type);
     this.selectEventTime(log);
     this.fillNote(log.note);
-    this.clickAdd();
+    this.submitNewTimeLog();
   },
   updateTimeLog(type, log) {
     const el_update = `${this.elements.getTimeLogContext(type)}${this.elements.openedittimelog_button}`;
@@ -66,35 +70,35 @@ module.exports = {
     this.selectType(log.type);
     this.selectEventTime(log);
     this.fillNote(log.note);
-    this.clickUpdate();
+    this.submitTimeLogUpdate();
   },
   deleteTimeLog(type) {
     const el_delete = `${this.elements.getTimeLogContext(type)}${this.elements.deletetimelog_button}`;
     I.waitForElement(el_delete, 5);
     I.click(el_delete);
   },
-  addToCalender(type) {
-    const el_addtocalender = `${this.elements.getTimeLogContext(type)}${this.elements.addtocalender_button}`;
-    I.waitForElement(el_addtocalender, 5);
-    I.click(el_addtocalender);
+  addToCalendar(type) {
+    const el_addtocalendar = `${this.elements.getTimeLogContext(type)}${this.elements.addtocalendar_button}`;
+    I.waitForElement(el_addtocalendar, 5);
+    I.click(el_addtocalendar);
   },
   selectType(type) {
     if (type) {
       I.waitForElement(this.fields.type, 5);
       I.click(this.fields.type);
-      I.click(this.elements.select_options + '[contains(.,"' + type + '")]');
+      I.click(this.elements.getSelectOption(type));
       I.dontSeeElement(this.elements.select_options);
     }
   },
-  selectEventTime(calender) {
+  selectEventTime(calendar) {
     I.click(this.fields.time);
     I.waitForElement(this.datePicker.datePicker_container, 5);
-    this.selectYear(calender.year);
-    this.selectMonth(calender.month);
-    this.selectDay(calender.day);
-    this.selectHour(calender.hour);
-    this.selectMinute(calender.minute);
-    this.selectPeriod(calender.period);
+    this.selectYear(calendar.year);
+    this.selectMonth(calendar.month);
+    this.selectDay(calendar.day);
+    this.selectHour(calendar.hour);
+    this.selectMinute(calendar.minute);
+    this.selectPeriod(calendar.period);
     I.click(this.elements.timelog_dialog);
   },
   selectYear(year) {
@@ -110,21 +114,7 @@ module.exports = {
     I.click(this.datePicker.open_day_month);
 
     const selected = await I.waitForFunction(
-      function recurse(month) {
-        const months = [
-          'January',
-          'February',
-          'March',
-          'April',
-          'May',
-          'June',
-          'July',
-          'August',
-          'September',
-          'October',
-          'November',
-          'December',
-        ];
+      function recurse(month, monthNames) {
         const m_y = '//div[contains(@class,"MuiPickersSlideTransition-transitionContainer")]/p';
         const next = '//div[contains(@class,"MuiPickersCalendarHeader-switchHeader")]/button[2]';
         const previous = '//div[contains(@class,"MuiPickersCalendarHeader-switchHeader")]/button[1]';
@@ -137,16 +127,16 @@ module.exports = {
         if (cur_month === month) {
           return true;
         } else {
-          if (months.indexOf(cur_month) < months.indexOf(month)) {
+          if (monthNames.indexOf(cur_month) < monthNames.indexOf(month)) {
             el_next.click();
-            recurse(month);
-          } else if (months.indexOf(cur_month) > months.indexOf(month)) {
+            recurse(month, monthNames);
+          } else if (monthNames.indexOf(cur_month) > monthNames.indexOf(month)) {
             el_previous.click();
-            recurse(month);
+            recurse();
           }
         }
       },
-      [month],
+      [month, monthNames],
       100
     );
   },
@@ -182,11 +172,11 @@ module.exports = {
     I.pressKey('Backspace');
     I.fillField(this.fields.note, note);
   },
-  clickAdd() {
+  submitNewTimeLog() {
     I.waitForElement(this.elements.addtimelog_button, 5);
     I.click(this.elements.addtimelog_button);
   },
-  clickUpdate() {
+  submitTimeLogUpdate() {
     I.waitForElement(this.elements.updatetimelog_button, 5);
     I.click(this.elements.updatetimelog_button);
   },

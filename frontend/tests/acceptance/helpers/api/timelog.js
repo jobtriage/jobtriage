@@ -5,7 +5,6 @@ const { I } = inject();
 module.exports = {
   addTimeLog: async (data) => {
     axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
-    console.log(data);
     try {
       await axios.post(`${serverUrl}/applications/${data.jobId}/timelogs`, {
         type: data.type,
