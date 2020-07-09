@@ -22,7 +22,7 @@ Then('the new time log should be displayed with following details:', async (tabl
   await tearDown();
 });
 
-Given('the following time log exists:', async (table) => {
+Given('the following time log has been created:', async (table) => {
   jobID = await getJobId();
   const log = table.parse().hashes()[0];
   const token = await I.grabCookie('token');
@@ -60,7 +60,7 @@ When('the user deletes time log of type {string} using the webUI', (type) => {
   timeLogPage.deleteTimeLog(type);
 });
 
-Then('the time log of type {string} should be removed', (type) => {
+Then('the time log of type {string} should not exist', (type) => {
   I.refreshPage();
   within(timeLogPage.elements.timelog_container, () => {
     I.dontSee(type.toUpperCase());
