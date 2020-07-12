@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import NavBar from '../NavBar/NavBar';
 import APIService from '../../service/APIService';
 import { Button, Input, Typography } from '../../Material-UI/Components';
 import { makeStyles } from '../../Material-UI/import';
@@ -35,15 +34,15 @@ const useStyles = makeStyles((theme) => ({
 
 
 const getData = (id, name) => {
-  APIService.getDataDump(id).then((response)=> {
-    let  blob = new Blob([response.data], { type: 'application/pdf' });
-    let url = window.URL.createObjectURL(blob);
-    let a = document.createElement('a');
+  APIService.getDataDump(id).then((response) => {
+    const blob = new Blob([response.data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
     a.href = url;
     a.download = `${name}.pdf`;
     a.click();
   });
-}
+};
 
 const ChangePassword = () => {
   const showToast = useToast();
@@ -122,21 +121,21 @@ const AccountDetails = () => {
   return (
     <div className={classes.innerContainer}>
       <Typography variant="h6" color="primary">
-         Account
-       </Typography>
-       <Typography variant="body1">
-         <b>Email:</b>
-         {' '}
-         {email}
-       </Typography>
-       <Typography variant="body1">
-         <b>Name:</b>
-         {' '}
-         {name}
-       </Typography>
-       <ChangePassword />
+        Account
+      </Typography>
+      <Typography variant="body1">
+        <b>Email:</b>
+        {' '}
+        {email}
+      </Typography>
+      <Typography variant="body1">
+        <b>Name:</b>
+        {' '}
+        {name}
+      </Typography>
+      <ChangePassword />
 
-       <Button name = "Export Data" onClick={() => getData(id, name)}>Export Data</Button>
+      <Button name="Export Data" onClick={() => getData(id, name)}>Export Data</Button>
     </div>
   );
 };

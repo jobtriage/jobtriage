@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
     fontSize: '16px',
     color: 'rgb(127, 127, 127)',
     height: '100vh',
-  }
+  },
 }));
 
 
@@ -81,7 +81,7 @@ const Routes = () => {
   return (
     <Router>
       <div className={classes.app}>
-        {state.loader ? <HorizontalLoader />: ''}
+        {state.loader ? <HorizontalLoader /> : ''}
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />

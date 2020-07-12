@@ -220,8 +220,8 @@ const SelfAnalysis = () => {
       <Typography color="primary" variant="h5">
         Self Analysis
       </Typography>
-       <PitchView />
-       <BehaviourAnalysis />
+      <PitchView />
+      <BehaviourAnalysis />
     </div>
   );
 };

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import {
-  Dialog, DialogContent, DialogTitle, MenuItem,
+  Dialog, DialogContent, DialogTitle,
 } from '@material-ui/core';
 import { DateTimePicker } from '@material-ui/pickers';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Input, Select } from '../../../Material-UI/Components';
+import { Button, Input } from '../../../Material-UI/Components';
 import APIService from '../../../service/APIService';
 import { DropDownMenu } from '../../../Components';
 import { TIMELOG_TYPES } from '../../../constants/Constants';
@@ -50,12 +50,12 @@ const TimeDialog = props => {
       <DialogTitle style={{ marginLeft: '8px' }} id="add-title">Add Time log</DialogTitle>
       <DialogContent>
         <form className={classes.form} onSubmit={handleSubmit}>
-          
-          <DropDownMenu 
-            label="Type" 
-            value={type} 
-            onChange={e => setType(e.target.value)} 
-            options={TIMELOG_TYPES} 
+
+          <DropDownMenu
+            label="Type"
+            value={type}
+            onChange={e => setType(e.target.value)}
+            options={TIMELOG_TYPES}
           />
           <DateTimePicker
             style={{ margin: '8px' }}

@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Tab, Tabs } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import APIService from '../../service/APIService';
-import { NavBar, Typography, HorizontalLoader } from '../../Components';
+import { NavBar, Typography } from '../../Components';
 import BasicDetails from './BasicDetails';
 import Notes from './Notes/Notes';
 import TimeLog from './TimeLog/TimeLog';
@@ -41,13 +41,16 @@ const ViewJob = props => {
   const { applicationId } = match.params;
   const [basicDetail, setBasicDetail] = useState({});
   const [tab, setTab] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const loadData = () => {
     showLoader(true);
+    setLoading(true);
     APIService.getApplicationDetails(applicationId)
       .then(resp => {
         showLoader(false);
         setBasicDetail({ applicationId, ...resp.data });
+        setLoading(false);
       }).catch(console.log);
   };
 
@@ -56,7 +59,7 @@ const ViewJob = props => {
   };
 
   useEffect(() => {
-    if (basicDetail.title === undefined) {
+    if (!loading && basicDetail.title === undefined) {
       loadData();
     }
   });
