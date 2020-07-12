@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import APIService from '../../service/APIService';
 import {
-  Typography, Input, Button, DropDownMenu
+  Typography, Input, Button, DropDownMenu,
 } from '../../Components';
 import { useToast, ToastConstants } from '../../store/context';
-import {JOB_APPLICATION_PRIORITY, JOB_APPLICATION_STATUS} from '../../constants/Constants'
+import { JOB_APPLICATION_PRIORITY, JOB_APPLICATION_STATUS } from '../../constants/Constants';
 
 const useStyles = makeStyles(({
   form: {
@@ -17,7 +17,7 @@ const useStyles = makeStyles(({
     justifyContent: 'center',
   },
   root: {
-    marginLeft: 30
+    marginLeft: 30,
   },
   spaceBetween: {
     display: 'flex',
@@ -36,6 +36,7 @@ const BasicDetails = props => {
   const [priority, setPriority] = useState(basicDetail.priority);
   const [description, setDescription] = useState(basicDetail.description || '');
   const [url, setUrl] = useState(basicDetail.url || '');
+  const [location, setLocation] = useState(basicDetail.location || '');
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -47,6 +48,7 @@ const BasicDetails = props => {
       priority,
       description,
       url,
+      location,
     };
     APIService.updateJobApplication(basicDetail.applicationId, jobDetail)
       .then(() => {
@@ -73,7 +75,7 @@ const BasicDetails = props => {
           <DropDownMenu label="Status" options={JOB_APPLICATION_STATUS} value={status} onChange={e => setStatus(e.target.value)} />
         </div>
         <div className={classes.spaceBetween}>
-        <Input
+          <Input
             type="text"
             label="Company Name"
             onChange={e => setCompanyName(e.target.value)}
@@ -81,11 +83,17 @@ const BasicDetails = props => {
           />
           <Input
             type="text"
-            label="Company Link"
-            onChange={e => setCompanyUrl(e.target.value)}
-            value={companyUrl}
+            label="Location"
+            onChange={e => setLocation(e.target.value)}
+            value={location}
           />
         </div>
+        <Input
+          type="text"
+          label="Company Link"
+          onChange={e => setCompanyUrl(e.target.value)}
+          value={companyUrl}
+        />
         <Input type="text" label="Job post url" onChange={e => setUrl(e.target.value)} value={url} />
         <Input
           type="text"

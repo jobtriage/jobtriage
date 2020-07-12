@@ -2,17 +2,17 @@ import React from 'react';
 import { ButtonGroup, makeStyles } from '../../import';
 
 const useStyles = makeStyles(theme => ({
-    root: {
-      margin: theme.spacing(1),
-      letterSpacing: theme.spacing(0.12),
-    },
-  }));
+  root: {
+    margin: theme.spacing(1),
+    letterSpacing: theme.spacing(0.12),
+  },
+}));
 
 const PrimaryButtonGroup = (props) => {
-    const classes = useStyles();
+  const classes = useStyles();
 
   const {
-    children, disabled, color, fullWidth, size, variant
+    children, disabled, color, fullWidth, size, variant,
   } = props;
 
   return (

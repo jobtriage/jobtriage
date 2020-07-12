@@ -20,5 +20,5 @@ export {
   ListItemText,
   Box,
   Divider,
-  ButtonGroup
+  ButtonGroup,
 } from '@material-ui/core';

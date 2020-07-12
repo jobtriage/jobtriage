@@ -81,7 +81,7 @@ const TimeLogItem = props => {
 
   return (
     <Paper className={classes.timeLogItem} elevation={3}>
-       <Typography variant="body2" style={{ width: '20%' }}>
+      <Typography variant="body2" style={{ width: '20%' }}>
         {formatedTime}
       </Typography>
       <Typography variant="body2" style={{ width: '10%' }}>
@@ -91,7 +91,7 @@ const TimeLogItem = props => {
         <FormatedNote />
       </BootstrapTooltip>
       <div className={classes.displayFlex} style={{ justifyContent: 'space-between' }}>
-      <a href={getCalenderLink(type, time, note)} label="Add to calender" target="_blank" rel="noopener noreferrer">
+        <a href={getCalenderLink(type, time, note)} label="Add to calender" target="_blank" rel="noopener noreferrer">
           <IconButton aria-label="Add to calender" component="span">
             <CalendarTodayOutlined />
           </IconButton>

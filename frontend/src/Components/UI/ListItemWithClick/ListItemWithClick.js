@@ -1,17 +1,7 @@
 import React from 'react';
 import { ListItem, ListItemIcon, ListItemText } from '../../../Material-UI/Components';
-import { makeStyles } from '../../../Material-UI/import';
-
-
-const useStyles = makeStyles((theme) => ({
-  activeClassName: {
-    backgroundColor: theme.palette.activeBg.main,
-  },
-}));
-
 
 const ListItemWithLink = (props) => {
-  const classes = useStyles();
   const {
     icon, primary, textOverrideClass, onClick,
   } = props;

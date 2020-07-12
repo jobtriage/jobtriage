@@ -19,7 +19,7 @@ const NoteDialog = props => {
   const classes = useStyles();
 
   const {
-    open, onClose, onChange, applicationId, isNew, title: titleOld, content: contentOld, id, label
+    open, onClose, onChange, applicationId, isNew, title: titleOld, content: contentOld, id, label,
   } = props;
   const [title, setTitle] = useState(isNew ? '' : titleOld);
   const [content, setContent] = useState(isNew ? '' : contentOld);

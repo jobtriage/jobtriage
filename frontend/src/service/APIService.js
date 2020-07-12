@@ -100,7 +100,7 @@ const addJobApplication = (title, status, priority, companyName, location) => {
     status,
     priority,
     company_name: companyName,
-    location
+    location,
   });
 };
 

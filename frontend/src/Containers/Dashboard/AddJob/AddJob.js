@@ -5,7 +5,7 @@ import { Button, ButtonGroup, Input } from '../../../Material-UI/Components';
 import { DropDownMenu } from '../../../Components';
 import APIService from '../../../service/APIService';
 import { useToast, ToastConstants } from '../../../store/context';
-import {JOB_APPLICATION_PRIORITY, JOB_APPLICATION_STATUS} from '../../../constants/Constants'
+import { JOB_APPLICATION_PRIORITY, JOB_APPLICATION_STATUS } from '../../../constants/Constants';
 
 const useStyles = makeStyles(() => ({
   mainCard: {
@@ -15,8 +15,8 @@ const useStyles = makeStyles(() => ({
   },
   dialogLabel: {
     marginLeft: '0.5em',
-    color: 'gray'
-  }
+    color: 'gray',
+  },
 }));
 
 const AddJobDialog = props => {
@@ -37,7 +37,7 @@ const AddJobDialog = props => {
         onClose();
         setTitle('');
         setCompany('');
-        setLocation('')
+        setLocation('');
         showToast('Job Application added successfully', ToastConstants.SUCCESS);
       })
       .catch(() => { showToast('Error in adding Job Application', ToastConstants.ERROR); });
@@ -53,12 +53,13 @@ const AddJobDialog = props => {
           <p className={classes.dialogLabel}> Priority </p>
           <ButtonGroup>
             {JOB_APPLICATION_PRIORITY.map(element => (
-              <Button onClick={()=> { setPriority(element.value) }}
-                 color={priority === element.value ? 'primary': 'default'}> 
-                {element.label} 
+              <Button
+                onClick={() => { setPriority(element.value); }}
+                color={priority === element.value ? 'primary' : 'default'}
+              >
+                {element.label}
               </Button>
-              ))
-            }
+            ))}
           </ButtonGroup>
           <DropDownMenu label="Status" options={JOB_APPLICATION_STATUS} onChange={e => setStatus(e.target.value)} />
           <Input type="text" label="Location" required onChange={e => setLocation(e.target.value)} value={location} />
