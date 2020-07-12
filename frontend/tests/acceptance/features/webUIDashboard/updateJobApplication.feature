@@ -11,8 +11,8 @@ Feature: Update job application
     And the following job application has been created:
       | title          | company     | priority | status       |
       | Office Manager | ABC Company | Medium   | Yet to Apply |
-    And the use has navigated to the dashboard
-    And the user has navigated to update job application page to update the job application of title "Office Manager" using the webUI
+    And the user has navigated to the dashboard
+    And the user has navigated to update the job application of title "Office Manager" using the webUI
 
   @updatewithemptytitle
   Scenario: Update job application with empty job title

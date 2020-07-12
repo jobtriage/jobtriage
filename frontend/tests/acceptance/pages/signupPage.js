@@ -1,7 +1,7 @@
 const { I } = inject();
 
 module.exports = {
-  url: "/signup",
+  url: '/signup',
   fields: {
     name: '//label[contains(text(),"Name")]/parent::div//input[contains(@class, "MuiInputBase-input")]',
     email: '//label[contains(text(),"Email")]/parent::div//input[contains(@class, "MuiInputBase-input")]',

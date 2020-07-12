@@ -7,16 +7,13 @@ const navigationPage = require('../pages/navigationPage');
 const FIELDS = updateJobPage.fields;
 const ELEMENTS = updateJobPage.elements;
 
-Given('the use has navigated to the dashboard', () => {
+Given('the user has navigated to the dashboard', () => {
   I.amOnPage(dashboardPage.url);
 });
 
-Given(
-  'the user has navigated to update job application page to update the job application of title {string} using the webUI',
-  (title) => {
-    dashboardPage.gotoUpdateJob(title);
-  }
-);
+Given('the user has navigated to update the job application of title {string} using the webUI', (title) => {
+  dashboardPage.gotoUpdateJob(title);
+});
 
 When('the user updates the job application with empty job title', () => {
   updateJobPage.updateJobwithEmptyTitle();
