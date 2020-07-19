@@ -121,6 +121,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "jatin33",
+      "name": "Jatin Panjwani",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/13780467?v=4",
+      "profile": "http://linkedin.com/in/jatinpanjwani",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
