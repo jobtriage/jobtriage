@@ -112,6 +112,15 @@
         "bug",
         "test"
       ]
+    },
+    {
+      "login": "EaswarAiyer",
+      "name": "EaswarAiyer",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/12936760?v=4",
+      "profile": "https://github.com/EaswarAiyer",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
