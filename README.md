@@ -52,6 +52,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="http://balamurugan.info"><img src="https://avatars2.githubusercontent.com/u/3702953?v=4" width="100px;" alt=""/><br /><sub><b>Balamurugan M</b></sub></a><br /><a href="#design-snmbala" title="Design">🎨</a></td>
     <td align="center"><a href="https://github.com/bibekthapa619"><img src="https://avatars3.githubusercontent.com/u/57626775?v=4" width="100px;" alt=""/><br /><sub><b>bibekthapa619</b></sub></a><br /><a href="https://github.com/jobtriage/jobtriage/issues?q=author%3Abibekthapa619" title="Bug reports">🐛</a> <a href="https://github.com/jobtriage/jobtriage/commits?author=bibekthapa619" title="Tests">⚠️</a></td>
     <td align="center"><a href="https://github.com/EaswarAiyer"><img src="https://avatars1.githubusercontent.com/u/12936760?v=4" width="100px;" alt=""/><br /><sub><b>EaswarAiyer</b></sub></a><br /><a href="https://github.com/jobtriage/jobtriage/issues?q=author%3AEaswarAiyer" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="http://linkedin.com/in/jatinpanjwani"><img src="https://avatars1.githubusercontent.com/u/13780467?v=4" width="100px;" alt=""/><br /><sub><b>Jatin Panjwani</b></sub></a><br /><a href="https://github.com/jobtriage/jobtriage/issues?q=author%3Ajatin33" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
