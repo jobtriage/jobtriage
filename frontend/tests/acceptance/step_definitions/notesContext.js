@@ -1,44 +1,40 @@
 const { I } = inject();
-const { deleteJobApplication } = require('../helpers/api/job_application');
-const { addNote, deleteNote } = require('../helpers/api/notes');
 const updateJobPage = require('../pages/updateJobApplicationPage');
 const notesPage = require('../pages/notesPage');
+const { addNote } = require('../helpers/api/notes');
 const { elementWaitTime } = require('../helpers/globals');
+const { cleanJobApplications, cleanJobNotes } = require('../helpers/customTearDown');
+const { jobID } = require('../helpers/globals');
 
-let jobID;
+const ELEMENTS = notesPage.elements;
 
 Given('the user is in the notes page', async () => {
-  updateJobPage.elements.notes_button;
+  updateJobPage.gotoNotes();
+});
+
+Given('the following job note has been created:', async (table) => {
+  const notes = table.parse().hashes();
+  const token = await I.grabCookie('token');
+  for await (const note of notes) {
+    const { title, content } = note;
+    const data = {
+      jobId: jobID[0],
+      token: token.value,
+      title: title,
+      content: content,
+    };
+    await addNote(data);
+  }
+  I.refreshPage();
 });
 
 When('the user adds a new note with following details:', async (table) => {
-  jobID = await getJobId();
   const note = table.parse().hashes()[0];
   notesPage.addNote(note);
 });
 
-Then('the newly created note of title {string} and content {string} should appear', async (title, content) => {
-  I.waitForElement(notesPage.elements.getNoteContext(title), 5);
-  within(notesPage.elements.notesContainer, () => {
-    I.see(title);
-    I.see(content);
-  });
-  await tearDown();
-});
-
-Given('the following job has been created:', async (table) => {
-  jobID = await getJobId();
-  const note = table.parse().hashes()[0];
-  const token = await I.grabCookie('token');
-
-  const data = {
-    jobId: await getJobId(),
-    token: token.value,
-    title: note.title,
-    content: note.content,
-  };
-  await addNote(data);
-  I.refreshPage();
+When('the user deletes job note of title {string} using the webUI', (title) => {
+  notesPage.deleteNote(title);
 });
 
 When('the user updates the job note of title {string} with following details:', (oldTitle, table) => {
@@ -46,40 +42,37 @@ When('the user updates the job note of title {string} with following details:', 
   notesPage.updateNote(oldTitle, note);
 });
 
-Then('the note should be updated with new title {string} and new content {string}', async (title, content) => {
-  I.waitForElement(notesPage.elements.getNoteContext(title), elementWaitTime);
-  within(notesPage.elements.notesContainer, () => {
-    I.see(title);
-    I.see(content);
+Then('the newly created note of title {string} and content {string} should appear', async (title, content) => {
+  I.waitForElement(ELEMENTS.getNoteSingle(title), 5);
+  await within(ELEMENTS.notesContainer, async () => {
+    await I.see(title);
+    await I.see(content);
   });
-  await tearDown();
+  await cleanJobNotes();
+  await cleanJobApplications();
 });
 
-When('the user deletes job note of title {string} using the webUI', (title) => {
-  notesPage.deleteNote(title);
+Then('the note should be updated with new title {string} and new content {string}', async (title, content) => {
+  I.waitForElement(ELEMENTS.getNoteSingle(title), elementWaitTime);
+  await within(ELEMENTS.notesContainer, async () => {
+    await I.see(title);
+    await I.see(content);
+  });
+  await cleanJobNotes();
+  await cleanJobApplications();
 });
 
 Then('the job note of title {string} should not exist', async (title) => {
-  within(notesPage.elements.notesContainer, () => {
+  await within(ELEMENTS.notesContainer, async () => {
     I.refreshPage();
     updateJobPage.gotoNotes();
-    I.dontSee(title);
+    await I.dontSee(title);
   });
-  await tearDown();
+  await cleanJobNotes();
+  await cleanJobApplications();
 });
 
-async function tearDown() {
-  const token = await I.grabCookie('token');
-  const idToken = {
-    jobId: jobID,
-    token: token.value,
-  };
-  await deleteNote(idToken);
-  await deleteJobApplication(token.value);
-  I.clearCookie();
-}
-
-async function getJobId() {
-  const url = await I.grabCurrentUrl();
-  return url.split('/').pop();
-}
+// async function getJobId() {
+//   const url = await I.grabCurrentUrl();
+//   return url.split('/').pop();
+// }

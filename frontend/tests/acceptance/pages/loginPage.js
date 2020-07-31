@@ -1,4 +1,5 @@
 const { I } = inject();
+const { elementWaitTime } = require('../helpers/globals');
 
 module.exports = {
   url: '/login',
@@ -6,29 +7,40 @@ module.exports = {
     email: '//label[contains(text(),"Email")]/parent::div//input[contains(@class, "MuiInputBase-input")]',
     password: '//label[contains(text(),"Password")]/parent::div//input[contains(@class, "MuiInputBase-input")]',
   },
-  buttons: {
-    login: "//button/span[contains(text(),'Login')]",
+
+  elements: {
+    login_button: '//button/span[contains(text(),"Login")]',
+    error_label: '//form/p[contains(text(),"Authentication failed check input")]',
+    signup_label: '//form//span[contains(.,"Sign up here")]',
   },
-  login(email, password) {
+
+  async login(user) {
+    const { email, password } = user;
+
     this.fillEmail(email);
     this.fillPassword(password);
-    this.clickLogin();
+
+    I.waitForElement(this.elements.login_button, elementWaitTime);
+    await I.click(this.elements.login_button);
   },
-  text: {
-    error: '//form/p[contains(text(),"Authentication failed check input")]',
-  },
+
   fillEmail(email) {
-    I.waitForVisible(this.fields.email, 5);
+    I.waitForElement(this.fields.email, elementWaitTime);
     I.fillField(this.fields.email, email);
   },
+
   fillPassword(password) {
-    I.waitForVisible(this.fields.password, 5);
+    I.waitForElement(this.fields.password, elementWaitTime);
     I.fillField(this.fields.password, password);
   },
-  clickLogin() {
-    I.click(this.buttons.login);
+
+  navigateToSignup() {
+    I.waitForElement(this.elements.signup_label, elementWaitTime);
+    I.click(this.elements.signup_label);
   },
+
   amOnThisPage() {
-    I.seeElement(this.buttons.login);
+    I.waitForElement(this.elements.login_button, elementWaitTime);
+    I.seeElement(this.elements.login_button);
   },
 };

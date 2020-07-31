@@ -1,52 +1,41 @@
 const { I } = inject();
-const newJobDialog = require('../pages/addNewJobApplicationForm');
-const dashboard = require('../pages/dashboardPage');
-const { deleteJobApplication } = require('../helpers/api/job_application');
+const newJobForm = require('../pages/addNewJobApplicationForm');
+const dashboardPage = require('../pages/dashboardPage');
+const { elementWaitTime } = require('../helpers/globals');
+const { cleanJobApplications } = require('../helpers/customTearDown');
 
-const ELEMENT = newJobDialog.elements;
+const ELEMENTS = newJobForm.elements;
 
 Given('the user has opened add new job application dialog form from the dashboard', () => {
-  I.amOnPage(dashboard.url);
-  I.waitForElement(dashboard.elements.addnewjob_button, 5);
-  I.click(dashboard.elements.addnewjob_button);
+  I.waitForElement(dashboardPage.elements.addnewjob_button, elementWaitTime);
+  I.click(dashboardPage.elements.addnewjob_button);
 });
 
-When('the user adds a new job application with the following data:', (table) => {
-  const newJob = table.parse().hashes()[0];
-  newJobDialog.addNewJobApplication(newJob);
+When('the user adds a new job application with the following data:', async (table) => {
+  const data = table.parse().hashes()[0];
+  await newJobForm.addNewJobApplication(data);
 });
 
 When('the user cancels adding a new job application', () => {
-  I.click(dashboard.elements.addnewjob_button);
+  I.click(dashboardPage.elements.addnewjob_button);
 });
 
 Then('the add new job application dialog form should be closed', () => {
-  I.dontSee(dashboard.addNewDialogForm);
+  I.dontSee(dashboardPage.newjob_dialog);
 });
 
-Then('a success message {string} should pop up', (message) => {
-  I.waitForElement(ELEMENT.success_label, 5);
-  I.see(message, ELEMENT.success_label);
+Then('a popup message {string} should be displayed', (message) => {
+  I.waitForElement(ELEMENTS.popup, elementWaitTime);
+  I.see(message, ELEMENTS.popup);
 });
 
 Then(
-  'the job application of title {string} should be added in {string} status board in the dashboard',
+  'the job application of title {string} should be added under {string} status board in the dashboard',
   async (title, status) => {
-    I.seeElement(ELEMENT.trello_board, 5);
-    within(dashboard.getJobStatusBoard(status), () => {
-      I.see(title);
+    await I.seeElement(dashboardPage.elements.trello_board, elementWaitTime);
+    await within(dashboardPage.getJobStatusBoard(status), async () => {
+      await I.see(title);
     });
-    await tearDown();
+    await cleanJobApplications();
   }
 );
-
-Then('an error message {string} should pop up', (message) => {
-  I.waitForElement(ELEMENT.error_label, 5);
-  I.see(message, ELEMENT.error_label);
-});
-
-async function tearDown() {
-  const token = await I.grabCookie('token');
-  await deleteJobApplication(token.value);
-  I.clearCookie();
-}

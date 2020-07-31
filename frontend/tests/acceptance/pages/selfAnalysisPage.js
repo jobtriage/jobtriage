@@ -1,11 +1,14 @@
 const { I } = inject();
+const { elementWaitTime } = require('../helpers/globals');
 
 module.exports = {
   url: '/self',
-  text: {
-    selfAnalysis: '//h5[contains(text(),"Self Analysis")]',
+  elements: {
+    selfAnalysis_page_title: '//h5[contains(text(),"Self Analysis")]',
   },
+
   amOnThisPage() {
-    I.seeElement(this.text.selfAnalysis);
+    I.waitForElement(this.elements.selfAnalysis_page_title, elementWaitTime);
+    I.seeElement(this.elements.selfAnalysis_page_title);
   },
 };

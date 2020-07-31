@@ -1,114 +1,107 @@
 const { I } = inject();
-const dashboard = require('../pages/dashboardPage');
-const { addJobApplication, deleteJobApplication } = require('../helpers/api/job_application');
-const USER_API = require('../helpers/api/user');
-const updateJob = require('../pages/updateJobApplicationPage');
+const dashboardPage = require('../pages/dashboardPage');
+const updateJobPage = require('../pages/updateJobApplicationPage');
+const { addJobApplication } = require('../helpers/api/job_application');
+const { loginUser } = require('../helpers/api/user');
+const { cleanJobApplications } = require('../helpers/customTearDown');
 
-let apiToken, firstJob, secondJob;
-
-Given('a user has been registered with the following details:', async (table) => {
-  const user = table.parse().hashes()[0];
-  await USER_API.register(user.name, user.email, user.password);
-});
+let authToken, firstJob, secondJob;
 
 Given('the user has logged in with email {string} and password {string}', async (email, password) => {
-  await USER_API.login(email, password).then(async ({ token }) => {
-    apiToken = token;
-    I.setCookie({ name: 'token', value: token, domain: 'localhost:3001/' });
-  });
+  const response = await loginUser(email, password);
+  authToken = response.token;
+  await I.setCookie({ name: 'token', value: response.token, domain: 'localhost:3001/' });
 });
 
 Given('the following job application has been created:', async (table) => {
   const jobs = table.parse().hashes();
-  jobs.forEach(async (job) => {
+  for await (const job of jobs) {
+    const { title, company, priority, status } = job;
     const data = {
-      token: apiToken,
-      title: job.title,
-      company: job.company,
-      priority: job.priority,
-      status: job.status.toLowerCase().replace(/ /g, ''),
+      token: authToken,
+      title: title,
+      company: company,
+      priority: priority,
+      status: status.toLowerCase().replace(/ /g, ''),
     };
     await addJobApplication(data);
-  });
+  }
 });
 
-When('the user moves job application from {string} to {string} status board using the webUI', (source, destination) => {
-  I.amOnPage(dashboard.url);
-  I.dragAndDrop(dashboard.dragFrom(source), dashboard.dragTo(destination));
+Given('the user has browsed to the dashboard page', () => {
+  I.amOnPage(dashboardPage.url);
 });
 
-Then('the job application of title {string} should be moved from {string} status board', async (title, status) => {
-  within(dashboard.getJobStatusBoard(status), () => {
-    I.dontSee(title);
-  });
-});
-
-Then(
-  'the job application of title {string} should be added in {string} status board in the dashboard',
-  async (title, status) => {
-    within(dashboard.getJobStatusBoard(status), () => {
-      I.see(title);
-    });
-    await tearDown();
+When(
+  'the user moves job application from {string} to {string} status board using the webUI',
+  async (source, destination) => {
+    await dashboardPage.dragAndDrop(source, destination);
   }
 );
 
 When(
   'the user moves second job application above the first job application within {string} status board using the webUI',
   async (status) => {
-    I.amOnPage(dashboard.url);
-    within(dashboard.getJobStatusBoard(status), async () => {
-      firstJob = await I.grabTextFrom(dashboard.getCardPosition(status, 1));
-      secondJob = await I.grabTextFrom(dashboard.getCardPosition(status, 2));
-      await dashboard.dragAndDropWithin(status);
+    await within(dashboardPage.getJobStatusBoard(status), async () => {
+      firstJob = await I.grabTextFrom(dashboardPage.getCardPosition(status, 1));
+      secondJob = await I.grabTextFrom(dashboardPage.getCardPosition(status, 2));
+      await dashboardPage.dragAndDropWithin(status);
     });
+  }
+);
+
+When('the user deletes job application of {string} status board using webUI', (status) => {
+  dashboardPage.removeJob(status);
+});
+
+When(
+  'the user clicks job application of title {string} from {string} status board using the webUI',
+  async (title, status) => {
+    await within(dashboardPage.getJobStatusBoard(status), () => {
+      dashboardPage.gotoUpdateJob(title);
+    });
+  }
+);
+
+Then('the job application of title {string} should be moved from {string} status board', async (title, status) => {
+  await within(dashboardPage.getJobStatusBoard(status), async () => {
+    await I.dontSee(title);
+  });
+});
+
+Then(
+  'the job application of title {string} should be added in {string} status board in the dashboard',
+  async (title, status) => {
+    await within(dashboardPage.getJobStatusBoard(status), async () => {
+      await I.see(title);
+    });
+    await cleanJobApplications();
   }
 );
 
 Then(
   'the second job applications should appear above the first job application within {string} status board',
   async (status) => {
-    within(dashboard.getJobStatusBoard(status), () => {
-      I.see(secondJob, dashboard.getCardPosition(status, 1));
-      I.see(firstJob, dashboard.getCardPosition(status, 2));
+    await within(dashboardPage.getJobStatusBoard(status), async () => {
+      await I.see(secondJob, dashboardPage.getCardPosition(status, 1));
+      await I.see(firstJob, dashboardPage.getCardPosition(status, 2));
     });
-    await tearDown();
+    await cleanJobApplications();
   }
 );
 
-When('the user deletes job application of {string} status board using webUI', async (status) => {
-  I.amOnPage(dashboard.url);
-  dashboard.removeJob(status);
-});
-
 Then('the job application of title {string} should not appear in {string} status board', async (title, status) => {
-  within(dashboard.getJobStatusBoard(status), () => {
-    I.dontSee(title);
+  await within(dashboardPage.getJobStatusBoard(status), async () => {
+    await I.dontSee(title);
   });
 });
 
-When(
-  'the user clicks job application of title {string} from {string} status board using the webUI',
-  async (title, status) => {
-    I.amOnPage(dashboard.url);
-    within(dashboard.getJobStatusBoard(status), () => {
-      dashboard.gotoUpdateJob(title);
-    });
-  }
-);
-
 Then('the user should be redirected to update job application page and should see following data:', async (table) => {
   const job = table.parse().hashes()[0];
-  I.see('Application Details');
-  I.seeInField(updateJob.fields.title, job.title);
-  I.seeTextEquals(job.priority, updateJob.fields.priority);
-  I.seeTextEquals(job.status, updateJob.fields.status);
-  I.seeInField(updateJob.fields.company, job.company);
-  await tearDown();
+  await I.see('Application Details');
+  await I.seeInField(updateJobPage.fields.title, job.title);
+  await I.seeTextEquals(job.priority, updateJobPage.fields.priority);
+  await I.seeTextEquals(job.status, updateJobPage.fields.status);
+  await I.seeInField(updateJobPage.fields.company, job.company);
+  await cleanJobApplications();
 });
-
-async function tearDown() {
-  const token = await I.grabCookie('token');
-  await deleteJobApplication(token.value);
-  I.clearCookie();
-}

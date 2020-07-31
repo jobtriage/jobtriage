@@ -4,32 +4,42 @@ Feature: login a user
   So that I can access jobtriage services
 
   Background:
-    Given the user has signed up with name "user1", email "user1@gmail.com" password "password"
+    Given the user with following details already exists:
+      | name      | email               | password   |
+      | test      | test@email.com      | testpass   |
     And the user has browsed to the login page using the webUI
 
-  @validLogin
+  @validlogin
   Scenario: login a valid user
-    When the user logs in with email "user1@gmail.com" and password "password" using the webUI
+    When the user logs in with the following credentials using the webUI:
+      | email           | password |
+      | test@email.com  | testpass |
     Then the user should be redirected to the dashboard page
 
-  @invalidLogin
-  Scenario: login with invalid credentials
+  @invalidlogin
+  Scenario Outline: login with invalid credentials
     When the user logs in with the following credentials using the webUI:
-      | email           | password |
-      | user1@gmail.com | passwo   |
-    Then an error message "Authentication failed check input" should be displayed
+      | email   | password   |
+      | <email> | <password> |
+    Then the login error message "Authentication failed check input" should be displayed
+    Examples:
+      | email          | password   |
+      | user@email.com | testpass   |
+      | test@email.com | mypassword |
 
-  @blankEmailLogin
-  Scenario: login with blank email
+  @emptyfields
+  Scenario Outline: login with blank email
     When the user logs in with the following credentials using the webUI:
-      | email | password |
-      |       | password |
+      | email   | password   |
+      | <email> | <password> |
     Then the user should stay on the login page
+    Examples:
+      | email          | password   |
+      |                |            |
+      |                | testpass   |
+      | test@email.com |            |
 
-  @blankPasswordLogin
-  Scenario: login with blank password
-    When the user logs in with the following credentials using the webUI:
-      | email           | password |
-      | user1@gmail.com |          |
-    Then the user should stay on the login page
-
+  @gotosignup
+  Scenario: Go to signup page
+    When the user clicks sign up here button
+    Then the user should be redirected to the signup page

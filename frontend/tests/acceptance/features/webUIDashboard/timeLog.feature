@@ -4,14 +4,14 @@ Feature: Add time log to job application
   So that I can keep track of my job applications
 
   Background: User has access to dashboard
-    Given a user has been registered with the following details:
-      | name | email          | password |
-      | test | test@email.com | testpass |
+    Given the user with following details already exists:
+      | name      | email               | password   |
+      | test      | test@email.com      | testpass   |
     And the user has logged in with email "test@email.com" and password "testpass"
     And the following job application has been created:
       | title          | company     | priority | status       |
       | Office Manager | ABC Company | Medium   | Yet to Apply |
-    And the user has navigated to the dashboard
+    And the user has browsed to the dashboard page
     And the user has navigated to update the job application of title "Office Manager" using the webUI
 
   @addtimelog

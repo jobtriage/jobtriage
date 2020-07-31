@@ -1,26 +1,31 @@
 const { I } = inject();
+const { elementWaitTime } = require('../helpers/globals');
 
 module.exports = {
-  menuOptions: {
+  menus: {
     dashboard: '//nav/ul/li//span[contains(text(),"Dashboard")]',
-    selfAnalysis: '//nav/ul/li//span[contains(text(),"Self Analysis")]',
+    self_analysis: '//nav/ul/li//span[contains(text(),"Self Analysis")]',
     account: '//nav/ul/li//span[contains(text(),"Account")]',
     logout: '//nav/ul/li//span[contains(text(),"Logout")]',
   },
-  clickDashboard() {
-    I.waitForVisible(this.menuOptions.dashboard, 5);
-    I.click(this.menuOptions.dashboard);
+
+  navigateToDashboard() {
+    I.waitForElement(this.menus.dashboard, elementWaitTime);
+    I.click(this.menus.dashboard);
   },
-  clickSelfAnalysis() {
-    I.waitForVisible(this.menuOptions.selfAnalysis, 5);
-    I.click(this.menuOptions.selfAnalysis);
+
+  navigateToSelfAnalysis() {
+    I.waitForElement(this.menus.self_analysis, elementWaitTime);
+    I.click(this.menus.self_analysis);
   },
-  clickAccount() {
-    I.waitForVisible(this.menuOptions.account, 5);
-    I.click(this.menuOptions.account);
+
+  navigateToAccount() {
+    I.waitForElement(this.menus.account, elementWaitTime);
+    I.click(this.menus.account);
   },
+
   clickLogout() {
-    I.waitForVisible(this.menuOptions.logout, 5);
-    I.click(this.menuOptions.logout);
+    I.waitForElement(this.menus.logout, elementWaitTime);
+    I.click(this.menus.logout);
   },
 };

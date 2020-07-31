@@ -1,5 +1,6 @@
 const { I } = inject();
 const { monthNames } = require('../helpers/calendarHelper');
+const { elementWaitTime } = require('../helpers/globals');
 
 module.exports = {
   fields: {
@@ -7,6 +8,7 @@ module.exports = {
     time: '//label[contains(text(),"Event time")]/parent::div//input',
     note: '//label[contains(text(),"Note")]/parent::div//textarea[contains(@class, "MuiInputBase-input")]',
   },
+
   elements: {
     timelog_title: '//h6[text()="Time Logs"]',
     empty_message: '//h5[text()="No timelogs added yet"]',
@@ -26,6 +28,7 @@ module.exports = {
       return `//p[text()="${type.toUpperCase()}"]/parent::div`;
     },
   },
+
   datePicker: {
     datePicker_container: '//div[contains(@class,"MuiPickersBasePicker-container")]',
     open_year: '//div[1]/button[contains(@class,"MuiPickersToolbarButton-toolbarBtn")]//h6',
@@ -55,44 +58,53 @@ module.exports = {
       return `//button//h6[contains(text(),"${period}")]`;
     },
   },
-  addTimeLog(log) {
-    I.waitForElement(this.elements.openaddtimelog_dialog, 5);
+
+  async addTimeLog(timeLog) {
+    const { type, note } = timeLog;
+    I.waitForElement(this.elements.openaddtimelog_dialog, elementWaitTime);
     I.click(this.elements.openaddtimelog_dialog);
-    this.selectType(log.type);
-    this.selectEventTime(log);
-    this.fillNote(log.note);
-    this.submitNewTimeLog();
+    this.selectType(type);
+    this.selectEventTime(timeLog);
+    this.fillNote(note);
+    await this.clickAdd();
   },
-  updateTimeLog(type, log) {
-    const el_update = `${this.elements.getTimeLogContext(type)}${this.elements.openedittimelog_button}`;
-    I.waitForElement(el_update, 5);
+
+  async updateTimeLog(previousType, timeLog) {
+    const { type, note } = timeLog;
+    const el_update = `${this.elements.getTimeLogContext(previousType)}${this.elements.openedittimelog_button}`;
+
+    I.waitForElement(el_update, elementWaitTime);
     I.click(el_update);
-    this.selectType(log.type);
-    this.selectEventTime(log);
-    this.fillNote(log.note);
-    this.submitTimeLogUpdate();
+    this.selectType(type);
+    this.selectEventTime(timeLog);
+    this.fillNote(note);
+    await this.clickUpdate();
   },
+
   deleteTimeLog(type) {
     const el_delete = `${this.elements.getTimeLogContext(type)}${this.elements.deletetimelog_button}`;
-    I.waitForElement(el_delete, 5);
+    I.waitForElement(el_delete, elementWaitTime);
     I.click(el_delete);
   },
+
   addToCalendar(type) {
     const el_addtocalendar = `${this.elements.getTimeLogContext(type)}${this.elements.addtocalendar_button}`;
-    I.waitForElement(el_addtocalendar, 5);
+    I.waitForElement(el_addtocalendar, elementWaitTime);
     I.click(el_addtocalendar);
   },
+
   selectType(type) {
     if (type) {
-      I.waitForElement(this.fields.type, 5);
+      I.waitForElement(this.fields.type, elementWaitTime);
       I.click(this.fields.type);
       I.click(this.elements.getSelectOption(type));
       I.dontSeeElement(this.elements.select_options);
     }
   },
+
   selectEventTime(calendar) {
     I.click(this.fields.time);
-    I.waitForElement(this.datePicker.datePicker_container, 5);
+    I.waitForElement(this.datePicker.datePicker_container, elementWaitTime);
     this.selectYear(calendar.year);
     this.selectMonth(calendar.month);
     this.selectDay(calendar.day);
@@ -101,16 +113,18 @@ module.exports = {
     this.selectPeriod(calendar.period);
     I.click(this.elements.timelog_dialog);
   },
+
   selectYear(year) {
-    I.waitForElement(this.datePicker.open_year, 5);
+    I.waitForElement(this.datePicker.open_year, elementWaitTime);
     I.click(this.datePicker.open_year);
     const el_year = this.datePicker.getYear(year);
-    I.waitForElement(el_year, 5);
+    I.waitForElement(el_year, elementWaitTime);
     I.scrollTo(el_year);
     I.click(el_year);
   },
+
   async selectMonth(month) {
-    I.waitForElement(this.datePicker.open_day_month, 5);
+    I.waitForElement(this.datePicker.open_day_month, elementWaitTime);
     I.click(this.datePicker.open_day_month);
 
     const selected = await I.waitForFunction(
@@ -118,11 +132,13 @@ module.exports = {
         const m_y = '//div[contains(@class,"MuiPickersSlideTransition-transitionContainer")]/p';
         const next = '//div[contains(@class,"MuiPickersCalendarHeader-switchHeader")]/button[2]';
         const previous = '//div[contains(@class,"MuiPickersCalendarHeader-switchHeader")]/button[1]';
+
         const el_m = document.evaluate(m_y, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
         const el_next = document.evaluate(next, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
           .singleNodeValue;
         const el_previous = document.evaluate(previous, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
           .singleNodeValue;
+
         let cur_month = el_m.innerText.split(' ')[0];
         if (cur_month === month) {
           return true;
@@ -140,44 +156,51 @@ module.exports = {
       100
     );
   },
+
   async selectDay(day) {
     const el_day = this.datePicker.getDay(day);
-    I.waitForElement(el_day, 5);
+    I.waitForElement(el_day, elementWaitTime);
     I.click(el_day);
   },
+
   selectHour(hour) {
-    I.waitForElement(this.datePicker.open_hour, 5);
+    I.waitForElement(this.datePicker.open_hour, elementWaitTime);
     I.click(this.datePicker.open_hour);
     const el_hour = this.datePicker.getHour(hour);
-    I.waitForElement(el_hour, 5);
+    I.waitForElement(el_hour, elementWaitTime);
     I.click(el_hour);
   },
+
   selectMinute(minute) {
-    I.waitForElement(this.datePicker.open_minute, 5);
+    I.waitForElement(this.datePicker.open_minute, elementWaitTime);
     I.click(this.datePicker.open_minute);
     const el_minute = this.datePicker.getMinute(minute);
-    I.waitForElement(el_minute, 5);
+    I.waitForElement(el_minute, elementWaitTime);
     I.click(el_minute);
   },
+
   selectPeriod(period) {
     const el_period = this.datePicker.getPeriod(period);
-    I.waitForElement(el_period, 5);
+    I.waitForElement(el_period, elementWaitTime);
     I.click(el_period);
   },
+
   fillNote(note) {
-    I.waitForInvisible(this.datePicker.datePicker_container, 5);
-    I.waitForElement(this.fields.note, 5);
+    I.waitForInvisible(this.datePicker.datePicker_container, elementWaitTime);
+    I.waitForElement(this.fields.note, elementWaitTime);
     I.click(this.fields.note);
     I.pressKey(['CommandOrControl', 'A']);
     I.pressKey('Backspace');
     I.fillField(this.fields.note, note);
   },
-  submitNewTimeLog() {
-    I.waitForElement(this.elements.addtimelog_button, 5);
-    I.click(this.elements.addtimelog_button);
+
+  async clickAdd() {
+    I.waitForElement(this.elements.addtimelog_button, elementWaitTime);
+    await I.click(this.elements.addtimelog_button);
   },
-  submitTimeLogUpdate() {
-    I.waitForElement(this.elements.updatetimelog_button, 5);
-    I.click(this.elements.updatetimelog_button);
+
+  async clickUpdate() {
+    I.waitForElement(this.elements.updatetimelog_button, elementWaitTime);
+    await I.click(this.elements.updatetimelog_button);
   },
 };
