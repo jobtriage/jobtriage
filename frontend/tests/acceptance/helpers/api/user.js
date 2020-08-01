@@ -5,7 +5,6 @@ const { I } = inject();
 
 const httpRequest = axios.create({
   baseURL: `${serverUrl}/auth/`,
-  timeout: 1000,
   headers: { 'Content-Type': 'application/json' },
 });
 

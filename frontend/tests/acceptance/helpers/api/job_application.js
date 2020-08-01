@@ -4,7 +4,6 @@ const { I } = inject();
 
 const httpRequest = axios.create({
   baseURL: `${serverUrl}/applications`,
-  timeout: 1000,
   headers: {
     'Content-Type': 'application/json',
   },
