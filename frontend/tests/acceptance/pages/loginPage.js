@@ -17,30 +17,30 @@ module.exports = {
   async login(user) {
     const { email, password } = user;
 
-    this.fillEmail(email);
-    this.fillPassword(password);
+    await this.fillEmail(email);
+    await this.fillPassword(password);
 
     I.waitForElement(this.elements.login_button, elementWaitTime);
     await I.click(this.elements.login_button);
   },
 
-  fillEmail(email) {
+  async fillEmail(email) {
     I.waitForElement(this.fields.email, elementWaitTime);
-    I.fillField(this.fields.email, email);
+    await I.fillField(this.fields.email, email);
   },
 
-  fillPassword(password) {
+  async fillPassword(password) {
     I.waitForElement(this.fields.password, elementWaitTime);
-    I.fillField(this.fields.password, password);
+    await I.fillField(this.fields.password, password);
   },
 
-  navigateToSignup() {
+  async navigateToSignup() {
     I.waitForElement(this.elements.signup_label, elementWaitTime);
-    I.click(this.elements.signup_label);
+    await I.click(this.elements.signup_label);
   },
 
-  amOnThisPage() {
+  async amOnThisPage() {
     I.waitForElement(this.elements.login_button, elementWaitTime);
-    I.seeElement(this.elements.login_button);
+    await I.seeElement(this.elements.login_button);
   },
 };

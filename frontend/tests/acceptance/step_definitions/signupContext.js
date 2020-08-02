@@ -9,8 +9,8 @@ const { elementWaitTime } = require('../helpers/globals');
 const ELEMENTS = signupPage.elements;
 const FIELDS = signupPage.fields;
 
-Given('the user has browsed to the signup page using the webUI', () => {
-  I.amOnPage(signupPage.url);
+Given('the user has browsed to the signup page using the webUI', async () => {
+  await I.amOnPage(signupPage.url);
 });
 
 When('the user signs up with the following data using the webUI:', async (table) => {
@@ -18,16 +18,16 @@ When('the user signs up with the following data using the webUI:', async (table)
   await signupPage.signUp(data);
 });
 
-When('the user clicks login here button', () => {
-  signupPage.navigateToLogin();
+When('the user clicks login here button', async () => {
+  await signupPage.navigateToLogin();
 });
 
-Then('the user should be redirected to the login page', () => {
-  loginPage.amOnThisPage();
+Then('the user should be redirected to the login page', async () => {
+  await loginPage.amOnThisPage();
 });
 
 Then('the user should be redirected to the dashboard page', async () => {
-  dashboardPage.amOnThisPage();
+  await dashboardPage.amOnThisPage();
 });
 
 Then('the user should be able to login with email {string} and password {string}', async (email, password) => {
@@ -36,23 +36,23 @@ Then('the user should be able to login with email {string} and password {string}
   await loginUser(email, password);
 });
 
-Then('the input fields should have following values:', (table) => {
+Then('the input fields should have following values:', async (table) => {
   const { name, email, password, confirmPassword } = table.parse().hashes()[0];
 
-  I.seeInField(FIELDS.name, name);
-  I.seeInField(FIELDS.email, email);
-  I.seeInField(FIELDS.password, password);
-  I.seeInField(FIELDS.confirmPassword, confirmPassword);
+  await I.seeInField(FIELDS.name, name);
+  await I.seeInField(FIELDS.email, email);
+  await I.seeInField(FIELDS.password, password);
+  await I.seeInField(FIELDS.confirmPassword, confirmPassword);
 });
 
-Then('the user should not be created', () => {
-  signupPage.amOnThisPage();
-  I.dontSee(ELEMENTS.error_label);
+Then('the user should not be created', async () => {
+  await signupPage.amOnThisPage();
+  await I.dontSee(ELEMENTS.error_label);
 });
 
-Then('the signup error message {string} should be displayed', (message) => {
+Then('the signup error message {string} should be displayed', async (message) => {
   I.waitForElement(ELEMENTS.error_label, elementWaitTime);
-  I.see(message, ELEMENTS.error_label);
+  await I.see(message, ELEMENTS.error_label);
 });
 
 After(async () => {

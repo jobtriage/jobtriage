@@ -21,31 +21,31 @@ module.exports = {
   async updatePassword(passwords) {
     const { currentPassword, newPassword, confirmPassword } = passwords;
 
-    this.fillCurrentPassword(currentPassword);
-    this.fillNewPassword(newPassword);
-    this.fillConfirmPassword(confirmPassword);
+    await this.fillCurrentPassword(currentPassword);
+    await this.fillNewPassword(newPassword);
+    await this.fillConfirmPassword(confirmPassword);
 
     I.waitForElement(this.elements.update_button, elementWaitTime);
     await I.click(this.elements.update_button);
   },
 
-  fillCurrentPassword(password) {
+  async fillCurrentPassword(password) {
     I.waitForElement(this.fields.currentPassword, elementWaitTime);
-    I.fillField(this.fields.currentPassword, password);
+    await I.fillField(this.fields.currentPassword, password);
   },
 
-  fillNewPassword(password) {
+  async fillNewPassword(password) {
     I.waitForElement(this.fields.newPassword, elementWaitTime);
-    I.fillField(this.fields.newPassword, password);
+    await I.fillField(this.fields.newPassword, password);
   },
 
-  fillConfirmPassword(password) {
+  async fillConfirmPassword(password) {
     I.waitForElement(this.fields.confirmPassword, elementWaitTime);
-    I.fillField(this.fields.confirmPassword, password);
+    await I.fillField(this.fields.confirmPassword, password);
   },
 
-  amOnThisPage() {
+  async amOnThisPage() {
     I.waitForElement(this.elements.account_page_title, elementWaitTime);
-    I.seeElement(this.elements.account_page_title);
+    await I.seeElement(this.elements.account_page_title);
   },
 };

@@ -9,7 +9,19 @@ Feature: update the account password
       | test      | test@email.com      | testpass   |
     And the user has logged in with email "test@email.com" and password "testpass"
     And the user has browsed to the account page
-
+  
+  @blankPasswordUpdate
+  Scenario Outline: update password with blank credentials
+    When the user updates password with the following credentials using the webUI
+      | currentPassword   | newPassword   | confirmPassword   |
+      | <currentPassword> | <newPassword> | <confirmPassword> |
+    Then the user should stay on the account page
+    Examples:
+      | currentPassword | newPassword | confirmPassword |
+      |                 | newPassword | newPassword     |
+      | password        |             | newPassword     |
+      | password        | newpassword |                 |
+  
   @invalidpassword
   Scenario: update password with invalid current credentials
     When the user updates password with the following credentials using the webUI

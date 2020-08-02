@@ -28,8 +28,8 @@ Given('the following job application has been created:', async (table) => {
   }
 });
 
-Given('the user has browsed to the dashboard page', () => {
-  I.amOnPage(dashboardPage.url);
+Given('the user has browsed to the dashboard page', async () => {
+  await I.amOnPage(dashboardPage.url);
 });
 
 When(
@@ -50,15 +50,15 @@ When(
   }
 );
 
-When('the user deletes job application of {string} status board using webUI', (status) => {
-  dashboardPage.removeJob(status);
+When('the user deletes job application of {string} status board using webUI', async (status) => {
+  await dashboardPage.removeJob(status);
 });
 
 When(
   'the user clicks job application of title {string} from {string} status board using the webUI',
   async (title, status) => {
-    await within(dashboardPage.getJobStatusBoard(status), () => {
-      dashboardPage.gotoUpdateJob(title);
+    await within(dashboardPage.getJobStatusBoard(status), async () => {
+      await dashboardPage.gotoUpdateJob(title);
     });
   }
 );

@@ -17,7 +17,7 @@ module.exports = {
         note: note,
         time: time,
       });
-      I.say('Time log added');
+      await I.say('Time log added');
     } catch (err) {
       console.log(
         `Cannot add time log\n` +
@@ -35,7 +35,7 @@ module.exports = {
       timelogs.forEach(async (timelog) => {
         try {
           await httpRequest.delete(`${jobId}/timelogs/${timelog.id}`);
-          I.say('Time log(s) cleared');
+          await I.say('Time log(s) cleared');
         } catch (err) {
           console.log(
             `Cannot delete time logs\n` +

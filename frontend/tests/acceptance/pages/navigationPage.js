@@ -9,23 +9,23 @@ module.exports = {
     logout: '//nav/ul/li//span[contains(text(),"Logout")]',
   },
 
-  navigateToDashboard() {
+  async navigateToDashboard() {
     I.waitForElement(this.menus.dashboard, elementWaitTime);
-    I.click(this.menus.dashboard);
+    await I.click(this.menus.dashboard);
   },
 
-  navigateToSelfAnalysis() {
+  async navigateToSelfAnalysis() {
     I.waitForElement(this.menus.self_analysis, elementWaitTime);
-    I.click(this.menus.self_analysis);
+    await I.click(this.menus.self_analysis);
   },
 
-  navigateToAccount() {
+  async navigateToAccount() {
     I.waitForElement(this.menus.account, elementWaitTime);
-    I.click(this.menus.account);
+    await I.click(this.menus.account);
   },
 
-  clickLogout() {
+  async clickLogout() {
     I.waitForElement(this.menus.logout, elementWaitTime);
-    I.click(this.menus.logout);
+    await I.click(this.menus.logout);
   },
 };

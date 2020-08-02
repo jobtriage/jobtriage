@@ -29,65 +29,65 @@ module.exports = {
   async updateJob(job) {
     const { title, priority, status, company, company_link, job_url, description } = job;
 
-    this.fillTitle(title);
-    this.selectPriority(priority);
-    this.selectStatus(status);
-    this.fillCompany(company);
-    this.fillCompanyLink(company_link);
-    this.fillJobUrl(job_url);
-    this.fillDescription(description);
+    await this.fillTitle(title);
+    await this.selectPriority(priority);
+    await this.selectStatus(status);
+    await this.fillCompany(company);
+    await this.fillCompanyLink(company_link);
+    await this.fillJobUrl(job_url);
+    await this.fillDescription(description);
     await this.clickUpdate();
   },
 
   async updateJobwithEmptyTitle() {
-    I.click(this.fields.title);
-    I.pressKey(['CommandOrControl', 'A']);
-    I.pressKey('Backspace');
+    await I.click(this.fields.title);
+    await I.pressKey(['CommandOrControl', 'A']);
+    await I.pressKey('Backspace');
     await this.clickUpdate();
   },
 
-  fillTitle(title) {
+  async fillTitle(title) {
     I.waitForElement(this.fields.title, elementWaitTime);
-    I.clearField(this.fields.title);
-    I.fillField(this.fields.title, title);
+    await I.clearField(this.fields.title);
+    await I.fillField(this.fields.title, title);
   },
 
-  selectPriority(priority) {
+  async selectPriority(priority) {
     I.waitForElement(this.fields.priority, elementWaitTime);
-    I.click(this.fields.priority);
-    I.click(this.elements.selectOptions(priority));
-    I.dontSeeElement(this.elements.select_options);
+    await I.click(this.fields.priority);
+    await I.click(this.elements.selectOptions(priority));
+    await I.dontSeeElement(this.elements.select_options);
   },
 
-  selectStatus(status) {
+  async selectStatus(status) {
     I.waitForElement(this.fields.status, elementWaitTime);
-    I.click(this.fields.status);
-    I.click(this.elements.selectOptions(status));
-    I.dontSeeElement(this.elements.select_options);
+    await I.click(this.fields.status);
+    await I.click(this.elements.selectOptions(status));
+    await I.dontSeeElement(this.elements.select_options);
   },
 
-  fillCompany(company) {
+  async fillCompany(company) {
     I.waitForElement(this.fields.company, elementWaitTime);
-    I.clearField(this.fields.company);
-    I.fillField(this.fields.company, company);
+    await I.clearField(this.fields.company);
+    await I.fillField(this.fields.company, company);
   },
 
-  fillCompanyLink(company_link) {
+  async fillCompanyLink(company_link) {
     I.waitForElement(this.fields.company_link, elementWaitTime);
-    I.clearField(this.fields.company_link);
-    I.fillField(this.fields.company_link, company_link);
+    await I.clearField(this.fields.company_link);
+    await I.fillField(this.fields.company_link, company_link);
   },
 
-  fillJobUrl(job_post_url) {
-    I.clearField(this.fields.job_post_url);
+  async fillJobUrl(job_post_url) {
+    await I.clearField(this.fields.job_post_url);
     I.waitForElement(this.fields.job_post_url, elementWaitTime);
-    I.fillField(this.fields.job_post_url, job_post_url);
+    await I.fillField(this.fields.job_post_url, job_post_url);
   },
 
-  fillDescription(description) {
+  async fillDescription(description) {
     I.waitForElement(this.fields.description, elementWaitTime);
-    I.clearField(this.fields.description);
-    I.fillField(this.fields.description, description);
+    await I.clearField(this.fields.description);
+    await I.fillField(this.fields.description, description);
   },
 
   async clickUpdate() {
@@ -95,13 +95,13 @@ module.exports = {
     await I.click(this.elements.update_button);
   },
 
-  gotoNotes() {
+  async gotoNotes() {
     I.waitForElement(this.elements.notes_tab, elementWaitTime);
-    I.click(this.elements.notes_tab);
+    await I.click(this.elements.notes_tab);
   },
 
-  gotoDetails() {
+  async gotoDetails() {
     I.waitForElement(this.elements.details_tab, elementWaitTime);
-    I.click(this.elements.details_tab);
+    await I.click(this.elements.details_tab);
   },
 };

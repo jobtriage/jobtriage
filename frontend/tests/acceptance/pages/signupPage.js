@@ -21,42 +21,42 @@ module.exports = {
     const { name, email, password } = user;
     const confirmPassword = user.hasOwnProperty('confirmPassword') ? user.confirmPassword : password;
 
-    this.fillname(name);
-    this.fillEmail(email);
-    this.fillPassword(password);
-    this.fillConfirmPassword(confirmPassword);
+    await this.fillname(name);
+    await this.fillEmail(email);
+    await this.fillPassword(password);
+    await this.fillConfirmPassword(confirmPassword);
 
     I.waitForElement(this.elements.signup_button, elementWaitTime);
     await I.click(this.elements.signup_button);
   },
 
-  fillname(name) {
+  async fillname(name) {
     I.waitForElement(this.fields.name, elementWaitTime);
-    I.fillField(this.fields.name, name);
+    await I.fillField(this.fields.name, name);
   },
 
-  fillEmail(email) {
+  async fillEmail(email) {
     I.waitForElement(this.fields.email, elementWaitTime);
-    I.fillField(this.fields.email, email);
+    await I.fillField(this.fields.email, email);
   },
 
-  fillPassword(password) {
+  async fillPassword(password) {
     I.waitForElement(this.fields.password, elementWaitTime);
-    I.fillField(this.fields.password, password);
+    await I.fillField(this.fields.password, password);
   },
 
-  fillConfirmPassword(confirmPassword) {
+  async fillConfirmPassword(confirmPassword) {
     I.waitForElement(this.fields.confirmPassword, elementWaitTime);
-    I.fillField(this.fields.confirmPassword, confirmPassword);
+    await I.fillField(this.fields.confirmPassword, confirmPassword);
   },
 
-  navigateToLogin() {
+  async navigateToLogin() {
     I.waitForElement(this.elements.login_label, elementWaitTime);
-    I.click(this.elements.login_label);
+    await I.click(this.elements.login_label);
   },
 
-  amOnThisPage() {
+  async amOnThisPage() {
     I.waitForElement(this.elements.signup_button, elementWaitTime);
-    I.seeElement(this.elements.signup_button);
+    await I.seeElement(this.elements.signup_button);
   },
 };

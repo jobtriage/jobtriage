@@ -14,7 +14,7 @@ module.exports = {
     try {
       var res = await httpRequest.post(`register`, { name, email, password });
       users.push({ email, password });
-      I.say(res.data.message);
+      await I.say(res.data.message);
     } catch (err) {
       console.log(
         `Cannot register new user\n` +
@@ -32,7 +32,7 @@ module.exports = {
         var res = await httpRequest.delete(`deleteuser`, {
           params: { email, password },
         });
-        I.say(res.data.message);
+        await I.say(res.data.message);
       } catch (err) {
         console.log(
           `Cannot delete created user\n` +
@@ -48,7 +48,7 @@ module.exports = {
   loginUser: async (email, password) => {
     try {
       let res = await httpRequest.post(`login`, { email, password });
-      I.say('Login Successful');
+      await I.say('Login Successful');
       return { token: res.data.message.token, success: true };
     } catch (err) {
       console.log(

@@ -51,22 +51,24 @@ module.exports = {
     }[@draggable='true']`;
   },
 
-  removeJob(jobStatus) {
-    I.scrollTo(`${this.statusContext(jobStatus)}${this.elements.delete_job}`);
-    I.moveCursorTo(`${this.statusContext(jobStatus)}${this.elements.delete_job}`);
-    I.click(this.elements.delete_job);
+  async removeJob(jobStatus) {
+    await I.scrollTo(`${this.statusContext(jobStatus)}${this.elements.delete_job}`);
+    await I.moveCursorTo(`${this.statusContext(jobStatus)}${this.elements.delete_job}`);
+    await I.click(this.elements.delete_job);
   },
 
   statusContext(jobStatus) {
     return `${this.elements.job_status_board_title}/span[contains(.,'${jobStatus}')]/ancestor::section`;
   },
 
-  gotoUpdateJob(title) {
-    I.click(`${this.elements.job_title}[contains(text(),"${title}")]`);
+  async gotoUpdateJob(title) {
+    const el_jobcard = `${this.elements.job_title}[contains(text(),"${title}")]`;
+    I.waitForElement(el_jobcard, elementWaitTime);
+    await I.click(el_jobcard);
   },
 
-  amOnThisPage() {
+  async amOnThisPage() {
     I.waitForElement(this.elements.dashboard_container, elementWaitTime);
-    I.seeElement(this.elements.dashboard_container);
+    await I.seeElement(this.elements.dashboard_container);
   },
 };

@@ -38,7 +38,7 @@ module.exports = {
       jobs.forEach(async (job) => {
         try {
           await httpRequest.delete(`/${job.id}`);
-          I.say('Job application(s) cleared');
+          await I.say('Job application(s) cleared');
         } catch (err) {
           console.log(
             `Cannot delete job application\n` +

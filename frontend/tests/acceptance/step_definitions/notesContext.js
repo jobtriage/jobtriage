@@ -9,7 +9,7 @@ const { jobID } = require('../helpers/globals');
 const ELEMENTS = notesPage.elements;
 
 Given('the user is in the notes page', async () => {
-  updateJobPage.gotoNotes();
+  await updateJobPage.gotoNotes();
 });
 
 Given('the following job note has been created:', async (table) => {
@@ -25,21 +25,21 @@ Given('the following job note has been created:', async (table) => {
     };
     await addNote(data);
   }
-  I.refreshPage();
+  await I.refreshPage();
 });
 
 When('the user adds a new note with following details:', async (table) => {
   const note = table.parse().hashes()[0];
-  notesPage.addNote(note);
+  await notesPage.addNote(note);
 });
 
-When('the user deletes job note of title {string} using the webUI', (title) => {
-  notesPage.deleteNote(title);
+When('the user deletes job note of title {string} using the webUI', async (title) => {
+  await notesPage.deleteNote(title);
 });
 
-When('the user updates the job note of title {string} with following details:', (oldTitle, table) => {
+When('the user updates the job note of title {string} with following details:', async (oldTitle, table) => {
   const note = table.parse().hashes()[0];
-  notesPage.updateNote(oldTitle, note);
+  await notesPage.updateNote(oldTitle, note);
 });
 
 Then('the newly created note of title {string} and content {string} should appear', async (title, content) => {
@@ -64,15 +64,10 @@ Then('the note should be updated with new title {string} and new content {string
 
 Then('the job note of title {string} should not exist', async (title) => {
   await within(ELEMENTS.notesContainer, async () => {
-    I.refreshPage();
-    updateJobPage.gotoNotes();
+    await I.refreshPage();
+    await updateJobPage.gotoNotes();
     await I.dontSee(title);
   });
   await cleanJobNotes();
   await cleanJobApplications();
 });
-
-// async function getJobId() {
-//   const url = await I.grabCurrentUrl();
-//   return url.split('/').pop();
-// }

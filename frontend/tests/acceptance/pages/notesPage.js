@@ -22,9 +22,9 @@ module.exports = {
   async addNote(note) {
     const { title, content } = note;
     I.waitForElement(this.elements.openaddnote_dialog, elementWaitTime);
-    I.click(this.elements.openaddnote_dialog);
-    this.fillTitle(title);
-    this.fillContent(content);
+    await I.click(this.elements.openaddnote_dialog);
+    await this.fillTitle(title);
+    await this.fillContent(content);
 
     I.waitForElement(this.elements.addnote_button, elementWaitTime);
     await I.click(this.elements.addnote_button);
@@ -34,33 +34,33 @@ module.exports = {
     const job_note_selector = `${this.elements.getNoteSingle(oldTitle)}${this.elements.openeditnote_dialog}`;
 
     I.waitForElement(job_note_selector, elementWaitTime);
-    I.click(job_note_selector);
-    this.fillTitle(note.title);
-    this.fillContent(note.content);
+    await I.click(job_note_selector);
+    await this.fillTitle(note.title);
+    await this.fillContent(note.content);
 
     I.waitForElement(this.elements.updatenote_button, elementWaitTime);
     await I.click(this.elements.updatenote_button);
   },
 
-  fillTitle(title) {
+  async fillTitle(title) {
     I.waitForElement(this.fields.title, elementWaitTime);
-    I.click(this.fields.title);
-    I.pressKey(['CommandOrControl', 'A']);
-    I.pressKey('Backspace');
-    I.fillField(this.fields.title, title);
+    await I.click(this.fields.title);
+    await I.pressKey(['CommandOrControl', 'A']);
+    await I.pressKey('Backspace');
+    await I.fillField(this.fields.title, title);
   },
 
-  fillContent(content) {
+  async fillContent(content) {
     I.waitForElement(this.fields.content, elementWaitTime);
-    I.click(this.fields.content);
-    I.pressKey(['CommandOrControl', 'A']);
-    I.pressKey('Backspace');
-    I.fillField(this.fields.content, content);
+    await I.click(this.fields.content);
+    await I.pressKey(['CommandOrControl', 'A']);
+    await I.pressKey('Backspace');
+    await I.fillField(this.fields.content, content);
   },
 
-  deleteNote(title) {
+  async deleteNote(title) {
     const delete_icon = `${this.elements.getNoteSingle(title)}${this.elements.deletenote_button}`;
     I.waitForElement(delete_icon, elementWaitTime);
-    I.click(delete_icon);
+    await I.click(delete_icon);
   },
 };

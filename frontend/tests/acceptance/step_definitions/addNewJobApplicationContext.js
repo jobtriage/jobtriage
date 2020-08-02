@@ -6,9 +6,9 @@ const { cleanJobApplications } = require('../helpers/customTearDown');
 
 const ELEMENTS = newJobForm.elements;
 
-Given('the user has opened add new job application dialog form from the dashboard', () => {
+Given('the user has opened add new job application dialog form from the dashboard', async () => {
   I.waitForElement(dashboardPage.elements.addnewjob_button, elementWaitTime);
-  I.click(dashboardPage.elements.addnewjob_button);
+  await I.click(dashboardPage.elements.addnewjob_button);
 });
 
 When('the user adds a new job application with the following data:', async (table) => {
@@ -16,17 +16,17 @@ When('the user adds a new job application with the following data:', async (tabl
   await newJobForm.addNewJobApplication(data);
 });
 
-When('the user cancels adding a new job application', () => {
-  I.click(dashboardPage.elements.addnewjob_button);
+When('the user cancels adding a new job application', async () => {
+  await I.click(dashboardPage.elements.addnewjob_button);
 });
 
-Then('the add new job application dialog form should be closed', () => {
-  I.dontSee(dashboardPage.newjob_dialog);
+Then('the add new job application dialog form should be closed', async () => {
+  await I.dontSee(dashboardPage.newjob_dialog);
 });
 
-Then('a popup message {string} should be displayed', (message) => {
+Then('a popup message {string} should be displayed', async (message) => {
   I.waitForElement(ELEMENTS.popup, elementWaitTime);
-  I.see(message, ELEMENTS.popup);
+  await I.see(message, ELEMENTS.popup);
 });
 
 Then(

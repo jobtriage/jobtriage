@@ -19,7 +19,7 @@ Given('the following time log has been created:', async (table) => {
     time: timestamp,
   };
   await addTimeLog(data);
-  I.refreshPage();
+  await I.refreshPage();
 });
 
 When('the user adds a new time log with following details:', async (table) => {
@@ -32,17 +32,17 @@ When('the user updates the time log of type {string} with following details:', a
   await timeLogPage.updateTimeLog(previousType, timeLog);
 });
 
-When('the user deletes time log of type {string} using the webUI', (type) => {
-  timeLogPage.deleteTimeLog(type);
+When('the user deletes time log of type {string} using the webUI', async (type) => {
+  await timeLogPage.deleteTimeLog(type);
 });
 
-When('he user adds time log with type {string} to the calendar using the WebUI', (type) => {
-  timeLogPage.addToCalendar(type);
+When('he user adds time log with type {string} to the calendar using the WebUI', async (type) => {
+  await timeLogPage.addToCalendar(type);
 });
 
 Then('the new time log should be displayed with following details:', async (table) => {
   const { type, note } = table.parse().hashes()[0];
-  I.refreshPage();
+  await I.refreshPage();
   await within(timeLogPage.elements.timelog_container, async () => {
     await I.see(type.toUpperCase());
     await I.see(note);
@@ -52,7 +52,7 @@ Then('the new time log should be displayed with following details:', async (tabl
 });
 
 Then('the time log should have the type {string} and note {string}', async (type, note) => {
-  I.refreshPage();
+  await I.refreshPage();
   await within(timeLogPage.elements.timelog_container, async () => {
     await I.see(type.toUpperCase());
     await I.see(note);
@@ -62,14 +62,14 @@ Then('the time log should have the type {string} and note {string}', async (type
 });
 
 Then('the time log of type {string} should not exist', async (type) => {
-  I.refreshPage();
+  await I.refreshPage();
   await within(timeLogPage.elements.timelog_container, async () => {
     await I.dontSee(type.toUpperCase());
   });
 });
 
 Then('the user should be redirected to google calendar', async () => {
-  I.switchToNextTab();
+  await I.switchToNextTab();
   I.waitInUrl('google.com/', elementWaitTime);
   await I.seeInCurrentUrl('google.com/');
   await I.switchToPreviousTab();

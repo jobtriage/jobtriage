@@ -18,7 +18,7 @@ module.exports = {
         title: title,
         content: content,
       });
-      I.say('Job note added');
+      await I.say('Job note added');
     } catch (err) {
       console.log(
         `Cannot add job note\n` +
@@ -36,7 +36,7 @@ module.exports = {
       notes.forEach(async (note) => {
         try {
           await httpRequest.delete(`${jobId}/notes/${note.id}`);
-          I.say('Job note(s) cleared');
+          await I.say('Job note(s) cleared');
         } catch (err) {
           console.log(
             `Cannot delete job notes\n` +

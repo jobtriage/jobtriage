@@ -24,45 +24,45 @@ module.exports = {
   async addNewJobApplication(job) {
     const { title, company, priority, status, location } = job;
 
-    this.fillTitle(title);
-    this.fillCompany(company);
-    this.selectPriority(priority);
-    this.selectStatus(status);
-    this.fillLocation(location);
+    await this.fillTitle(title);
+    await this.fillCompany(company);
+    await this.selectPriority(priority);
+    await this.selectStatus(status);
+    await this.fillLocation(location);
 
     I.waitForElement(this.elements.addjob_button, elementWaitTime);
     await I.click(this.elements.addjob_button);
   },
 
-  fillTitle(title) {
+  async fillTitle(title) {
     I.waitForElement(this.fields.title, elementWaitTime);
-    I.fillField(this.fields.title, title);
+    await I.fillField(this.fields.title, title);
   },
 
-  fillCompany(company) {
+  async fillCompany(company) {
     I.waitForElement(this.fields.company, elementWaitTime);
-    I.fillField(this.fields.company, company);
+    await I.fillField(this.fields.company, company);
   },
 
-  selectPriority(priority) {
+  async selectPriority(priority) {
     if (priority) {
       const el_priority = this.elements.getPriorityElement(priority);
       I.waitForElement(el_priority, elementWaitTime);
-      I.click(el_priority);
+      await I.click(el_priority);
     }
   },
 
-  selectStatus(status) {
+  async selectStatus(status) {
     if (status) {
       I.waitForElement(this.fields.status, elementWaitTime);
-      I.click(this.fields.status);
-      I.click(this.elements.getStatusElement(status));
-      I.dontSeeElement(this.elements.select_options);
+      await I.click(this.fields.status);
+      await I.click(this.elements.getStatusElement(status));
+      await I.dontSeeElement(this.elements.select_options);
     }
   },
 
-  fillLocation(location) {
+  async fillLocation(location) {
     I.waitForElement(this.fields.location, elementWaitTime);
-    I.fillField(this.fields.location, location);
+    await I.fillField(this.fields.location, location);
   },
 };

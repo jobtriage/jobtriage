@@ -23,12 +23,12 @@ When('the user updates the job application with following details:', async (tabl
   await updateJobPage.updateJob(job);
 });
 
-When('the user clicks notes tab', () => {
-  updateJobPage.gotoNotes();
+When('the user clicks notes tab', async () => {
+  await updateJobPage.gotoNotes();
 });
 
-When('the user clicks details tab', () => {
-  updateJobPage.gotoDetails();
+When('the user clicks details tab', async () => {
+  await updateJobPage.gotoDetails();
 });
 
 Then('the initial job title {string} should be preserved', async (title) => {
@@ -46,7 +46,7 @@ Then('the message {string} should pop up', async (message) => {
 Then(
   'the job application of title {string} having company name {string} and priority {string} should appear under {string} status board in the dashboard',
   async (title, company, priority, status) => {
-    navigationPage.navigateToDashboard();
+    await navigationPage.navigateToDashboard();
     await within(dashboardPage.getJobStatusBoard(status), async () => {
       await I.see(title);
       await I.see(company);
@@ -58,7 +58,7 @@ Then(
 Then('the following updated details should appear in the update job application page:', async (table) => {
   const { title, priority, status, company, company_link, job_url, description } = table.parse().hashes()[0];
 
-  dashboardPage.gotoUpdateJob(title);
+  await dashboardPage.gotoUpdateJob(title);
   await I.waitForElement(ELEMENTS.details_title);
   await I.seeInField(FIELDS.title, title);
   await I.seeTextEquals(priority, FIELDS.priority);
