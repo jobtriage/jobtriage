@@ -1,4 +1,5 @@
 const { I } = inject();
+const { elementWaitTime } = require('../helpers/globals');
 
 module.exports = {
   fields: {
@@ -7,53 +8,61 @@ module.exports = {
     status: '//label[contains(.,"Status")]/parent::div//div[contains(@class,"MuiSelect-select")]',
     location: '//label[contains(text(),"Location")]/parent::div//input[contains(@class,"MuiInputBase-input")]',
   },
+
   elements: {
-    add_job_application_button: '//button[contains(@class,"MuiButton-root")]/span[contains(.,"Add")]',
+    addjob_button: '//button[contains(@class,"MuiButton-root")]/span[contains(.,"Add")]',
     select_options: '//div[contains(@class,"MuiPopover-paper")]//li',
-    error_label: '//div[contains(.,"Error in adding Job Application")]',
-    success_label: '//div[contains(.,"Job Application added successfully")]',
-    trello_board: '//div[contains(@class,"react-trello-board")]',
-    getPriority(priority) {
+    popup: '//div[contains(@class,"MuiSnackbarContent-message")]/div',
+    getPriorityElement(priority) {
       return `//div[contains(@class,"MuiButtonGroup")]/button/span[text()="${priority}"]`;
     },
+    getStatusElement(status) {
+      return `${this.select_options}[contains(.,"${status}")]`;
+    },
   },
-  addNewJobApplication(job) {
-    this.fillTitle(job.title);
-    this.fillCompany(job.company);
-    this.selectPriority(job.priority);
-    this.selectStatus(job.status);
-    this.fillLocation(job.location);
-    this.clickAdd();
+
+  async addNewJobApplication(job) {
+    const { title, company, priority, status, location } = job;
+
+    await this.fillTitle(title);
+    await this.fillCompany(company);
+    await this.selectPriority(priority);
+    await this.selectStatus(status);
+    await this.fillLocation(location);
+
+    I.waitForElement(this.elements.addjob_button, elementWaitTime);
+    await I.click(this.elements.addjob_button);
   },
-  fillTitle(title) {
-    I.waitForElement(this.fields.title, 5);
-    I.fillField(this.fields.title, title);
+
+  async fillTitle(title) {
+    I.waitForElement(this.fields.title, elementWaitTime);
+    await I.fillField(this.fields.title, title);
   },
-  fillCompany(company) {
-    I.waitForElement(this.fields.company, 5);
-    I.fillField(this.fields.company, company);
+
+  async fillCompany(company) {
+    I.waitForElement(this.fields.company, elementWaitTime);
+    await I.fillField(this.fields.company, company);
   },
-  selectPriority(priority) {
+
+  async selectPriority(priority) {
     if (priority) {
-      const el_priority = this.elements.getPriority(priority);
-      I.waitForElement(el_priority, 5);
-      I.click(el_priority);
+      const el_priority = this.elements.getPriorityElement(priority);
+      I.waitForElement(el_priority, elementWaitTime);
+      await I.click(el_priority);
     }
   },
-  selectStatus(status) {
+
+  async selectStatus(status) {
     if (status) {
-      I.waitForElement(this.fields.status, 5);
-      I.click(this.fields.status);
-      I.click(this.elements.select_options + '[contains(.,"' + status + '")]');
-      I.dontSeeElement(this.elements.select_options);
+      I.waitForElement(this.fields.status, elementWaitTime);
+      await I.click(this.fields.status);
+      await I.click(this.elements.getStatusElement(status));
+      await I.dontSeeElement(this.elements.select_options);
     }
   },
-  fillLocation(location) {
-    I.waitForElement(this.fields.location, 5);
-    I.fillField(this.fields.location, location);
-  },
-  clickAdd() {
-    I.waitForElement(this.elements.add_job_application_button, 5);
-    I.click(this.elements.add_job_application_button);
+
+  async fillLocation(location) {
+    I.waitForElement(this.fields.location, elementWaitTime);
+    await I.fillField(this.fields.location, location);
   },
 };

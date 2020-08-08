@@ -4,14 +4,14 @@ Feature: Add notes to job application
   So that I can remark my job applications
 
   Background: Valid user has access to the dashboard
-    Given a user has been registered with the following details:
-      | name | email          | password |
-      | test | test@email.com | testpass |
+    Given the user with following details already exists:
+      | name      | email               | password   |
+      | test      | test@email.com      | testpass   |
     And the user has logged in with email "test@email.com" and password "testpass"
     And the following job application has been created:
       | title          | company     | priority | status       |
       | Office Manager | ABC Company | Medium   | Yet to Apply |
-    And the user has navigated to the dashboard
+    And the user has browsed to the dashboard page
     And the user has navigated to update the job application of title "Office Manager" using the webUI
 
   @addnewnote
@@ -27,7 +27,7 @@ Feature: Add notes to job application
 
   @updatenote
   Scenario Outline: Update job note
-  Given the following job has been created:
+  Given the following job note has been created:
     | title     | content            |
     | TestTitle | Some contents here |
   And the user is in the notes page
@@ -41,7 +41,7 @@ Feature: Add notes to job application
 
   @deletenote
   Scenario: Delete job note
-  Given the following job has been created:
+  Given the following job note has been created:
     | title     | content            |
     | TestTitle | Some contents here |
   And the user is in the notes page

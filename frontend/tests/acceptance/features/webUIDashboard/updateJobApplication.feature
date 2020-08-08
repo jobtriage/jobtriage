@@ -4,20 +4,20 @@ Feature: Update job application
   So that I can make corrections to my job applications
 
   Background: User has access to dashboard
-    Given a user has been registered with the following details:
-      | name | email          | password |
-      | test | test@email.com | testpass |
+    Given the user with following details already exists:
+      | name      | email               | password   |
+      | test      | test@email.com      | testpass   |
     And the user has logged in with email "test@email.com" and password "testpass"
     And the following job application has been created:
       | title          | company     | priority | status       |
       | Office Manager | ABC Company | Medium   | Yet to Apply |
-    And the user has navigated to the dashboard
+    And the user has browsed to the dashboard page
     And the user has navigated to update the job application of title "Office Manager" using the webUI
 
   @updatewithemptytitle
   Scenario: Update job application with empty job title
   When the user updates the job application with empty job title
-  Then an update error message "Update failed" should pop up
+  Then the message "Update failed" should pop up
   And the initial job title "Office Manager" should be preserved
 
   @updatejob
@@ -25,7 +25,7 @@ Feature: Update job application
   When the user updates the job application with following details:
     | title   | priority   | status   | company   | company_link   | job_url   | description   |
     | <title> | <priority> | <status> | <company> | <company_link> | <job_url> | <description> |
-  Then an update success message "Update success" should pop up
+  Then the message "Update success" should pop up
   And the job application of title "<title>" having company name "<company>" and priority "<priority>" should appear under "<status>" status board in the dashboard
   And the following updated details should appear in the update job application page:
     | title   | priority   | status   | company   | company_link   | job_url   | description   |

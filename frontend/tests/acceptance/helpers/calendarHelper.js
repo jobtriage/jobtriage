@@ -22,11 +22,11 @@ module.exports = {
       throw new Error(err);
     }
   },
-  formatDay(day) {
+  formatDayNumber(day) {
     if (day.split('').count == 2) return day;
     else return `0${day}`;
   },
-  formatHour(hour, period) {
+  formatHour24(hour, period) {
     if (period === 'AM') return hour;
     else if (parseInt(hour) <= 12) return parseInt(hour) + 12;
   },

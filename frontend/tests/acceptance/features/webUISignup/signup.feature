@@ -4,14 +4,14 @@ Feature: Signup a user
   So that I can log in to the application
 
   Background: browse to signup page
-    Given the user has browsed to signup page
+    Given the user has browsed to the signup page using the webUI
 
   @validsignup
   Scenario Outline: Signup a valid user
     When the user signs up with the following data using the webUI:
       | name      | email        | password     |
       | <name>    | <email>      | <password>   |
-    Then the user should be redirected to dashboard
+    Then the user should be redirected to the dashboard page
     And the user should be able to login with email "<email>" and password "<password>"
     Examples:
       | name      | email             | password   |
@@ -39,7 +39,7 @@ Feature: Signup a user
     When the user signs up with the following data using the webUI:
       | name      | email          | password       |
       | <name>    | <email>        | <password>     |
-    Then an error message "Enter a valid email" should be displayed
+    Then the signup error message "Enter a valid email" should be displayed
     Examples:
       | name      | email          | password   |
       | test      | user102.com    | testpass   |
@@ -53,7 +53,7 @@ Feature: Signup a user
     When the user signs up with the following data using the webUI:
       | name      | email               | password   | confirmPassword   |
       | test      | test@email.com      | testpass   | testpass2         |
-    Then an error message "Password and Confirm password is not same" should be displayed
+    Then the signup error message "Password and Confirm password is not same" should be displayed
   
   @registeredemail
   Scenario: Signup user with already registered email
@@ -63,9 +63,9 @@ Feature: Signup a user
     When the user signs up with the following data using the webUI:
       | name      | email               | password   |
       | newuser   | test@email.com      | testpass   |
-    Then an error message "Error occurred check inputs" should be displayed
+    Then the signup error message "Error occurred check inputs" should be displayed
 
   @gotologin
   Scenario: Go to login page
-    When the user clicks go to login page button
-    Then the user should be redirected to login page
+    When the user clicks login here button
+    Then the user should be redirected to the login page

@@ -2,16 +2,22 @@ const axios = require('axios');
 const { serverUrl } = require('../constants');
 const { I } = inject();
 
+const httpRequest = axios.create({
+  baseURL: `${serverUrl}/applications/`,
+  headers: { 'Content-Type': 'application/json' },
+});
+
 module.exports = {
   addTimeLog: async (data) => {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+    const { token, jobId, type, note, time } = data;
+    httpRequest.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     try {
-      await axios.post(`${serverUrl}/applications/${data.jobId}/timelogs`, {
-        type: data.type,
-        note: data.note,
-        time: data.time,
+      await httpRequest.post(`${jobId}/timelogs`, {
+        type: type,
+        note: note,
+        time: time,
       });
-      I.say('Time log added');
+      await I.say('Time log added');
     } catch (err) {
       console.log(
         `Cannot add time log\n` +
@@ -22,40 +28,34 @@ module.exports = {
     }
   },
   deleteTimeLog: async (data) => {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+    const { jobId, token } = data;
+    httpRequest.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     try {
-      logs = await getTimeLogs(data.jobId, data.token);
-      if (logs.length != 0) {
-        logs.forEach(async (log) => {
-          try {
-            await axios.delete(`${serverUrl}/applications/${data.jobId}/timelogs/${log.id}`);
-            I.say('Time log cleared');
-          } catch (err) {
-            console.log(
-              `Cannot delete time logs\n` +
-                `Error: ${err.response.status} - ${err.response.statusText}\n` +
-                `<< Error Details >>${err.response.data.error}\n`
-            );
-            throw new Error(err);
-          }
-        });
-      }
+      timelogs = await getTimeLogs(jobId, token);
+      timelogs.forEach(async (timelog) => {
+        try {
+          await httpRequest.delete(`${jobId}/timelogs/${timelog.id}`);
+          await I.say('Time log(s) cleared');
+        } catch (err) {
+          console.log(
+            `Cannot delete time logs\n` +
+              `Error: ${err.response.status} - ${err.response.statusText}\n` +
+              `<< Error Details >>${err.response.data.error}\n`
+          );
+          throw new Error(err);
+        }
+      });
     } catch (err) {
-      console.log(
-        `Cannot fetch time logs\n` +
-          `Error: ${err.response.status} - ${err.response.statusText}\n` +
-          `<< Error Details >>${err.response.data.error}\n`
-      );
       throw new Error(err);
     }
   },
 };
 
 async function getTimeLogs(jobId, token) {
-  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  httpRequest.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   let logs = [];
   try {
-    logs = await axios.get(`${serverUrl}/applications/${jobId}/timelogs`).then(({ data }) => data);
+    logs = await httpRequest.get(`${jobId}/timelogs`).then(({ data }) => data);
   } catch (err) {
     console.log(
       `Cannot fetch time logs\n` +

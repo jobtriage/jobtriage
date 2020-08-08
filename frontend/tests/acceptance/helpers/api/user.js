@@ -3,12 +3,18 @@ const { users } = require('../globals');
 const { serverUrl } = require('../constants');
 const { I } = inject();
 
+const httpRequest = axios.create({
+  baseURL: `${serverUrl}/auth/`,
+  headers: { 'Content-Type': 'application/json' },
+});
+
 module.exports = {
-  register: async (name, email, password) => {
+  registerUser: async (user) => {
+    const { name, email, password } = user;
     try {
-      var res = await axios.post(`${serverUrl}/auth/register`, { name, email, password });
+      var res = await httpRequest.post(`register`, { name, email, password });
       users.push({ email, password });
-      I.say(res.data.message);
+      await I.say(res.data.message);
     } catch (err) {
       console.log(
         `Cannot register new user\n` +
@@ -18,30 +24,31 @@ module.exports = {
       throw new Error(err);
     }
   },
-  delete: () => {
-    if (users.length != 0) {
-      users.forEach(async (user) => {
-        try {
-          var res = await axios.delete(`${serverUrl}/auth/deleteuser`, {
-            params: { email: user.email, password: user.password },
-          });
-          I.say(res.data.message);
-        } catch (err) {
-          console.log(
-            `Cannot delete created user\n` +
-              `Error: ${err.response.status} - ${err.response.statusText}\n` +
-              `<< Error Details >>${err.response.data.error}\n`
-          );
-          throw new Error(err);
-        }
-      });
-      users.length = 0;
-    }
+
+  deleteUser: async () => {
+    users.forEach(async (user) => {
+      const { email, password } = user;
+      try {
+        var res = await httpRequest.delete(`deleteuser`, {
+          params: { email, password },
+        });
+        await I.say(res.data.message);
+      } catch (err) {
+        console.log(
+          `Cannot delete created user\n` +
+            `Error: ${err.response.status} - ${err.response.statusText}\n` +
+            `<< Error Details >>${err.response.data.error}\n`
+        );
+        throw new Error(err);
+      }
+    });
+    users.length = 0;
   },
-  login: async (email, password) => {
+
+  loginUser: async (email, password) => {
     try {
-      let res = await axios.post(`${serverUrl}/auth/login`, { email, password });
-      I.say('Login Successful');
+      let res = await httpRequest.post(`login`, { email, password });
+      await I.say('Login Successful');
       return { token: res.data.message.token, success: true };
     } catch (err) {
       console.log(

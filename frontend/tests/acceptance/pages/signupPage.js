@@ -1,4 +1,5 @@
 const { I } = inject();
+const { elementWaitTime } = require('../helpers/globals');
 
 module.exports = {
   url: '/signup',
@@ -9,40 +10,53 @@ module.exports = {
     confirmPassword:
       '//label[contains(text(),"Confirm password")]/parent::div//input[contains(@class, "MuiInputBase-input")]',
   },
+
   elements: {
     error_label: '//form/p[contains(@class,"makeStyles-error-")]',
     login_label: '//form//span[contains(.,"Login here")]',
-    signup_button: '//form/button/span[contains(.,"Sign Up")]',
+    signup_button: '//button/span[contains(text(),"Sign Up")]',
   },
-  async signUp(name, email, password, confirmPassword) {
-    this.fillname(name);
-    this.fillEmail(email);
-    this.fillPassword(password);
-    this.fillConfirmPassword(confirmPassword);
-    await this.clickSignUp();
-  },
-  fillname(name) {
-    I.waitForElement(this.fields.name, 5);
-    I.fillField(this.fields.name, name);
-  },
-  fillEmail(email) {
-    I.waitForElement(this.fields.email, 5);
-    I.fillField(this.fields.email, email);
-  },
-  fillPassword(password) {
-    I.waitForElement(this.fields.password, 5);
-    I.fillField(this.fields.password, password);
-  },
-  fillConfirmPassword(confirmPassword) {
-    I.waitForElement(this.fields.confirmPassword, 5);
-    I.fillField(this.fields.confirmPassword, confirmPassword);
-  },
-  async clickSignUp() {
-    I.waitForElement(this.elements.signup_button, 5);
+
+  async signUp(user) {
+    const { name, email, password } = user;
+    const confirmPassword = user.hasOwnProperty('confirmPassword') ? user.confirmPassword : password;
+
+    await this.fillname(name);
+    await this.fillEmail(email);
+    await this.fillPassword(password);
+    await this.fillConfirmPassword(confirmPassword);
+
+    I.waitForElement(this.elements.signup_button, elementWaitTime);
     await I.click(this.elements.signup_button);
   },
-  goToLogin() {
-    I.waitForElement(this.elements.login_label, 5);
-    I.click(this.elements.login_label);
+
+  async fillname(name) {
+    I.waitForElement(this.fields.name, elementWaitTime);
+    await I.fillField(this.fields.name, name);
+  },
+
+  async fillEmail(email) {
+    I.waitForElement(this.fields.email, elementWaitTime);
+    await I.fillField(this.fields.email, email);
+  },
+
+  async fillPassword(password) {
+    I.waitForElement(this.fields.password, elementWaitTime);
+    await I.fillField(this.fields.password, password);
+  },
+
+  async fillConfirmPassword(confirmPassword) {
+    I.waitForElement(this.fields.confirmPassword, elementWaitTime);
+    await I.fillField(this.fields.confirmPassword, confirmPassword);
+  },
+
+  async navigateToLogin() {
+    I.waitForElement(this.elements.login_label, elementWaitTime);
+    await I.click(this.elements.login_label);
+  },
+
+  async amOnThisPage() {
+    I.waitForElement(this.elements.signup_button, elementWaitTime);
+    await I.seeElement(this.elements.signup_button);
   },
 };

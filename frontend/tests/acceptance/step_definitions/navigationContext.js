@@ -1,37 +1,32 @@
 const { I } = inject();
 const navigationPage = require('../pages/navigationPage');
-const userAPI = require('../helpers/api/user');
 const selfAnalysisPage = require('../pages/selfAnalysisPage');
 const accountPage = require('../pages/accountPage');
 
-Given('the user has browsed to the dashboard page', () => {
-  I.amOnPage('/dashboard');
+Given('the user is in the Account page', async () => {
+  await I.amOnPage(accountPage.url);
 });
 
-Given('the user is in the Account page', () => {
-  navigationPage.clickAccount();
+When('the user clicks the dashboard option from the sidebar menu using the webUI', async () => {
+  await navigationPage.navigateToDashboard();
 });
 
-When('the user clicks on dashboard option on the drawer using the webUI', () => {
-  navigationPage.clickDashboard();
+When('the user clicks the Self Analysis option from the sidebar menu using the webUI', async () => {
+  navigationPage.navigateToSelfAnalysis();
 });
 
-When('the user clicks on Self Analysis option on the drawer using the webUI', () => {
-  navigationPage.clickSelfAnalysis();
+When('the user clicks the account option from the sidebar menu using the webUI', async () => {
+  await navigationPage.navigateToAccount();
 });
 
-When('the user clicks on account option on the drawer using the webUI', () => {
-  navigationPage.clickAccount();
+When('the user clicks the logout option from the sidebar menu using the webUI', async () => {
+  await navigationPage.clickLogout();
 });
 
-When('the user clicks on logout option on the drawer using the webUI', () => {
-  navigationPage.clickLogout();
+Then('the user should be redirected to the self analysis page', async () => {
+  await selfAnalysisPage.amOnThisPage();
 });
 
-Then('the user should be redirected to the self analysis page', () => {
-  selfAnalysisPage.amOnThisPage();
-});
-
-Then('the user should be redirected to account page', () => {
-  accountPage.amOnThisPage();
+Then('the user should be redirected to the account page', async () => {
+  await accountPage.amOnThisPage();
 });

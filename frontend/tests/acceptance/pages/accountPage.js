@@ -1,4 +1,5 @@
 const { I } = inject();
+const { elementWaitTime } = require('../helpers/globals');
 
 module.exports = {
   url: '/account',
@@ -9,37 +10,42 @@ module.exports = {
     confirmPassword:
       '//label[contains(text(),"Confirm Password")]/parent::div//input[contains(@class, "MuiInputBase-input")]',
   },
-  text: {
-    account: '//h6[contains(text(),"Account")]',
-    popUp: '//div[contains(@class,"MuiSnackbarContent-message")]/div',
-    passwordMismatch: '//form/p[contains(@class,"makeStyles-error")]',
+
+  elements: {
+    account_page_title: '//h6[contains(text(),"Account")]',
+    update_button: '//button/span[contains(text(),"Update")]',
+    popup: '//div[contains(@class,"MuiSnackbarContent-message")]/div',
+    error_label: '//form/p[contains(@class,"makeStyles-error")]',
   },
-  buttons: {
-    update: '//button/span[contains(text(),"Update")]',
+
+  async updatePassword(passwords) {
+    const { currentPassword, newPassword, confirmPassword } = passwords;
+
+    await this.fillCurrentPassword(currentPassword);
+    await this.fillNewPassword(newPassword);
+    await this.fillConfirmPassword(confirmPassword);
+
+    I.waitForElement(this.elements.update_button, elementWaitTime);
+    await I.click(this.elements.update_button);
   },
-  amOnThisPage() {
-    I.seeElement(this.text.account);
+
+  async fillCurrentPassword(password) {
+    I.waitForElement(this.fields.currentPassword, elementWaitTime);
+    await I.fillField(this.fields.currentPassword, password);
   },
-  clickUpdate() {
-    I.waitForElement(this.buttons.update, 5);
-    I.click(this.buttons.update);
+
+  async fillNewPassword(password) {
+    I.waitForElement(this.fields.newPassword, elementWaitTime);
+    await I.fillField(this.fields.newPassword, password);
   },
-  fillCurrentPassword(password) {
-    I.waitForElement(this.fields.currentPassword, 5);
-    I.fillField(this.fields.currentPassword, password);
+
+  async fillConfirmPassword(password) {
+    I.waitForElement(this.fields.confirmPassword, elementWaitTime);
+    await I.fillField(this.fields.confirmPassword, password);
   },
-  fillNewPassword(password) {
-    I.waitForElement(this.fields.newPassword, 5);
-    I.fillField(this.fields.newPassword, password);
-  },
-  fillConfirmPassword(password) {
-    I.waitForElement(this.fields.confirmPassword, 5);
-    I.fillField(this.fields.confirmPassword, password);
-  },
-  updatePassword(currentPassword, newPassword, confirmPassword) {
-    this.fillCurrentPassword(currentPassword);
-    this.fillNewPassword(newPassword);
-    this.fillConfirmPassword(confirmPassword);
-    this.clickUpdate();
+
+  async amOnThisPage() {
+    I.waitForElement(this.elements.account_page_title, elementWaitTime);
+    await I.seeElement(this.elements.account_page_title);
   },
 };

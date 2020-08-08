@@ -1,96 +1,79 @@
 const { I } = inject();
-const { deleteJobApplication } = require('../helpers/api/job_application');
-const { addTimeLog, deleteTimeLog } = require('../helpers/api/timelog');
+const { addTimeLog } = require('../helpers/api/timelog');
 const timeLogPage = require('../pages/timeLogPage');
-const { getMonthNumber, formatDay, formatHour } = require('../helpers/calendarHelper');
+const { getMonthNumber, formatDayNumber, formatHour24 } = require('../helpers/calendarHelper');
+const { jobID } = require('../helpers/globals');
+const { cleanJobApplications, cleanJobTimeLogs } = require('../helpers/customTearDown');
+const { elementWaitTime } = require('../helpers/globals');
 
-let jobID;
+Given('the following time log has been created:', async (table) => {
+  const { type, note, day, month, year, hour, minute, period } = table.parse().hashes()[0];
+  const token = await I.grabCookie('token');
+
+  let timestamp = `${formatDayNumber(day)}/${getMonthNumber(month)}/${year} ${formatHour24(hour, period)}:${minute}`;
+  const data = {
+    jobId: jobID[0],
+    token: token.value,
+    type: type.toLowerCase(),
+    note: note,
+    time: timestamp,
+  };
+  await addTimeLog(data);
+  await I.refreshPage();
+});
 
 When('the user adds a new time log with following details:', async (table) => {
-  jobID = await getCurrentJobId();
-  const log = table.parse().hashes()[0];
-  timeLogPage.addTimeLog(log);
+  const timeLog = table.parse().hashes()[0];
+  await timeLogPage.addTimeLog(timeLog);
+});
+
+When('the user updates the time log of type {string} with following details:', async (previousType, table) => {
+  const timeLog = table.parse().hashes()[0];
+  await timeLogPage.updateTimeLog(previousType, timeLog);
+});
+
+When('the user deletes time log of type {string} using the webUI', async (type) => {
+  await timeLogPage.deleteTimeLog(type);
+});
+
+When('he user adds time log with type {string} to the calendar using the WebUI', async (type) => {
+  await timeLogPage.addToCalendar(type);
 });
 
 Then('the new time log should be displayed with following details:', async (table) => {
-  const log = table.parse().hashes()[0];
-  I.refreshPage();
-  within(timeLogPage.elements.timelog_container, () => {
-    I.see(log.type.toUpperCase());
-    I.see(log.note);
+  const { type, note } = table.parse().hashes()[0];
+  await I.refreshPage();
+  await within(timeLogPage.elements.timelog_container, async () => {
+    await I.see(type.toUpperCase());
+    await I.see(note);
   });
-  await tearDown();
-});
-
-Given('the following time log has been created:', async (table) => {
-  jobID = await getCurrentJobId();
-  const log = table.parse().hashes()[0];
-  const token = await I.grabCookie('token');
-
-  let timelog = `${formatDay(log.day)}/${getMonthNumber(log.month)}/${log.year} ${formatHour(log.hour, log.period)}:${
-    log.minute
-  }`;
-
-  const data = {
-    jobId: await getCurrentJobId(),
-    token: token.value,
-    type: log.type.toLowerCase(),
-    note: log.note,
-    time: timelog,
-  };
-  await addTimeLog(data);
-  I.refreshPage();
-});
-
-When('the user updates the time log of type {string} with following details:', (type, table) => {
-  const log = table.parse().hashes()[0];
-  timeLogPage.updateTimeLog(type, log);
+  await cleanJobTimeLogs();
+  await cleanJobApplications();
 });
 
 Then('the time log should have the type {string} and note {string}', async (type, note) => {
-  I.refreshPage();
-  within(timeLogPage.elements.timelog_container, () => {
-    I.see(type.toUpperCase());
-    I.see(note);
+  await I.refreshPage();
+  await within(timeLogPage.elements.timelog_container, async () => {
+    await I.see(type.toUpperCase());
+    await I.see(note);
   });
-  await tearDown();
+  await cleanJobTimeLogs();
+  await cleanJobApplications();
 });
 
-When('the user deletes time log of type {string} using the webUI', (type) => {
-  timeLogPage.deleteTimeLog(type);
-});
-
-Then('the time log of type {string} should not exist', (type) => {
-  I.refreshPage();
-  within(timeLogPage.elements.timelog_container, () => {
-    I.dontSee(type.toUpperCase());
+Then('the time log of type {string} should not exist', async (type) => {
+  await I.refreshPage();
+  await within(timeLogPage.elements.timelog_container, async () => {
+    await I.dontSee(type.toUpperCase());
   });
-});
-
-When('he user adds time log with type {string} to the calendar using the WebUI', (type) => {
-  timeLogPage.addToCalendar(type);
 });
 
 Then('the user should be redirected to google calendar', async () => {
-  I.switchToNextTab();
-  I.waitInUrl('google.com/', 5);
-  I.seeInCurrentUrl('google.com/');
-  I.switchToPreviousTab();
-  await tearDown();
+  await I.switchToNextTab();
+  I.waitInUrl('google.com/', elementWaitTime);
+  await I.seeInCurrentUrl('google.com/');
+  await I.switchToPreviousTab();
+
+  await cleanJobTimeLogs();
+  await cleanJobApplications();
 });
-
-async function tearDown() {
-  const token = await I.grabCookie('token');
-  const idToken = {
-    jobId: jobID,
-    token: token.value,
-  };
-  await deleteTimeLog(idToken);
-  await deleteJobApplication(token.value);
-  I.clearCookie();
-}
-
-async function getCurrentJobId() {
-  const url = await I.grabCurrentUrl();
-  return url.split('/').pop();
-}

@@ -4,9 +4,9 @@ Feature: Organize job applications
   So that I can update the status of my applications
 
   Background: User has access to dashboard
-    Given a user has been registered with the following details:
-      | name | email          | password |
-      | test | test@email.com | testpass |
+    Given the user with following details already exists:
+      | name      | email               | password   |
+      | test      | test@email.com      | testpass   |
     And the user has logged in with email "test@email.com" and password "testpass"
 
   @movejobs
@@ -14,6 +14,7 @@ Feature: Organize job applications
     Given the following job application has been created:
       | title          | company     | priority | status          |
       | Office Manager | ABC Company | Medium   | <initialStatus> |
+    And the user has browsed to the dashboard page
     When the user moves job application from "<initialStatus>" to "<dragTOStatus>" status board using the webUI
     Then the job application of title "Office Manager" should be moved from "<initialStatus>" status board
     And the job application of title "Office Manager" should be added in "<dragTOStatus>" status board in the dashboard
@@ -31,6 +32,7 @@ Feature: Organize job applications
       | title          | company     | priority   | status   |
       | Office Manager | ABC Company | Medium     | <status> |
       | Sales Manager  | XYZ Company | Low        | <status> |
+    And the user has browsed to the dashboard page
     When the user moves second job application above the first job application within "<status>" status board using the webUI
     Then the second job applications should appear above the first job application within "<status>" status board
     Examples:
@@ -46,6 +48,7 @@ Feature: Organize job applications
     Given the following job application has been created:
       | title          | company     | priority | status   |
       | Office Manager | ABC Company | Medium   | <status> |
+    And the user has browsed to the dashboard page
     When the user deletes job application of "<status>" status board using webUI
     Then the job application of title "Office Manager" should not appear in "<status>" status board
     Examples:
@@ -61,6 +64,7 @@ Feature: Organize job applications
     Given the following job application has been created:
       | title          | company     | priority | status   |
       | Office Manager | ABC Company | Medium   | <status> |
+    And the user has browsed to the dashboard page
     When the user clicks job application of title "Office Manager" from "<status>" status board using the webUI
     Then the user should be redirected to update job application page and should see following data:
       | title          | company     | priority | status   |
