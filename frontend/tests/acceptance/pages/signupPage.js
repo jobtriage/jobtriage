@@ -17,6 +17,10 @@ module.exports = {
     signup_button: '//button/span[contains(text(),"Sign Up")]',
   },
 
+  /**
+   *
+   * @param {object} user
+   */
   async signUp(user) {
     const { name, email, password } = user;
     const confirmPassword = user.hasOwnProperty('confirmPassword') ? user.confirmPassword : password;
@@ -30,21 +34,37 @@ module.exports = {
     await I.click(this.elements.signup_button);
   },
 
+  /**
+   *
+   * @param {string} name
+   */
   async fillname(name) {
     I.waitForElement(this.fields.name, elementWaitTime);
     await I.fillField(this.fields.name, name);
   },
 
+  /**
+   *
+   * @param {string} email
+   */
   async fillEmail(email) {
     I.waitForElement(this.fields.email, elementWaitTime);
     await I.fillField(this.fields.email, email);
   },
 
+  /**
+   *
+   * @param {string} password
+   */
   async fillPassword(password) {
     I.waitForElement(this.fields.password, elementWaitTime);
     await I.fillField(this.fields.password, password);
   },
 
+  /**
+   *
+   * @param {string} confirmPassword
+   */
   async fillConfirmPassword(confirmPassword) {
     I.waitForElement(this.fields.confirmPassword, elementWaitTime);
     await I.fillField(this.fields.confirmPassword, confirmPassword);

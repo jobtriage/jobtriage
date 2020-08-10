@@ -26,6 +26,10 @@ module.exports = {
     popup: '//div[contains(@class,"MuiSnackbarContent-message")]/div',
   },
 
+  /**
+   *
+   * @param {object} job - job application details
+   */
   async updateJob(job) {
     const { title, priority, status, company, company_link, job_url, description } = job;
 
@@ -46,12 +50,21 @@ module.exports = {
     await this.clickUpdate();
   },
 
+  /**
+   *
+   * @param {string} title - job application title
+   */
   async fillTitle(title) {
     I.waitForElement(this.fields.title, elementWaitTime);
     await I.clearField(this.fields.title);
     await I.fillField(this.fields.title, title);
   },
 
+  /**
+   *
+   * @param {string} priority - job application priority
+   * [ Low, Medium and High ]
+   */
   async selectPriority(priority) {
     I.waitForElement(this.fields.priority, elementWaitTime);
     await I.click(this.fields.priority);
@@ -59,6 +72,11 @@ module.exports = {
     await I.dontSeeElement(this.elements.select_options);
   },
 
+  /**
+   *
+   * @param {string} status - job application status
+   * [ Yet to Apply, Applied, In Progress, Accepted, Rejected ]
+   */
   async selectStatus(status) {
     I.waitForElement(this.fields.status, elementWaitTime);
     await I.click(this.fields.status);
@@ -66,24 +84,40 @@ module.exports = {
     await I.dontSeeElement(this.elements.select_options);
   },
 
+  /**
+   *
+   * @param {string} company - company name
+   */
   async fillCompany(company) {
     I.waitForElement(this.fields.company, elementWaitTime);
     await I.clearField(this.fields.company);
     await I.fillField(this.fields.company, company);
   },
 
+  /**
+   *
+   * @param {string} company_link - company website url
+   */
   async fillCompanyLink(company_link) {
     I.waitForElement(this.fields.company_link, elementWaitTime);
     await I.clearField(this.fields.company_link);
     await I.fillField(this.fields.company_link, company_link);
   },
 
+  /**
+   *
+   * @param {string} job_post_url - job post url
+   */
   async fillJobUrl(job_post_url) {
     await I.clearField(this.fields.job_post_url);
     I.waitForElement(this.fields.job_post_url, elementWaitTime);
     await I.fillField(this.fields.job_post_url, job_post_url);
   },
 
+  /**
+   *
+   * @param {string} description - job application description
+   */
   async fillDescription(description) {
     I.waitForElement(this.fields.description, elementWaitTime);
     await I.clearField(this.fields.description);

@@ -15,19 +15,41 @@ module.exports = {
     job_container: '//div[contains(@class,"sc-fzoLsD")]',
   },
 
+  /**
+   *
+   * @param {string} jobStatus
+   * [ Yet to Apply, Applied, In Progress, Accepted, Rejected ]
+   *
+   * @returns {string} - xpath of given job status board of the dashboard
+   */
   getJobStatusBoard(jobStatus) {
     I.waitForElement(this.elements.job_status_board_title, elementWaitTime);
     return `${this.statusContext(jobStatus)}${this.elements.job_container}`;
   },
 
+  /**
+   *
+   * @param {string} title - job application title
+   *
+   * @returns {string} - xpath of given job application title
+   */
   getJobTitle(title) {
     return `${this.elements.job_title}[contains(text(),"${title}")]`;
   },
 
+  /**
+   *
+   * @param {sring} source - job status title from which job application is to be dragged
+   * @param {string} destination - job status title to which job application is to be dropped
+   */
   async dragAndDrop(source, destination) {
     await I.dragAndDrop(this.dragFrom(source), this.dragTo(destination));
   },
 
+  /**
+   *
+   * @param {string} jobStatus - job application status title
+   */
   async dragAndDropWithin(jobStatus) {
     await I.scrollTo(`${this.statusContext(jobStatus)}`);
     await I.waitForElement(this.statusContext(jobStatus, elementWaitTime));
@@ -37,30 +59,63 @@ module.exports = {
     );
   },
 
+  /**
+   *
+   * @param {string} jobStatus - dragAndDrop source job status title
+   *
+   * @returns {string} - xpath of job application to be dragged
+   */
   dragFrom(jobStatus) {
     return `${this.statusContext(jobStatus)}${this.elements.draggable_container}${this.elements.job_title}`;
   },
 
+  /**
+   *
+   * @param {string} jobStatus - dragAndDrop destination job status title
+   *
+   * @returns {string} - xpath of dragAndDrop destination job status title
+   */
   dragTo(jobStatus) {
     return `${this.statusContext(jobStatus)}/header`;
   },
 
+  /**
+   *
+   * @param {string} jobStatus - job application status title
+   * @param {number} index - job application card position
+   *
+   * @returns {string} - xpath of job application card of given status and index
+   */
   getCardPosition(jobStatus, index) {
     return `${this.statusContext(jobStatus)}${this.elements.draggable_container}[${index}]${
       this.elements.job_title
     }[@draggable='true']`;
   },
 
+  /**
+   *
+   * @param {string} jobStatus - job application status title
+   */
   async removeJob(jobStatus) {
     await I.scrollTo(`${this.statusContext(jobStatus)}${this.elements.delete_job}`);
     await I.moveCursorTo(`${this.statusContext(jobStatus)}${this.elements.delete_job}`);
     await I.click(this.elements.delete_job);
   },
 
+  /**
+   *
+   * @param {string} jobStatus - job application status title
+   *
+   * @returns {string} - xpath of job applications container of given status
+   */
   statusContext(jobStatus) {
     return `${this.elements.job_status_board_title}/span[contains(.,'${jobStatus}')]/ancestor::section`;
   },
 
+  /**
+   *
+   * @param {string} title - job application title
+   */
   async gotoUpdateJob(title) {
     const el_jobcard = `${this.elements.job_title}[contains(text(),"${title}")]`;
     I.waitForElement(el_jobcard, elementWaitTime);

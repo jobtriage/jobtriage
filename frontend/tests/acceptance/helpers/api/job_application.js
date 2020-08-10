@@ -11,14 +11,15 @@ const httpRequest = axios.create({
 
 module.exports = {
   addJobApplication: async (data) => {
-    httpRequest.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
-    const priority = getPriorityID(data.priority);
+    const { token, title, priority, status, company } = data;
+    httpRequest.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    const priority_index = getPriorityID(priority);
     try {
       await httpRequest.post('/', {
-        title: data.title,
-        status: data.status,
-        priority: priority,
-        company_name: data.company,
+        title: title,
+        status: status,
+        priority: priority_index,
+        company_name: company,
       });
       await I.say('Job application(s) added');
     } catch (err) {
@@ -35,9 +36,9 @@ module.exports = {
     httpRequest.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     try {
       jobs = await getJobApplications(token);
-      jobs.forEach(async (job) => {
+      jobs.forEach(async ({ id }) => {
         try {
-          await httpRequest.delete(`/${job.id}`);
+          await httpRequest.delete(`/${id}`);
           await I.say('Job application(s) cleared');
         } catch (err) {
           console.log(
