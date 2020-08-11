@@ -19,6 +19,10 @@ module.exports = {
     },
   },
 
+  /**
+   *
+   * @param {object} note - job note details
+   */
   async addNote(note) {
     const { title, content } = note;
     I.waitForElement(this.elements.openaddnote_dialog, elementWaitTime);
@@ -30,6 +34,11 @@ module.exports = {
     await I.click(this.elements.addnote_button);
   },
 
+  /**
+   *
+   * @param {string} oldTitle - old job note title
+   * @param {string} note - new job note title
+   */
   async updateNote(oldTitle, note) {
     const job_note_selector = `${this.elements.getNoteSingle(oldTitle)}${this.elements.openeditnote_dialog}`;
 
@@ -42,6 +51,10 @@ module.exports = {
     await I.click(this.elements.updatenote_button);
   },
 
+  /**
+   *
+   * @param {string} title - job note title
+   */
   async fillTitle(title) {
     I.waitForElement(this.fields.title, elementWaitTime);
     await I.click(this.fields.title);
@@ -50,6 +63,10 @@ module.exports = {
     await I.fillField(this.fields.title, title);
   },
 
+  /**
+   *
+   * @param {string} content - job note content
+   */
   async fillContent(content) {
     I.waitForElement(this.fields.content, elementWaitTime);
     await I.click(this.fields.content);
@@ -58,6 +75,10 @@ module.exports = {
     await I.fillField(this.fields.content, content);
   },
 
+  /**
+   *
+   * @param {string} title - job note title
+   */
   async deleteNote(title) {
     const delete_icon = `${this.elements.getNoteSingle(title)}${this.elements.deletenote_button}`;
     I.waitForElement(delete_icon, elementWaitTime);

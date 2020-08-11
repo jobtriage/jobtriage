@@ -21,6 +21,10 @@ module.exports = {
     },
   },
 
+  /**
+   *
+   * @param {object} job
+   */
   async addNewJobApplication(job) {
     const { title, company, priority, status, location } = job;
 
@@ -34,16 +38,29 @@ module.exports = {
     await I.click(this.elements.addjob_button);
   },
 
+  /**
+   *
+   * @param {string} title - job application title
+   */
   async fillTitle(title) {
     I.waitForElement(this.fields.title, elementWaitTime);
     await I.fillField(this.fields.title, title);
   },
 
+  /**
+   *
+   * @param {string} company - company name
+   */
   async fillCompany(company) {
     I.waitForElement(this.fields.company, elementWaitTime);
     await I.fillField(this.fields.company, company);
   },
 
+  /**
+   *
+   * @param {string} priority - job application priority
+   * [ Low, Medium and High ]
+   */
   async selectPriority(priority) {
     if (priority) {
       const el_priority = this.elements.getPriorityElement(priority);
@@ -52,6 +69,11 @@ module.exports = {
     }
   },
 
+  /**
+   *
+   * @param {string} status - job application status
+   * [ Yet to Apply, Applied, In Progress, Accepted, Rejected ]
+   */
   async selectStatus(status) {
     if (status) {
       I.waitForElement(this.fields.status, elementWaitTime);
@@ -61,6 +83,10 @@ module.exports = {
     }
   },
 
+  /**
+   *
+   * @param {string} location - company location
+   */
   async fillLocation(location) {
     I.waitForElement(this.fields.location, elementWaitTime);
     await I.fillField(this.fields.location, location);

@@ -21,9 +21,24 @@ module.exports = {
     select_options: '//div[contains(@class,"MuiPopover-paper")]//li',
     timelog_container: '//h6[text()="Time Logs"]/parent::div',
     timelog_dialog: '//div[@id="add-title"]',
+
+    /**
+     *
+     * @param {string} type - type of time log
+     * [ Applied, Interview, Accepted, Rejected, Other ]
+     *
+     * @returns {string} - xpath of given type's element
+     */
     getSelectOption(type) {
       return `${this.select_options}[contains(.,"${type}")]`;
     },
+
+    /**
+     *
+     * @param {string} type
+     *
+     * @returns {string} - xpath of given type's time log
+     */
     getTimeLogContext(type) {
       return `//p[text()="${type.toUpperCase()}"]/parent::div`;
     },
@@ -38,27 +53,72 @@ module.exports = {
     month_container: '//div[contains(@class,"MuiPickersSlideTransition-transitionContainer")]/p',
     next_month: '//div[contains(@class,"MuiPickersCalendarHeader-switchHeader")]/button[2]',
     previous_month: '//div[contains(@class,"MuiPickersCalendarHeader-switchHeader")]/button[1]',
+
+    /**
+     *
+     * @param {string} year - full year: 2020
+     *
+     * @return {string} - xpath of given year's element
+     */
     getYear(year) {
       return `//div[contains(@class,"MuiPickersYearSelection-container")]/div[text()="${year}"]`;
     },
+
+    /**
+     *
+     * @param {string} month - full month name: January
+     *
+     * @return {string} - xpath of given month's element
+     */
     getMonth(month) {
       return `//div[contains(@class,"MuiPickersClock-clock")]/span[text()="${month}"]`;
     },
+
+    /**
+     *
+     * @param {string} day - in a format like: 2, 4, 12, 29
+     *
+     * @return {string} - xpath of given day's element
+     */
     getDay(day) {
       return `//div[@role="presentation"]//p[text()="${day}"]`;
     },
-    day: '',
+
+    /**
+     *
+     * @param {string} hour - in 12 hour format
+     *
+     * @return {string} - xpath of given hour's element
+     */
     getHour(hour) {
       return `//div[contains(@class,"MuiPickersClock-clock")]/span[text()="${hour}"]`;
     },
+
+    /**
+     *
+     * @param {string} minute - in a two digit format: 02, 14, 09
+     *
+     * @return {string} - xpath of given minute's element
+     */
     getMinute(minute) {
       return `//div[contains(@class,"MuiPickersClock-clock")]/span[text()="${minute}"]`;
     },
+
+    /**
+     *
+     * @param {string} period - AM or PM
+     *
+     * @return {string} - xpath of given period's element
+     */
     getPeriod(period) {
       return `//button//h6[contains(text(),"${period}")]`;
     },
   },
 
+  /**
+   *
+   * @param {object} timeLog - details of time log
+   */
   async addTimeLog(timeLog) {
     const { type, note } = timeLog;
     I.waitForElement(this.elements.openaddtimelog_dialog, elementWaitTime);
@@ -69,6 +129,11 @@ module.exports = {
     await this.clickAdd();
   },
 
+  /**
+   *
+   * @param {string} previousType - old type of time log
+   * @param {object} timeLog - new details of time log
+   */
   async updateTimeLog(previousType, timeLog) {
     const { type, note } = timeLog;
     const el_update = `${this.elements.getTimeLogContext(previousType)}${this.elements.openedittimelog_button}`;
@@ -81,18 +146,30 @@ module.exports = {
     await this.clickUpdate();
   },
 
+  /**
+   *
+   * @param {string} type -  type of time log
+   */
   async deleteTimeLog(type) {
     const el_delete = `${this.elements.getTimeLogContext(type)}${this.elements.deletetimelog_button}`;
     I.waitForElement(el_delete, elementWaitTime);
     await I.click(el_delete);
   },
 
+  /**
+   *
+   * @param {string} type -  type of time log
+   */
   async addToCalendar(type) {
     const el_addtocalendar = `${this.elements.getTimeLogContext(type)}${this.elements.addtocalendar_button}`;
     I.waitForElement(el_addtocalendar, elementWaitTime);
     await I.click(el_addtocalendar);
   },
 
+  /**
+   *
+   * @param {string} type -  type of time log
+   */
   async selectType(type) {
     if (type) {
       I.waitForElement(this.fields.type, elementWaitTime);
@@ -102,18 +179,27 @@ module.exports = {
     }
   },
 
-  async selectEventTime(calendar) {
+  /**
+   *
+   * @param {object} timeLog - details of time log
+   */
+  async selectEventTime(timeLog) {
+    const { year, month, day, hour, minute, period } = timeLog;
     await I.click(this.fields.time);
     I.waitForElement(this.datePicker.datePicker_container, elementWaitTime);
-    await this.selectYear(calendar.year);
-    await this.selectMonth(calendar.month);
-    await this.selectDay(calendar.day);
-    await this.selectHour(calendar.hour);
-    await this.selectMinute(calendar.minute);
-    await this.selectPeriod(calendar.period);
+    await this.selectYear(year);
+    await this.selectMonth(month);
+    await this.selectDay(day);
+    await this.selectHour(hour);
+    await this.selectMinute(minute);
+    await this.selectPeriod(period);
     await I.click(this.elements.timelog_dialog);
   },
 
+  /**
+   *
+   * @param {string} year - full year: 2020
+   */
   async selectYear(year) {
     I.waitForElement(this.datePicker.open_year, elementWaitTime);
     await I.click(this.datePicker.open_year);
@@ -123,11 +209,22 @@ module.exports = {
     await I.click(el_year);
   },
 
+  /**
+   *
+   * @param {string} month - full month name: January
+   */
   async selectMonth(month) {
     I.waitForElement(this.datePicker.open_day_month, elementWaitTime);
     await I.click(this.datePicker.open_day_month);
 
     const selected = await I.waitForFunction(
+      /**
+       *
+       * @param {string} month - full onth name: Jaunuary
+       * @param {Array} monthNames - array of 12 months name
+       *
+       * @returns {boolean} true
+       */
       function recurse(month, monthNames) {
         const m_y = '//div[contains(@class,"MuiPickersSlideTransition-transitionContainer")]/p';
         const next = '//div[contains(@class,"MuiPickersCalendarHeader-switchHeader")]/button[2]';
@@ -157,12 +254,20 @@ module.exports = {
     );
   },
 
+  /**
+   *
+   * @param {string} day - in a format like: 2, 4, 12, 29
+   */
   async selectDay(day) {
     const el_day = this.datePicker.getDay(day);
     I.waitForElement(el_day, elementWaitTime);
     await I.click(el_day);
   },
 
+  /**
+   *
+   * @param {string} hour - in a 12 hour format
+   */
   async selectHour(hour) {
     I.waitForElement(this.datePicker.open_hour, elementWaitTime);
     await I.click(this.datePicker.open_hour);
@@ -171,6 +276,10 @@ module.exports = {
     await I.click(el_hour);
   },
 
+  /**
+   *
+   * @param {string} minute - in a two digit format: 02, 14, 09
+   */
   async selectMinute(minute) {
     I.waitForElement(this.datePicker.open_minute, elementWaitTime);
     await I.click(this.datePicker.open_minute);
@@ -179,12 +288,20 @@ module.exports = {
     await I.click(el_minute);
   },
 
+  /**
+   *
+   * @param {string} period - AM or PM
+   */
   async selectPeriod(period) {
     const el_period = this.datePicker.getPeriod(period);
     I.waitForElement(el_period, elementWaitTime);
     await I.click(el_period);
   },
 
+  /**
+   *
+   * @param {string} note - time log note
+   */
   async fillNote(note) {
     I.waitForInvisible(this.datePicker.datePicker_container, elementWaitTime);
     I.waitForElement(this.fields.note, elementWaitTime);

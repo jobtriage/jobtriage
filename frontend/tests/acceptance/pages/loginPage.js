@@ -14,6 +14,10 @@ module.exports = {
     signup_label: '//form//span[contains(.,"Sign up here")]',
   },
 
+  /**
+   *
+   * @param {object} user
+   */
   async login(user) {
     const { email, password } = user;
 
@@ -24,11 +28,19 @@ module.exports = {
     await I.click(this.elements.login_button);
   },
 
+  /**
+   *
+   * @param {string} email
+   */
   async fillEmail(email) {
     I.waitForElement(this.fields.email, elementWaitTime);
     await I.fillField(this.fields.email, email);
   },
 
+  /**
+   *
+   * @param {string} password
+   */
   async fillPassword(password) {
     I.waitForElement(this.fields.password, elementWaitTime);
     await I.fillField(this.fields.password, password);
